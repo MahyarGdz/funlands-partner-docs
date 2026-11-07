@@ -1,0 +1,17 @@
+* { box-sizing: border-box; }
+body { margin: 0; padding: 12px; font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1b1d2a; background: #0f1226; color: #e9e9f5; }
+.top { display: flex; gap: 8px; align-items: baseline; margin-bottom: 6px; }
+.muted { color: #9a9cb8; }
+.pill { margin-left: auto; padding: 2px 8px; border-radius: 10px; background: #2b2f55; font-size: 12px; }
+.pill.live { background: #1f8a4c; } .pill.dead { background: #c0392b; }
+.board { position: relative; height: 220px; margin: 10px 0; border-radius: 10px; background: radial-gradient(circle at 30% 20%, #26306b, #0b0d1f); overflow: hidden; }
+.hud { position: absolute; top: 8px; left: 10px; display: flex; gap: 16px; }
+#star { position: absolute; left: 45%; top: 40%; width: 44px; height: 44px; border-radius: 50%; font-size: 22px; background: #f5c542; color: #3a2a00; border: 0; cursor: pointer; }
+#star:disabled { opacity: .35; cursor: default; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+button { font: inherit; border: 0; border-radius: 7px; padding: 7px 12px; background: #6c4cf0; color: #fff; cursor: pointer; }
+button.secondary { background: #2b2f55; }
+button:disabled { opacity: .45; cursor: default; }
+#log { margin: 10px 0 0; padding-left: 18px; max-height: 190px; overflow: auto; font-size: 12px; }
+#log li { margin-bottom: 3px; word-break: break-word; }
+.ok { color: #5fd38d; } .bad { color: #ff7b6b; }

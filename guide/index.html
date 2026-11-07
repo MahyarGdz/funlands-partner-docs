@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>راهنمای اتصال شریک‌ها به فان‌لندز</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 16mm 14mm 18mm 14mm; }
+* { box-sizing: border-box; }
+body { font-family: "Vazirmatn", Tahoma, sans-serif; font-size: 10.5pt; line-height: 1.85; color: #1f2933; margin: 0; }
+.en { direction: ltr; unicode-bidi: isolate; font-family: "Vazirmatn", sans-serif; }
+.hero { background: #f2f5f9; border-radius: 10px; padding: 18px 20px 14px; margin-bottom: 16px; }
+.hero .date { color: #2563eb; font-weight: 700; font-size: 10pt; }
+.hero h1 { margin: 4px 0 8px; font-size: 20pt; }
+.hero p { margin: 0; color: #3e4c59; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0 6px; }
+.card { background: #fff; border: 1px solid #e1e7ef; border-radius: 8px; padding: 10px 12px; }
+.card h3 { margin: 0 0 4px; font-size: 11pt; }
+.card p { margin: 0; font-size: 9.6pt; color: #3e4c59; }
+h2 { font-size: 14pt; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 2px solid #e1e7ef; }
+h3 { font-size: 11.5pt; margin: 14px 0 4px; }
+p { margin: 6px 0; }
+ul { margin: 4px 0 8px; padding-right: 18px; }
+li { margin: 2px 0; }
+table { width: 100%; border-collapse: collapse; margin: 8px 0 12px; font-size: 9.4pt; }
+th, td { border-bottom: 1px solid #e6ebf1; padding: 6px 6px; text-align: right; vertical-align: top; }
+th { background: #f7f9fb; font-weight: 700; }
+.tag { display: inline-block; border-radius: 4px; padding: 0 6px; font-size: 8.6pt; font-weight: 700; white-space: nowrap; }
+.done { background: #dcfce7; color: #166534; }
+.part { background: #fef3c7; color: #92400e; }
+.none { background: #fee2e2; color: #991b1b; }
+.block { background: #e0e7ff; color: #3730a3; }
+.out { background: #f1f5f9; color: #475569; }
+.sprint { border: 1px solid #e1e7ef; border-radius: 8px; padding: 8px 12px; margin: 8px 0; page-break-inside: avoid; }
+.sprint .head { display: flex; justify-content: space-between; font-weight: 700; }
+.sprint .when { color: #2563eb; font-size: 9.4pt; }
+.note { background: #fff8e6; border-right: 3px solid #f59e0b; padding: 8px 12px; border-radius: 6px; margin: 10px 0; }
+.warn { background: #fdecec; border-right: 3px solid #dc2626; padding: 8px 12px; border-radius: 6px; margin: 10px 0; }
+.small { font-size: 9pt; color: #52606d; }
+.pb { page-break-before: always; }
+</style>
+<style>
+code { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 8.6pt; direction: ltr; unicode-bidi: isolate; background: #f2f5f9; padding: 0 3px; border-radius: 3px; }
+pre { direction: ltr; text-align: left; font-family: Menlo, Consolas, "Courier New", monospace; font-size: 8.2pt; line-height: 1.5; background: #f7f9fb; border: 1px solid #e1e7ef; border-radius: 6px; padding: 8px 10px; margin: 6px 0 10px; white-space: pre-wrap; word-break: break-word; page-break-inside: avoid; }
+pre code { background: none; padding: 0; font-size: inherit; }
+ol { margin: 4px 0 8px; padding-right: 20px; }
+tr { page-break-inside: avoid; }
+h2, h3 { page-break-after: avoid; }
+.nest pre { page-break-inside: auto; orphans: 6; widows: 6; font-size: 7.6pt; }
+.nest p { page-break-after: avoid; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="date">۱۶ آبان ۱۴۰۵ | نسخه ۱.۱ راهنما</div>
+  <h1>راهنمای اتصال شریک‌ها به فان‌لندز</h1>
+  <p>این سند فان‌لندزه برای تیم فنی هر شریکی که می‌خواد بازی‌های فان‌لندز رو داخل سرویس خودش نشون بده. تیم‌های داخلی خودمون هم که روی ماژول شریک یا کلاینت بازی کار می‌کنن همین رو مبنا می‌ذارن. پایه این متن قرارداد یکپارچه‌سازی فان‌لندز نسخه ۲.۰ هست. اینجا همون قرارداد رو به زبان اجرایی نوشتیم و هر جا چیزی باز مونده بود، تصمیم خودمون رو گذاشتیم. توی بخش ۱۰ هم نمونه کد NestJS برای همه کارهای سمت شریک اومده. اگه جایی این متن با قرارداد نخونه، قرارداد ملاکه و لطفا به ما خبر بدید.</p>
+  <div class="cards">
+    <div class="card"><h3>اصل اعتماد</h3><p>هر طرف با کلید خصوصی خودش امضا می‌کنه و کلید عمومیش رو روی یک نشانی JWKS منتشر می‌کنه. هیچ کلید خصوصی یا سکرت مشترکی بین ما و شریک جابه‌جا نمیشه.</p></div>
+    <div class="card"><h3>هر پوسته یک شریک</h3><p>هر پوسته یک شریک جداست با شناسه، کلید، داده و پنل خودش. هیچ شریکی داده شریک دیگه رو نمی‌بینه.</p></div>
+    <div class="card"><h3>دو محیط جدا</h3><p>sandbox و production کاملا از هم جدا هستن: کلید، issuer، audience، client_id، داده، وب‌هوک و پنل. توکن یک محیط توی محیط دیگه رد میشه و یک <code>sub</code> یکسان توی این دو محیط دو بازیکن جدا در فان‌لندزه.</p></div>
+    <div class="card"><h3>نمونه‌ها</h3><p>دامنه‌هایی مثل <code>funlands.example</code> و <code>partner.example</code> و همه کلیدها و شناسه‌های این متن نمونه‌ان. مقدار واقعی هر محیط توی برگ شریک ثبت میشه.</p></div>
+  </div>
+</div>
+
+<div class="note">وضعیت: مسیرهای این راهنما، یعنی JWKS فان‌لندز، ورود وب، bootstrap و refresh، خروج، توکن گزارش، گزارش‌ها و وب‌هوک، الان در حال پیاده‌سازی هستن و هنوز روی sandbox باز نشدن. وقتی sandbox آماده شد نشانی‌های واقعی رو توی برگ شریک می‌فرستیم. ورود اپ بومی، حذف حساب و API رویدادهای فنی بازی هنوز طراحی نهایی ندارن و توی بخش ۱۲ اومدن.</div>
+
+<div class="note">تغییرات نسخه ۱.۱ (۱۶ آبان ۱۴۰۵): فرم launch و bootstrap حالا روی Origin بازی فان‌لندز (<code>FUNLANDS_GAME_ORIGIN</code>) نوشته شدن، نه روی نشانی پایه API؛ کلید <code>x-partner-api-key</code> برای درخواست‌های صفحه بازی و خطای <code>PARTNER_TOKEN_MISMATCH</code> اضافه شد؛ کد refresh بعد از خروج اصلاح شد (بخش ۴.۷)؛ و روشن شد که <code>funlands:relaunch_requested</code> رو خود صفحه بازی می‌فرسته (بخش ۴.۹).</div>
+
+<h2>۱. اتصال در یک نگاه</h2>
+<p>اتصال شریک به فان‌لندز روی این چند قاعده ساخته شده:</p>
+<ul>
+  <li>هر کار توکن خودش رو داره: توکن launch با عمر حداکثر ۱۲۰ ثانیه، access بازی ۱۵ دقیقه، refresh چرخشی با سقف ۱۲ ساعت، و یک توکن جدا برای گزارش. هیچ توکن بلندمدتی برای کاربر صادر نمیشه.</li>
+  <li>هر طرف فقط نشانی JWKS خودش رو ثبت می‌کنه. نه فایل کلید رد و بدل میشه نه سکرت مشترک، و چرخش و ابطال کلید روال مشخص داره.</li>
+  <li>ورود وب با یک فرم POST داخل iframe انجام میشه و یک verifier کد bootstrap رو به همون پنجره گره می‌زنه. هیچ توکن یا کدی توی URL نمیره.</li>
+  <li>رویدادها با وب‌هوک امضاشده در قالب SET می‌رسن، شناسه <code>event_id</code> ثابته، تا ۷۲ ساعت دوباره فرستاده میشن و یک API هم برای گرفتن رویدادهای جامونده هست.</li>
+  <li>خروج کاربر با یک پیام امضاشده از سرور شریک انجام میشه و اثرش فوریه.</li>
+  <li>خطاها کد پایدار دارن و برای هر کد گفتیم شریک چی کار کنه.</li>
+</ul>
+<p>نمونه پیاده‌سازی همه این کارها در سمت شریک، با NestJS، توی بخش ۱۰ اومده.</p>
+
+<h3>چند اصطلاح</h3>
+<table>
+<tr><th style="width:22%">اصطلاح</th><th>معنی در این راهنما</th></tr>
+<tr><td>شریک، محیط شریک</td><td>سرویسی که کاربر خودش رو احراز هویت می‌کنه و بازی رو نشون میده. برای هر شریک در هر محیط (sandbox یا production) یک رکورد جدا ثبت می‌کنیم.</td></tr>
+<tr><td><code>issuer</code></td><td>شناسه دقیق صادرکننده توکن، به شکل نشانی HTTPS. باید حرف‌به‌حرف با مقدار ثبت‌شده یکی باشه.</td></tr>
+<tr><td>JWKS، <code>kid</code></td><td>فایل JSON عمومی که کلیدهای عمومی امضا رو منتشر می‌کنه. هر کلید یک <code>kid</code> یکتا داره و توکن با همین <code>kid</code> کلیدش رو معرفی می‌کنه.</td></tr>
+<tr><td><code>sub</code></td><td>شناسه مستعار و پایدار کاربر که فقط مخصوص اتصال همین شریک به فان‌لندزه.</td></tr>
+<tr><td><code>sid</code></td><td>شناسه نشست کاربر در سمت شریک. برای خروج دقیق لازمه.</td></tr>
+<tr><td>برگ شریک</td><td>فرمی که مقدارهای هر محیط، مثل issuer و JWKS و Originها و وب‌هوک، با مالک مشخص توش ثبت میشه.</td></tr>
+</table>
+
+<h2>۲. شروع همکاری</h2>
+<h3>۲.۱ چیزهایی که از شریک می‌گیریم</h3>
+<p>این موارد برای sandbox و production جدا پر میشن.</p>
+<table>
+<tr><th style="width:26%">مورد</th><th>توضیح</th><th style="width:20%">تایید با</th></tr>
+<tr><td>نام شریک، <code>pid</code> و محیط‌ها</td><td>نام حقوقی و شناسه فنی، و اینکه به کدوم محیط‌ها نیاز دارید</td><td>مالک محصول و امنیت</td></tr>
+<tr><td><code>issuer</code> و نشانی JWKS</td><td>نشانی دقیق HTTPS برای هر محیط، الگوریتم امضا، کلیدهای آزمایشی و برنامه چرخش کلید</td><td>مالک امنیت</td></tr>
+<tr><td>Originهای وب و کلاینت‌های بومی</td><td>فهرست دقیق Originهایی که صفحه بازی رو باز می‌کنن (حداکثر ۳۲ تا)، و فهرست اپ‌های Android، iOS و TV با روش handoff هر کدوم</td><td>مالک کلاینت</td></tr>
+<tr><td>قالب <code>sub</code>، <code>sid</code> و <code>age_band</code></td><td>پایداری و طول شناسه، مجموعه مقدارهای رده سنی و سیاست سن</td><td>محصول و حریم خصوصی</td></tr>
+<tr><td>وب‌هوک و مخاطب حادثه</td><td>نشانی وب‌هوک هر محیط، و یک کانال احرازشده برای اعلام حادثه امنیتی که به کلیدهای امضا وابسته نباشه</td><td>عملیات و امنیت</td></tr>
+<tr><td><code>client_id</code> و دسترسی گزارش</td><td>کلیدی که درخواست توکن گزارش رو امضا می‌کنه (از همون JWKS یا یک JWKS جدا)، scopeهای لازم و نقش‌های پنل</td><td>مالک داده</td></tr>
+<tr><td>منطقه زمانی و شاخص‌ها</td><td>تعریف «روز» برای گزارش، cohort، تاخیر قابل قبول داده و اینکه کدوم عدد مبنای تجاری میشه</td><td>محصول و مالی</td></tr>
+<tr><td>سیاست نگهداری و حذف</td><td>مدت نگهداری داده خام، feed، export و backup، و مهلت کامل شدن حذف حساب</td><td>حقوقی و حریم خصوصی</td></tr>
+</table>
+
+<h3>۲.۲ چیزهایی که به شریک می‌دیم</h3>
+<table>
+<tr><th style="width:26%">مورد</th><th>توضیح</th></tr>
+<tr><td><code>partner_id</code></td><td>شناسه داخلی شریک در فان‌لندز. توی پاسخ‌ها و پنل می‌بینیدش، ولی هیچ‌وقت لازم نیست توی درخواست بفرستیدش. ما شریک رو فقط از توکن امضاشده تشخیص می‌دیم.</td></tr>
+<tr><td><code>client_id</code></td><td>شناسه کلاینت برای گرفتن توکن گزارش، جدا برای هر محیط</td></tr>
+<tr><td>audienceها</td><td>سه مقدار جدا برای هر محیط که موقع ثبت توی برگ شریک بهتون میدیم: ورود (<code>…/partner-launch</code>)، خروج (<code>…/partner-logout</code>) و token endpoint (<code>…/oauth/token</code>). مقایسه حرف‌به‌حرفه، پس همون مقدار برگ شریک رو بذارید.</td></tr>
+<tr><td>JWKS فان‌لندز و issuer ما</td><td>نشانی <code>/.well-known/jwks.json</code> هر محیط و مقدار <code>iss</code> که روی SETها می‌ذاریم</td></tr>
+<tr><td>نشانی‌های sandbox</td><td>launch، خروج، token، پایه API گزارش و feed رویداد</td></tr>
+<tr><td>Origin بازی (<code>FUNLANDS_GAME_ORIGIN</code>)</td><td>Origin دقیقی که صفحه handoff و صفحه بازی روش باز میشن، مثلا <code>https://play.sandbox.funlands.example</code>، جدا برای هر محیط. فرم launch به همین Origin میره و iframe، CSP و چک <code>postMessage</code> هم با همین مقدار تنظیم میشن. توی بعضی استقرارها ممکنه با نشانی پایه API یکی باشه، ولی همیشه مقدار برگ شریک رو بذارید. JWKS، خروج، token، گزارش و feed روی نشانی پایه API می‌مونن.</td></tr>
+<tr><td><code>x-partner-api-key</code></td><td>فقط برای شریک‌های <code>client_direct</code>. کلیدی که شریک رو معرفی می‌کنه و صفحه بازی همراه درخواست‌هاش می‌فرسته (بخش ۴.۷). سکرت کاربر نیست، ولی فقط یک بار نشون داده میشه و با چرخیدنش کلید قبلی باطل میشه.</td></tr>
+<tr><td>قرارداد API و رویداد</td><td>OpenAPI نسخه‌دار، schema رویدادها و نشانی نوع هر رویداد</td></tr>
+<tr><td>آزمون انطباق</td><td>مجموعه تستی که شریک روی sandbox اجرا می‌کنه. فهرستش توی بخش ۱۱ هست.</td></tr>
+<tr><td>دسترسی پنل</td><td>دعوت کاربرهای پنل با نقش‌های owner، analyst و support، همراه با MFA</td></tr>
+</table>
+
+<h3>۲.۳ جدایی sandbox و production</h3>
+<ul>
+  <li>برای هر محیط یک رکورد جدا داریم با issuer، JWKS، الگوریتم، audienceها، Originها، وب‌هوک، <code>client_id</code>، داده و پنل خودش.</li>
+  <li>کلید امضای sandbox و production هیچ‌وقت یکی نیست. توکن sandbox روی production با <code>AUDIENCE_MISMATCH</code> رد میشه و برعکس.</li>
+  <li>توی sandbox فقط داده غیرواقعی بفرستید. شناسه کاربر واقعی رو برای تست استفاده نکنید.</li>
+  <li>بازیکن‌ها برای هر محیط جدا ساخته میشن: اگه یک <code>sub</code> هم توی sandbox و هم توی production وارد بشه، دو حساب جدا در فان‌لندز داره و داده بازی، نشست‌ها و گزارش‌هاش هیچ‌وقت قاطی نمیشن.</li>
+</ul>
+
+<h3>۲.۴ مسیر رسیدن به production</h3>
+<ol>
+  <li>شریک برگ بخش ۲.۱ رو برای sandbox پر می‌کنه و از یک کانال اداری احرازشده برامون می‌فرسته. نشانی JWKS رو فقط از همین کانال ثبت می‌کنیم، نه از داخل توکن.</li>
+  <li>ما رکورد sandbox رو می‌سازیم، JWKS شما رو یک بار می‌خونیم و چک می‌کنیم کلیدها درست باشن، الگوریتم مجاز باشه و هر کلید <code>kid</code> داشته باشه. بعد مقادیر بخش ۲.۲ رو می‌فرستیم.</li>
+  <li>شریک آزمون انطباق رو روی sandbox اجرا می‌کنه تا همه موارد پاس بشن، و بعد ترافیک آزمایشی با داده غیرواقعی می‌فرسته.</li>
+  <li>مالک امنیت دو طرف تست‌های منفی توکن و تمرین چرخش کلید رو امضا می‌کنن. برگ داده، فهرست رویدادها، تعریف شاخص‌ها و روال حادثه هم با مالک مشخص تایید میشن.</li>
+  <li>رکورد production با کلیدهای جدید و مقدارهای جدا ثبت میشه و ترافیک واقعی اول به‌صورت محدود باز میشه.</li>
+</ol>
+
+<h2>۳. کلیدها</h2>
+<h3>۳.۱ قاعده‌های اصلی</h3>
+<ul>
+  <li>هر طرف با کلید خصوصی خودش امضا می‌کنه. کلید خصوصی توی KMS یا HSM همون سازمان می‌مونه و به هیچ‌کس داده نمیشه، نه از طریق API، نه با ایمیل، نه «دستی» برای راه افتادن سریع. ما هم هیچ‌وقت چنین چیزی نمی‌خوایم. اگه کسی از طرف فان‌لندز کلید خصوصی خواست، این خودش یک حادثه امنیتیه.</li>
+  <li>سکرت مشترک هم نداریم. الگوریتم <code>none</code> و کل خانواده <code>HS256</code>/<code>HS384</code>/<code>HS512</code> رد میشن.</li>
+  <li>کلید عمومی رو فقط از نشانی JWKS ثبت‌شده همون issuer و همون محیط می‌خونیم. هدرهای <code>jku</code>، <code>x5u</code> و <code>jwk</code> منبع کلید نیستن و توکنی که هر کدومشون رو داشته باشه رد میشه.</li>
+  <li>الگوریتم رو از برگ شریک برمی‌داریم، نه از هدر توکن. برای هر محیط یک الگوریتم ثابت ثبت میشه. پیشنهاد ما <code>ES256</code> (منحنی P-256) هست. <code>RS256</code>، <code>PS256</code> و <code>EdDSA</code> هم پشتیبانی میشن، و برای RSA کلید باید دست‌کم ۲۰۴۸ بیت باشه. عوض کردن الگوریتم چرخش کلید حساب نمیشه، تغییر سیاسته و تست دوباره می‌خواد.</li>
+  <li>اختلاف ساعت مجاز برای همه توکن‌ها ۳۰ ثانیه‌ست. ساعت سرورها رو با NTP هماهنگ نگه دارید.</li>
+</ul>
+
+<h3>۳.۲ JWKS شریک</h3>
+<p>نشانی JWKS باید HTTPS باشه، بدون ریدایرکت جواب بده و فقط کلید عمومی داشته باشه. وجود <code>d</code>، <code>p</code>، <code>q</code> یا هر پارامتر خصوصی دیگه خطای امنیتیه و اون JWKS رو قبول نمی‌کنیم. هر کلید باید <code>kid</code>، <code>alg</code> و <code>use: "sig"</code> داشته باشه.</p>
+<pre><code>GET https://auth.sandbox.partner.example/.well-known/jwks.json
+
+{
+  "keys": [{
+    "kty": "EC", "crv": "P-256", "use": "sig", "alg": "ES256",
+    "kid": "partner-a-sandbox-2026-11",
+    "x": "&lt;base64url-public-x&gt;", "y": "&lt;base64url-public-y&gt;"
+  }]
+}</code></pre>
+<p>رفتار ما موقع خوندن JWKS شما:</p>
+<ul>
+  <li>فقط نشانی ثبت‌شده رو می‌خونیم. ریدایرکت رو دنبال نمی‌کنیم و به آدرس‌های داخلی یا خصوصی وصل نمیشیم.</li>
+  <li>timeout سه ثانیه‌ست، پاسخ حداکثر ۶۴ کیلوبایت و حداکثر ۲۰ کلید. JWKS رو ۵ دقیقه کش می‌کنیم.</li>
+  <li>اگه توکنی با <code>kid</code> ناشناخته برسه، یک بار JWKS رو دوباره می‌خونیم (برای هر محیط حداکثر یک بار در هر ۳۰ ثانیه). اگه باز هم کلید نبود، توکن با <code>KEY_NOT_FOUND</code> رد میشه.</li>
+  <li>اگه JWKS در دسترس نباشه، فقط کلیدهایی که قبلا معتبر و کش شده بودن تا حداکثر یک ساعت قبول میشن. کلید ناشناخته یا کلید ابطال‌شده به هیچ وجه به خاطر قطعی قبول نمیشه.</li>
+</ul>
+
+<h3>۳.۳ قاعده‌های <code>kid</code></h3>
+<ul>
+  <li><code>kid</code> باید رشته غیرخالی باشه و توی issuer و محیط شما یکتا باشه. لازم نیست بین شریک‌ها یکتا باشه، چون ما کلید رو با جفت issuer و <code>kid</code> پیدا می‌کنیم.</li>
+  <li><code>kid</code> یک کلید قدیمی رو هیچ‌وقت برای کلید جدید استفاده نکنید.</li>
+  <li>پیشنهاد قالب: <code>&lt;نام شریک&gt;-&lt;محیط&gt;-&lt;سال-ماه&gt;</code>، مثلا <code>partner-a-sandbox-2026-11</code>.</li>
+</ul>
+
+<h3>۳.۴ چرخش برنامه‌ریزی‌شده کلید شریک</h3>
+<ol>
+  <li>کلید جدید K2 رو با <code>kid</code> تازه توی KMS بسازید. هنوز با K1 امضا کنید.</li>
+  <li>K1 و K2 رو با هم توی JWKS منتشر کنید.</li>
+  <li>دست‌کم ۲۴ ساعت صبر کنید. حداقل فنی بیشینه کش ما به‌اضافه حاشیه‌ست، ولی ۲۴ ساعت جلوی مشکلات کش‌های میانی رو هم می‌گیره.</li>
+  <li>همه توکن‌ها رو با K2 امضا کنید: launch، logout و client assertion. ما کلید رو با <code>kid</code> انتخاب می‌کنیم و در این مدت هر دو کلید رو قبول می‌کنیم.</li>
+  <li>K1 رو دست‌کم ۲۴ ساعت بعد از آخرین امضا با اون توی JWKS نگه دارید، بعد حذفش کنید. حداقل فنی بلندترین عمر توکن شما (۱۲۰ ثانیه) به‌اضافه ۳۰ ثانیه اختلاف ساعت و زمان کشه.</li>
+  <li>پیشنهاد ما اینه که کلیدها رو دست‌کم هر ۱۸۰ روز عوض کنید و هر بار چرخش رو اول روی sandbox تمرین کنید.</li>
+</ol>
+
+<h3>۳.۵ چرخش برنامه‌ریزی‌شده کلید فان‌لندز</h3>
+<ol>
+  <li>کلید جدید ما دست‌کم ۲۴ ساعت قبل از اولین استفاده توی JWKS فان‌لندز منتشر میشه. JWKS ما <code>Cache-Control: public, max-age=300</code> برمی‌گردونه.</li>
+  <li>بعد SETهای جدید با کلید جدید امضا میشن. رویدادهایی که دوباره فرستاده میشن هم امضای تازه با کلید جدید می‌گیرن ولی <code>event_id</code> قبلی رو نگه می‌دارن.</li>
+  <li>کلید قدیمی دست‌کم ۲۴ ساعت بعد از آخرین امضا توی JWKS می‌مونه.</li>
+  <li>سمت شما: کلید ما رو توی کد ثابت نکنید. با <code>kid</code> از JWKS ما انتخاب کنید، کش رو حداکثر ۱۰ دقیقه نگه دارید و برای <code>kid</code> ناشناخته یک بار و با محدودیت نرخ دوباره بخونید.</li>
+</ol>
+
+<h3>۳.۶ ابطال اضطراری، وقتی کلید شریک لو رفته</h3>
+<p>حذف کردن کلید از JWKS به‌تنهایی کافی نیست، چون نسخه کش‌شده تا چند دقیقه هنوز اون کلید رو داره. ابطال واقعی با اعلام مستقیم و denylist انجام میشه.</p>
+<ol>
+  <li>امضا با K1 رو همون لحظه متوقف کنید و K1 رو توی KMS غیرفعال کنید.</li>
+  <li>از کانال حادثه‌ای که توی برگ شریک ثبت شده به ما خبر بدید: issuer، محیط، <code>kid</code> لو رفته و بازه زمانی‌ای که کلید در خطر بوده. این پیام نباید با کلید لو رفته امضا یا تایید بشه.</li>
+  <li>ما جفت issuer و <code>kid</code> رو برای اون محیط فورا توی denylist می‌ذاریم. denylist بر کش مقدمه، پس هر توکن K1، حتی با <code>exp</code> معتبر، رد میشه.</li>
+  <li>نشست‌هایی که توی بازه خطر ساخته شدن رو طبق روال حادثه باطل می‌کنیم. اگه دامنه نشت روشن نباشه، ورود جدید اون محیط رو موقتا می‌بندیم.</li>
+  <li>K2 رو با <code>kid</code> تازه منتشر کنید و K1 رو از JWKS بردارید. با اولین توکن K2 ما JWKS رو دوباره می‌خونیم.</li>
+  <li>بعد از حادثه یک گزارش کوتاه رد و بدل می‌کنیم. اگه همون کلید برای client assertion گزارش هم استفاده میشده، اون هم باید عوض بشه.</li>
+</ol>
+
+<h3>۳.۷ ابطال اضطراری، وقتی کلید فان‌لندز لو رفته</h3>
+<ol>
+  <li>ما امضا با K1 و در صورت لزوم ارسال وب‌هوک رو متوقف می‌کنیم و K2 رو فعال می‌کنیم.</li>
+  <li>از کانال حادثه ثبت‌شده به شما خبر می‌دیم، با <code>kid</code> لو رفته و زمان.</li>
+  <li>شما <code>kid</code> رو فورا توی denylist خودتون بذارید و هر SET که با K1 امضا شده رو رد کنید، حتی اگه تازه باشه.</li>
+  <li>بعد از رفع مشکل، رویدادهای تحویل‌نشده با امضای تازه و همون <code>event_id</code> دوباره ارسال میشن.</li>
+</ol>
+
+<h2>۴. ورود بازی در وب</h2>
+<h3>۴.۱ مراحل در یک نگاه</h3>
+<ol>
+  <li>کاربر توی سرویس شما وارد شده و شما چک کردید که این بازی براش مجازه.</li>
+  <li>سرور شما یک <code>bootstrap_verifier</code> تصادفی تازه می‌سازه و <code>launch_challenge</code> رو ازش حساب می‌کنه.</li>
+  <li>سرور شما توکن launch رو با کلید خصوصی امضا می‌کنه. توکن هیچ‌وقت توی مرورگر یا اپ ساخته نمیشه.</li>
+  <li>صفحه شما یک iframe و یک فرم مخفی داره که <code>launch_token</code>، <code>bootstrap_verifier</code> و <code>game</code> رو با POST به <code>/v1/partner/launch</code> روی Origin بازی فان‌لندز (<code>FUNLANDS_GAME_ORIGIN</code>) داخل همون iframe می‌فرسته.</li>
+  <li>فان‌لندز درخواست رو چک می‌کنه، بازیکن رو پیدا می‌کنه یا می‌سازه، یک نشست می‌سازه و یک صفحه HTML برمی‌گردونه.</li>
+  <li>اون صفحه داخل iframe کد bootstrap رو با همون verifier عوض می‌کنه و توکن‌های بازی رو می‌گیره. این قدم و refresh کار خود صفحه بازیه و سرور شما کاری نمی‌کنه.</li>
+</ol>
+
+<h3>۴.۲ توکن launch</h3>
+<p>هدر:</p>
+<table>
+<tr><th style="width:18%">فیلد</th><th>قاعده</th></tr>
+<tr><td><code>typ</code></td><td>دقیقا <code>funlands-launch+jwt</code>. یک <code>id_token</code> معمولی OIDC یا access token شما توکن launch حساب نمیشه.</td></tr>
+<tr><td><code>alg</code></td><td>همون الگوریتم ثبت‌شده برای این محیط</td></tr>
+<tr><td><code>kid</code></td><td>رشته غیرخالی که توی JWKS ثبت‌شده شما هست</td></tr>
+<tr><td>ممنوع</td><td><code>jku</code>، <code>x5u</code> و <code>jwk</code></td></tr>
+</table>
+<p>claimها:</p>
+<table>
+<tr><th style="width:18%">claim</th><th style="width:10%">اجباری</th><th>قاعده</th></tr>
+<tr><td><code>iss</code></td><td>بله</td><td>حرف‌به‌حرف برابر issuer ثبت‌شده همین محیط</td></tr>
+<tr><td><code>aud</code></td><td>بله</td><td>audience ورود همین محیط، مثلا <code>https://sandbox.funlands.example/partner-launch</code></td></tr>
+<tr><td><code>sub</code></td><td>بله</td><td>شناسه مستعار، پایدار و مخصوص همین اتصال، حداکثر ۱۲۸ کاراکتر. ایمیل، شماره تلفن، کد ملی یا شناسه سراسری قابل ردیابی نباشه. اگه <code>sub</code> عوض بشه از نظر ما یک بازیکن جدیده.</td></tr>
+<tr><td><code>sid</code></td><td>بله</td><td>شناسه نشست کاربر در سمت شما. خروج دقیق با همین انجام میشه.</td></tr>
+<tr><td><code>iat</code>، <code>exp</code></td><td>بله</td><td><code>exp - iat</code> حداکثر ۱۲۰ ثانیه. <code>iat</code> بیشتر از ۳۰ ثانیه در آینده نباشه.</td></tr>
+<tr><td><code>jti</code></td><td>بله</td><td>یکتا و یک‌بارمصرف، مثلا UUID</td></tr>
+<tr><td><code>game</code></td><td>بله</td><td>شناسه بازی. باید دقیقا با فیلد <code>game</code> فرم یکی باشه و بازی برای شما فعال باشه. اگه ورود به لابی بخواید، مقدارش رو با هم توافق می‌کنیم.</td></tr>
+<tr><td><code>launch_challenge</code></td><td>بله</td><td><code>base64url(SHA-256(bootstrap_verifier))</code></td></tr>
+<tr><td><code>locale</code></td><td>نه</td><td>BCP 47، مثلا <code>fa-IR</code></td></tr>
+<tr><td><code>age_band</code></td><td>نه</td><td>رده سنی از مجموعه مقدارهای توافق‌شده در برگ شریک. اگه نباشه رده سنی ناشناخته حساب میشه و محتوای محدودشده نشون داده نمیشه.</td></tr>
+<tr><td><code>nickname</code></td><td>نه</td><td>نام نمایشی. فیلتر میشه و حداکثر ۲۴ کاراکتره.</td></tr>
+</table>
+<p>نمونه هدر و payload (مقدارها نمونه‌ان):</p>
+<pre><code>{ "alg": "ES256", "typ": "funlands-launch+jwt", "kid": "partner-a-sandbox-2026-11" }
+
+{
+  "iss": "https://auth.sandbox.partner.example",
+  "aud": "https://sandbox.funlands.example/partner-launch",
+  "sub": "pw_7f3c9a1e",
+  "sid": "partner_session_123",
+  "iat": 1793440800,
+  "exp": 1793440920,
+  "jti": "2f6d1c1e-0b7a-4c55-9a43-5b1f0e8d9c21",
+  "game": "star-runner",
+  "launch_challenge": "&lt;base64url-sha256-of-bootstrap-verifier&gt;",
+  "locale": "fa-IR",
+  "age_band": "13-17"
+}</code></pre>
+
+<h3>۴.۳ verifier و ساخت توکن</h3>
+<p>برای هر ورود یک verifier تازه بسازید و هیچ‌وقت تکرارش نکنید. نمونه کوتاه با Node.js و کتابخونه jose اینه و نسخه کامل NestJS توی بخش ۱۰.۳ هست:</p>
+<pre><code>import { randomBytes, createHash, randomUUID } from 'node:crypto';
+import { SignJWT } from 'jose';
+
+const verifier  = randomBytes(32).toString('base64url');
+const challenge = createHash('sha256').update(verifier, 'ascii').digest('base64url');
+
+const now = Math.floor(Date.now() / 1000);   // one clock read: exp - iat stays exactly 120
+const launchToken = await new SignJWT({ sid, game, launch_challenge: challenge })
+  .setProtectedHeader({ alg: 'ES256', typ: 'funlands-launch+jwt', kid: ACTIVE_KID })
+  .setIssuer(ISSUER)
+  .setAudience(LAUNCH_AUDIENCE)
+  .setSubject(pairwiseSub)
+  .setIssuedAt(now)
+  .setExpirationTime(now + 120)
+  .setJti(randomUUID())
+  .sign(signer);   // production: sign inside KMS or HSM</code></pre>
+
+<h3>۴.۴ صفحه شریک و درخواست</h3>
+<pre><code>&lt;iframe name="game-frame" title="Game"&gt;&lt;/iframe&gt;
+&lt;form method="post" action="https://play.sandbox.funlands.example/v1/partner/launch" target="game-frame"&gt;
+  &lt;input type="hidden" name="launch_token"       value="{{escapedToken}}"&gt;
+  &lt;input type="hidden" name="bootstrap_verifier" value="{{escapedVerifier}}"&gt;
+  &lt;input type="hidden" name="game"               value="{{escapedGameId}}"&gt;
+&lt;/form&gt;</code></pre>
+<pre><code>POST /v1/partner/launch
+Host: play.sandbox.funlands.example
+Content-Type: application/x-www-form-urlencoded
+Origin: https://sandbox.partner.example
+
+launch_token=&lt;signed-jwt&gt;&amp;game=star-runner&amp;bootstrap_verifier=&lt;base64url-32-random-bytes&gt;</code></pre>
+<ul>
+  <li>توکن و verifier هیچ‌وقت توی query string یا fragment نمیان و نباید لاگ بشن. صفحه‌ای که اون‌ها رو داره باید <code>Cache-Control: no-store</code> داشته باشه.</li>
+  <li>Origin صفحه باید دقیقا یکی از Originهای ثبت‌شده باشه. درخواست بدون Origin یا با Origin برابر <code>null</code> رد میشه. Origin به‌تنهایی احراز هویت نیست و فقط یک لایه کنترله.</li>
+  <li>فرم رو به Origin بازی (<code>FUNLANDS_GAME_ORIGIN</code>) بفرستید، نه به نشانی پایه API. صفحه handoff کد رو روی همون Origin با bootstrap عوض می‌کنه و bootstrap فقط درخواستی رو قبول می‌کنه که Origin اون دقیقا Origin بازی باشه؛ اگه فرم به Origin دیگه‌ای بره، ورود با <code>ORIGIN_NOT_ALLOWED</code> رد میشه.</li>
+  <li>CSP صفحه خودتون رو طوری تنظیم کنید که <code>frame-src</code> و <code>form-action</code> فقط Origin بازی فان‌لندز همون محیط رو مجاز کنن.</li>
+  <li><code>Referrer-Policy</code> صفحه خودتون رو <code>strict-origin-when-cross-origin</code> بذارید (پیش‌فرض مرورگرها)، همون مقداری که نمونه‌های این راهنما می‌ذارن.</li>
+</ul>
+
+<div class="warn"><strong>هشدار:</strong> روی صفحه‌ای که فرم launch رو می‌فرسته <code>Referrer-Policy: no-referrer</code> نذارید. با این مقدار مرورگر توی POST بین دو دامنه هدر <code>Origin: null</code> می‌فرسته و ورود با <code>ORIGIN_NOT_ALLOWED</code> رد میشه.</div>
+
+<h3>۴.۵ چیزهایی که ما چک می‌کنیم</h3>
+<ol>
+  <li>حجم درخواست، <code>Content-Type</code>، محدودیت نرخ و Origin.</li>
+  <li>هدر و <code>iss</code> رو فقط برای پیدا کردن رکورد شریک می‌خونیم. تا امضا تایید نشه به هیچ‌کدوم اعتماد نمی‌کنیم.</li>
+  <li><code>typ</code>، الگوریتم، <code>kid</code>، نبودن هدرهای ممنوع و denylist.</li>
+  <li>امضا با کلید JWKS ثبت‌شده، بعد همه claimها، برابری <code>game</code> با فرم، و برابری <code>SHA-256(bootstrap_verifier)</code> با <code>launch_challenge</code>.</li>
+  <li>یک‌بارمصرف بودن <code>jti</code> با یک رکورد ماندگار در دیتابیس. ساخت بازیکن، نشست و رویدادهای <code>player.created</code> و <code>session.started</code> همه توی یک تراکنش انجام میشه.</li>
+</ol>
+
+<h3>۴.۶ پاسخ launch و bootstrap</h3>
+<p>پاسخ موفق یک صفحه HTML با <code>Cache-Control: no-store</code>، <code>Referrer-Policy: same-origin</code> و CSP سخت‌گیرانه‌ست که <code>frame-ancestors</code> اون فقط Originهای ثبت‌شده شما رو مجاز می‌کنه. پس صفحه بازی رو فقط داخل صفحه‌های خودتون می‌تونید قاب بگیرید. این صفحه کد bootstrap و verifier رو فقط توی حافظه نگه می‌داره و بلافاصله این درخواست رو روی همون Origin بازی می‌فرسته، بعد توکن‌ها رو به صفحه بازی همین Origin تحویل میده و اون رو باز می‌کنه. این بخش برای تیم کلاینت فان‌لندزه و شریک نباید صداش بزنه. پاسخ موفق bootstrap پاکت <code>{ "state", "data" }</code> نداره و فیلدهاش snake_case هستن:</p>
+<pre><code>POST /v1/session/bootstrap
+Host: play.sandbox.funlands.example
+Origin: https://play.sandbox.funlands.example
+Content-Type: application/json
+
+{ "code": "boot_01J...", "bootstrap_verifier": "&lt;same-verifier&gt;" }
+
+200 OK
+Cache-Control: no-store
+
+{ "access_token": "&lt;funlands-jwt&gt;", "expires_in": 900,
+  "refresh_token": "&lt;opaque-token&gt;", "token_type": "Bearer" }</code></pre>
+<table>
+<tr><th style="width:22%">چیز</th><th style="width:20%">عمر</th><th>نکته</th></tr>
+<tr><td>توکن launch</td><td>حداکثر ۱۲۰ ثانیه</td><td>یک‌بارمصرف، امضای شریک</td></tr>
+<tr><td>کد bootstrap</td><td>۳۰ ثانیه</td><td>یک‌بارمصرف، فقط با verifier درست. کد اشتباه، verifier اشتباه و کد مصرف‌شده همه یک خطای یکسان می‌گیرن.</td></tr>
+<tr><td>access token بازی</td><td>حداکثر ۱۵ دقیقه</td><td>مخصوص سرویس‌های بازی فان‌لندز. برای گزارش قبول نمیشه و شریک نباید بهش تکیه کنه یا محتواش رو بخونه.</td></tr>
+<tr><td>refresh token</td><td>سقف مطلق ۱۲ ساعت</td><td>opaque، با هر استفاده عوض میشه و فقط hash اون ذخیره میشه</td></tr>
+</table>
+
+<h3>۴.۷ refresh</h3>
+<p>صفحه بازی از همون endpoint تمدید نشست عادی فان‌لندز استفاده می‌کنه. بدنه و پاسخش camelCase هستن و پاسخ موفق داخل پاکت <code>{ "state": true, "data": ... }</code> میاد:</p>
+<pre><code>POST /v1/auth/session/refresh
+Content-Type: application/json
+
+{ "refreshToken": "&lt;opaque-token&gt;" }
+
+200 OK
+{ "state": true,
+  "data": { "accessToken": "&lt;funlands-jwt&gt;", "refreshToken": "&lt;rotated-opaque-token&gt;",
+            "accessTokenExpiresAt": "2026-11-05T09:45:00.000Z",
+            "refreshTokenExpiresAt": "2026-11-05T21:30:00.000Z" } }</code></pre>
+<ul>
+  <li>هر refresh موفق یک access و یک refresh تازه میده و refresh قبلی مصرف میشه.</li>
+  <li>توکن‌ها توی <code>localStorage</code> نگه داشته نمیشن. اگه صفحه reload بشه، ممکنه refresh از دست بره و لازم باشه ورود دوباره انجام بشه.</li>
+  <li>refresh ناشناخته یا منقضی، یا refresh بعد از سقف ۱۲ ساعت، جواب <code>401 TOKEN_EXPIRED</code> می‌گیره.</li>
+  <li>اگه یک refresh که قبلا چرخیده دوباره استفاده بشه، همه نشست‌های اون بازیکن باطل میشن و جواب <code>401 TOKEN_REUSE</code> هست؛ کاربر باید دوباره از طریق شما وارد بشه. پس دو refresh هم‌زمان با یک توکن نفرستید.</li>
+  <li>بعد از خروج back-channel، فان‌لندز نشست رو همون موقع حذف می‌کنه، پس refresh معمولا جواب <code>401 TOKEN_EXPIRED</code> می‌گیره، همون کدی که access token اون نشست هم از این به بعد می‌گیره. <code>401 SESSION_REVOKED</code> فقط وقتی میاد که refresh قبل از حذف نشست برسه: مثلا وقتی خروج یا غیرفعال شدن محیط ثبت شده ولی بستن نشست هنوز تموم نشده (خروجی که <code>503</code> گرفته و هنوز تکرار نشده). صفحه بازی هر دو کد رو یعنی «نشست تموم شده» حساب می‌کنه و ورود دوباره می‌خواد (بخش ۴.۹)؛ دوباره refresh نمی‌کنه.</li>
+</ul>
+<p>برای شریک‌های <code>client_direct</code>، صفحه بازی باید روی هر درخواست HTTP به APIهای بازی هدر <code>x-partner-api-key</code> رو بفرسته و روی هر اتصال WebSocket همین کلید رو با هدر <code>x-partner-api-key</code> یا <code>auth.partnerApiKey</code> در handshake بده. access token یک بازیکن شریک به همون شریک بسته‌ست؛ درخواستی که این کلید رو نداره فضای پلتفرم حساب میشه و با <code>403 PARTNER_TOKEN_MISMATCH</code> رد میشه. خود refresh به این کلید نیاز نداره، ولی کلید نامعتبر یا چرخیده روی هر درخواستی جواب <code>401 PARTNER_KEY_INVALID</code> می‌گیره.</p>
+<ul>
+  <li>این کلید رو فان‌لندز برای هر شریک <code>client_direct</code> صادر می‌کنه و توی برگ شریک تحویل میده. فقط شریک رو معرفی می‌کنه، سکرت کاربر نیست و توی کد مرورگر دیده میشه. با این حال لاگش نکنید و توی URL نذارید. با چرخیدنش کلید قبلی همون لحظه باطل میشه.</li>
+  <li>شریک‌های <code>server_to_server</code> با <code>X-Partner-Public-Key</code> و <code>X-Partner-Secret</code> کار می‌کنن. این سکرت هیچ‌وقت نباید به مرورگر، اپ یا صفحه بازی برسه.</li>
+  <li>اینکه فضای شریک از خود توکن بازیکن شریک خونده بشه و این هدر لازم نباشه در حال بررسیه و هنوز تصمیمی براش گرفته نشده (بخش ۱۲). تا اون موقع هدر رو بفرستید.</li>
+</ul>
+
+<h3>۴.۸ تکرار درخواست ورود</h3>
+<ul>
+  <li>اگه همون توکن با همون محتوا و همون verifier درست دوباره برسه، مثلا چون شبکه قطع شده، نشست دوم ساخته نمیشه و یک کد bootstrap تازه برای همون نشست برمی‌گرده. این کار حداکثر سه بار و فقط تا قبل از <code>exp</code> ممکنه.</li>
+  <li>اگه همون <code>jti</code> بدون verifier درست برسه، جواب <code>TOKEN_REPLAYED</code> هست.</li>
+  <li>اگه همون <code>jti</code> با محتوای متفاوت برسه، جواب <code>409 LAUNCH_PAYLOAD_CHANGED</code> هست.</li>
+  <li>دو ورود هم‌زمان با یک <code>sub</code> توی یک محیط همیشه به یک بازیکن می‌رسن.</li>
+</ul>
+
+<h3>۴.۹ ورود دوباره و خطای ورود با postMessage</h3>
+<p>توی iframe دو صفحه مختلف ممکنه به صفحه شما پیام بدن، هر دو روی Origin بازی. صفحه handoff فان‌لندز (پاسخ launch) فقط <code>funlands:launch_failed</code> رو می‌فرسته. <code>funlands:relaunch_requested</code> رو خود صفحه بازی می‌فرسته، وقتی نشستی نداره: مثلا بعد از reload، یا وقتی refresh با <code>TOKEN_EXPIRED</code> یا <code>SESSION_REVOKED</code> رد شده. توی پیام‌ها هیچ توکن یا <code>sub</code>ی نمیاد.</p>
+<pre><code>// از صفحه بازی به صفحه شریک
+{ "type": "funlands:relaunch_requested", "request_id": "r_123" }
+
+// از صفحه شریک به صفحه بازی، بعد از گرفتن launch تازه از سرور خودتون
+{ "type": "partner:relaunch_ready", "request_id": "r_123" }
+
+// از صفحه handoff، اگه ورود یا bootstrap رد بشه
+{ "type": "funlands:launch_failed", "code": "TOKEN_EXPIRED", "request_id": "req_01J..." }</code></pre>
+<ul>
+  <li>پیام رو فقط با <code>targetOrigin</code> دقیق Origin بازی (<code>FUNLANDS_GAME_ORIGIN</code>) همون محیط بفرستید. موقع دریافت، <code>event.origin</code> رو با همین مقدار و <code>event.source</code> رو با پنجره iframe بسنجید، و برای <code>partner:relaunch_ready</code> همون <code>request_id</code> پیام درخواست رو برگردونید.</li>
+  <li><code>request_id</code> توی <code>funlands:launch_failed</code> شناسه درخواست launch در فان‌لندزه (همون <code>X-Correlation-Id</code>)، نه شناسه درخواست relaunch. اون رو لاگ کنید و موقع تماس با ما بفرستید. اگه launch از Originی بیاد که ثبت نشده، صفحه handoff ساخته نمیشه، پیامی هم نمیاد و iframe فقط بدنه خطای JSON رو نشون میده.</li>
+  <li>بعد از <code>partner:relaunch_ready</code>، فرم ورود رو با توکن و verifier تازه دوباره داخل iframe ارسال کنید.</li>
+  <li>اگه سرور شما در دسترس نیست، یک پیام قابل فهم با دکمه تلاش دوباره نشون بدید.</li>
+</ul>
+
+<h2>۵. اپ‌های بومی (Android، iOS و TV)</h2>
+<p>مسیر ورود اپ بومی هنوز نهایی نشده و فعلا فقط ورود وب رو باز می‌کنیم. WebView معمولا Origin قابل اعتماد نمی‌فرسته، پس صرفا برداشتن چک Origin و گذاشتن محدودیت نرخ مجوز ورود نیست. تا وقتی مسیر زیر تصویب و پیاده‌سازی نشده، هیچ مسیر بدون Origin باز نمی‌کنیم. چیزی که برای این مسیر لازم میشه:</p>
+<ul>
+  <li>سرور شما ورود رو به‌صورت سرور به سرور برای ما می‌فرسته، با احراز هویت کلاینت یا امضای جدا و یک <code>nonce</code>.</li>
+  <li>ما یک کد handoff کوتاه‌عمر برمی‌گردونیم که به همون دستگاه یا نمونه WebView و به <code>nonce</code> گره خورده.</li>
+  <li>اپ فقط همون کد رو توی WebView باز می‌کنه و ما یک بار مصرفش می‌کنیم. توکن کاربر شما نباید به اپ داده بشه که اپ با اون APIهای مختلف رو صدا بزنه.</li>
+  <li>روش اثبات اپ، روش گره زدن به دستگاه و رفتار در قطع شبکه برای Android، iOS و TV هر کدوم جدا بررسی و تایید میشن. User-Agent، IP یا نبودن Origin اثبات حساب نمیشن.</li>
+</ul>
+<p>اگه اپ بومی دارید، فهرست اپ‌ها و نسخه‌ها رو توی برگ شریک بنویسید تا این بخش رو با شما نهایی کنیم.</p>
+
+<h2>۶. خروج و حذف حساب</h2>
+<h3>۶.۱ خروج از سمت شریک</h3>
+<p>وقتی کاربر از سرویس شما خارج میشه یا نشستش رو باطل می‌کنید، سرور شما یک توکن خروج امضاشده می‌فرسته:</p>
+<pre><code>POST /partner/v1/backchannel-logout
+Content-Type: application/x-www-form-urlencoded
+
+logout_token=&lt;signed-partner-logout-jwt&gt;</code></pre>
+<pre><code>{ "alg": "ES256", "typ": "logout+jwt", "kid": "partner-a-sandbox-2026-11" }
+
+{
+  "iss": "https://auth.sandbox.partner.example",
+  "aud": "https://sandbox.funlands.example/partner-logout",
+  "sub": "pw_7f3c9a1e",
+  "sid": "partner_session_123",
+  "iat": 1793444400,
+  "exp": 1793444520,
+  "jti": "9b0f6a52-6a1e-4f0e-8f63-1d2b7c4e5a10",
+  "events": { "http://schemas.openid.net/event/backchannel-logout": {} }
+}</code></pre>
+<ul>
+  <li><code>typ</code> باید <code>logout+jwt</code> باشه و <code>aud</code> audience مخصوص خروج. توکن launch رو برای خروج نفرستید و برعکس، چون رد میشه.</li>
+  <li><code>exp</code> اجباریه و <code>exp - iat</code> حداکثر ۱۲۰ ثانیه‌ست. <code>nonce</code> نباید باشه.</li>
+  <li><code>sid</code> اجباریه. خروج همه نشست‌های یک <code>sub</code> بدون <code>sid</code> فقط با توافق جدا فعال میشه.</li>
+  <li>پاسخ <code>200</code> یعنی دستور ثبت و اجرا شده یا قبلا اجرا شده بوده. ارسال دوباره همون <code>jti</code> هم <code>200</code> می‌گیره. پس اگه جواب نگرفتید با خیال راحت تکرار کنید.</li>
+</ul>
+<p>اثر خروج فوریه: نشست و کل خانواده refresh باطل میشن، اتصال‌های WebSocket بسته میشن و APIهای حساس وضعیت نشست رو در هر درخواست چک می‌کنن. پس لازم نیست منتظر تموم شدن access token پونزده‌دقیقه‌ای بمونید. بعد از پاسخ <code>200</code>، صفحه بازی روی access token و refresh همون نشست <code>401 TOKEN_EXPIRED</code> می‌گیره، چون نشست حذف شده؛ بخش ۴.۷ رو ببینید.</p>
+
+<h3>۶.۲ حذف حساب</h3>
+<p>حذف حساب دو وضعیت جدا داره: «درخواست دریافت شد» و «حذف کامل شد». این دو رو یکی حساب نکنید.</p>
+<ol>
+  <li>شما درخواست حذف رو با یک <code>request_id</code> پایدار، <code>sub</code> و زمان درخواست می‌فرستید. ارسال دوباره همون <code>request_id</code> اثر دوم نداره.</li>
+  <li>ما درخواست رو ماندگار ثبت می‌کنیم، همه نشست‌های اون بازیکن رو می‌بندیم و پردازش رو شروع می‌کنیم. جواب در این مرحله فقط یعنی «دریافت شد».</li>
+  <li>ارتباط هویت و داده شخصی طبق قرارداد داده حذف یا ناشناس میشه. فقط یک رکورد حداقلی برای جلوگیری از تکرار و تایید نگه می‌داریم. آمارهای تجمیعی که واقعا شخصی نیستن طبق توافق می‌مونن.</li>
+  <li>فقط بعد از کامل شدن حذف، رویداد <code>player.deleted</code> رو براتون می‌فرستیم. این رویداد مدرک کامل شدنه.</li>
+</ol>
+<p>نشانی دقیق این درخواست و مهلت کامل شدن حذف هنوز نهایی نیست (بخش ۱۲). تا اون موقع اگه کاربری حسابش رو حذف کرد، دست‌کم توکن خروج رو بفرستید تا نشست‌هاش بسته بشن.</p>
+
+<h2>۷. رویدادها و وب‌هوک</h2>
+<h3>۷.۱ فهرست رویدادها</h3>
+<p>هر رویداد این فیلدها رو داره: <code>event_id</code> ثابت، <code>schema_version</code>، <code>subject</code>، <code>player_seq</code> که برای هر بازیکن یکی‌یکی زیاد میشه، و <code>occurred_at</code> به وقت UTC با دقت ثانیه. نوع هر رویداد یک URI به شکل <code>https://api.funlands.ir/events/&lt;type&gt;</code> هست که توی هر دو محیط یکسانه. فهرست دقیق فیلدهای هر نوع توی schema نسخه ۱ میاد.</p>
+<table>
+<tr><th style="width:24%">رویداد</th><th style="width:36%">کِی</th><th>فیلدهای اصلی</th></tr>
+<tr><td><code>player.created</code></td><td>اولین ورود یک <code>sub</code></td><td><code>locale</code>، <code>age_band</code></td></tr>
+<tr><td><code>session.started</code></td><td>هر ورود موفق</td><td><code>game_id</code>، <code>platform</code></td></tr>
+<tr><td><code>session.ended</code></td><td>پایان نشست؛ فعلا وقتی نشست با خروج back-channel شما بسته بشه</td><td><code>duration_ms</code>، <code>games_played</code></td></tr>
+<tr><td><code>game.started</code></td><td>شروع یک دور یا مرحله</td><td><code>game_id</code>، <code>level</code> در صورت توافق</td></tr>
+<tr><td><code>game.completed</code></td><td>پایان معتبر که سرور تاییدش کرده (امتیازی که دور رو می‌بنده)، نه صرفا بسته شدن کلاینت</td><td><code>game_id</code>، <code>game_version</code>، <code>score</code>، <code>duration_ms</code>، <code>result</code></td></tr>
+<tr><td><code>achievement.unlocked</code></td><td>باز شدن یک دستاورد</td><td><code>achievement</code></td></tr>
+<tr><td><code>player.suspended</code></td><td>تعلیق بازیکن توسط فان‌لندز</td><td><code>reason_code</code></td></tr>
+<tr><td><code>player.deleted</code></td><td>بعد از کامل شدن حذف</td><td><code>request_id</code></td></tr>
+</table>
+<p>اگه محاسبه عددی بعدا اصلاح بشه، رویداد اصلاحی جدا می‌فرستیم و عدد تاریخی رو بی‌صدا عوض نمی‌کنیم.</p>
+<p>فعلا این‌ها فرستاده میشن: <code>player.created</code>، <code>session.started</code>، <code>session.ended</code>، <code>game.completed</code> و <code>player.deleted</code>. <code>game.started</code>، <code>achievement.unlocked</code>، <code>player.suspended</code> و رویداد اصلاحی هنوز فرستاده نمیشن و وقتی بیان همین قالب رو دارن. این فیلدها فعلا همیشه <code>null</code> هستن: <code>games_played</code>، <code>game_version</code> و <code>duration_ms</code> در <code>game.completed</code>، و <code>request_id</code>. کد شما باید <code>null</code> رو قبول کنه.</p>
+
+<h3>۷.۲ شکل درخواست وب‌هوک</h3>
+<p>هر تلاش ارسال یک SET تازه طبق RFC 8417 هست که با کلید فان‌لندز امضا شده. <code>jti</code> و <code>iat</code> در هر تلاش عوض میشن ولی <code>event_id</code> داخل رویداد ثابت می‌مونه.</p>
+<pre><code>POST /funlands/events          (نشانی وب‌هوک ثبت‌شده شما)
+Content-Type: application/secevent+jwt
+
+&lt;newly-signed-SET-for-this-attempt&gt;</code></pre>
+<pre><code>{ "alg": "ES256", "typ": "secevent+jwt", "kid": "funlands-sandbox-2026-11" }
+
+{
+  "iss": "https://sandbox-api.funlands.ir",
+  "aud": "https://auth.sandbox.partner.example",
+  "iat": 1793440860,
+  "jti": "dlv_0193a0e2c4d57e6f8a90b1c2d3e4f5a6",
+  "events": {
+    "https://api.funlands.ir/events/game.completed": {
+      "event_id": "evt_0193a0e1b2c37d4e8f50a1b2c3d4e5f6",
+      "schema_version": 1,
+      "subject": { "format": "iss_sub", "iss": "https://auth.sandbox.partner.example", "sub": "pw_7f3c9a1e" },
+      "player_seq": 42,
+      "occurred_at": "2026-10-31T10:00:00Z",
+      "game_id": "star-runner", "game_version": null, "score": 1250, "duration_ms": null, "result": "win"
+    }
+  }
+}</code></pre>
+<p><code>iss</code> همون issuer فان‌لندز توی همین محیطه و <code>aud</code> همیشه issuer خود شماست. SET فیلد <code>exp</code> نداره.</p>
+
+<h3>۷.۳ چک کردن امضا در سمت شریک</h3>
+<ol>
+  <li>بدنه با نوع <code>application/secevent+jwt</code> رو به‌صورت متن و با سقف حجم بخونید.</li>
+  <li><code>typ</code> باید <code>secevent+jwt</code> باشه، الگوریتم فقط <code>ES256</code> و <code>kid</code> غیرخالی. توکنی که <code>jku</code>، <code>x5u</code> یا <code>jwk</code> داره رو رد کنید. denylist خودتون رو هم چک کنید.</li>
+  <li>کلید رو فقط از نشانی JWKS فان‌لندز که توی برگ شریک گرفتید بخونید.</li>
+  <li>امضا، <code>iss</code> (issuer فان‌لندز همین محیط) و <code>aud</code> (issuer خود شما) رو با مقدارهای برگ شریک بسنجید، نه با چیزی که داخل درخواست اومده. <code>iat</code> حداکثر ۵ دقیقه قدیمی و حداکثر ۳۰ ثانیه آینده باشه.</li>
+  <li>تکراری بودن رو با <code>event_id</code> بسنجید، نه با <code>jti</code>. رویداد تکراری هم باید جواب موفق بگیره.</li>
+  <li>رویداد و رکورد پردازشش رو توی یک تراکنش ماندگار ذخیره کنید و بعد <code>202</code> بدید. پردازش رو بعدا انجام بدید. جواب رو حداکثر توی ۵ ثانیه بدید.</li>
+  <li>ترتیب رسیدن تضمینی نیست، حتی برای یک بازیکن. آخرین <code>player_seq</code> هر بازیکن رو نگه دارید، فاصله رو علامت بزنید و از feed بازیابی پرش کنید.</li>
+</ol>
+<pre><code>const { payload } = await jwtVerify(body, funlandsJwks, {
+  algorithms: ['ES256'], typ: 'secevent+jwt',
+  issuer: FUNLANDS_SET_ISSUER, audience: OUR_AUDIENCE,
+  requiredClaims: ['iss', 'aud', 'iat', 'jti', 'events'],
+  clockTolerance: 30,
+});
+// then: check iat age (max 5 min), reject jku/x5u/jwk headers, dedupe on event_id</code></pre>
+<p>نسخه کامل این گیرنده با NestJS توی بخش ۱۰.۴ هست.</p>
+
+<h3>۷.۴ پاسخ شما و رفتار ما</h3>
+<table>
+<tr><th style="width:18%">پاسخ</th><th style="width:34%">معنی</th><th>کار ما</th></tr>
+<tr><td><code>200</code> یا <code>202</code></td><td>ماندگار و idempotent ذخیره شد، از جمله رویداد تکراری</td><td>تحویل‌شده ثبت میشه. کد دیگه، حتی <code>204</code>، موفق حساب نمیشه.</td></tr>
+<tr><td><code>400</code></td><td>خطای دائمی schema</td><td>همون لحظه به dead letter میره و تکرار نمیشه؛ هشدار به هر دو طرف. بعد از رفع، replay میشه.</td></tr>
+<tr><td><code>401</code> یا <code>403</code></td><td>مشکل امضا یا مجوز</td><td>هشدار و توقف کنترل‌شده ارسال به محیط شما. رویدادها توی صف می‌مونن. وقتی رفع مشکل رو به ما خبر دادید، ارسال رو از سر می‌گیریم: رویدادهای مونده دوباره فرستاده میشن و پنجره ۷۲ ساعته از نو شروع میشه.</td></tr>
+<tr><td><code>429</code></td><td>محدودیت نرخ</td><td>تلاش دوباره با رعایت <code>Retry-After</code></td></tr>
+<tr><td><code>5xx</code>، timeout (بیشتر از ۵ ثانیه)، خطای شبکه، redirect یا هر کد دیگه</td><td>خطای گذرا</td><td>تلاش دوباره با backoff. redirect دنبال نمیشه.</td></tr>
+</table>
+<p>جواب موفقی که فقط توی حافظه یا یک صف غیرماندگار ثبت شده قابل قبول نیست. اگه بعدش رویداد گم بشه، از نظر قرارداد مشکل سمت گیرنده‌ست.</p>
+
+<h3>۷.۵ تلاش دوباره و dead letter</h3>
+<ul>
+  <li>فاصله تلاش‌ها بعد از تلاش اول: ۱ دقیقه، ۵ دقیقه، ۳۰ دقیقه، ۲ ساعت، ۶ ساعت و ۲۴ ساعت، هر کدوم با حداکثر ۱۰٪ jitter و دست‌کم به اندازه <code>Retry-After</code>. بعدش هر ۲۴ ساعت یک بار تا ۷۲ ساعت از اولین تلاش؛ آخرین تلاش درست سر ۷۲ ساعته.</li>
+  <li>بعد از هر خطای گذرا، بقیه رویدادهای محیط شما هم حدود یک دقیقه صبر می‌کنن.</li>
+  <li>توقف (401/403) و dead letter برای تیم عملیات ما هشدار می‌سازن و ما با مخاطب عملیات شما تماس می‌گیریم.</li>
+  <li>اگه رویدادی تا ۷۲ ساعت تحویل نشه، به dead letter میره. ارسال دوباره توسط تیم ما ثبت و حسابرسی میشه، همون <code>event_id</code> اصلی رو نگه می‌داره و پنجره ۷۲ ساعته تازه می‌گیره.</li>
+  <li>خرابی گیرنده شما بازی یا شریک دیگه رو متوقف نمی‌کنه.</li>
+</ul>
+
+<h3>۷.۶ API بازیابی رویداد</h3>
+<pre><code>GET /partner/v1/events?cursor=opaque_cursor&amp;limit=100
+Authorization: Bearer &lt;partner-api-access-token&gt;
+
+{ "items": [{ "event_id": "evt_0193a0e1b2c37d4e8f50a1b2c3d4e5f6",
+              "type": "https://api.funlands.ir/events/game.completed",
+              "schema_version": 1,
+              "subject": { "format": "iss_sub", "iss": "https://auth.sandbox.partner.example", "sub": "pw_7f3c9a1e" },
+              "player_seq": 42, "occurred_at": "2026-10-31T10:00:00Z",
+              "game_id": "star-runner", "game_version": null, "score": 1250, "duration_ms": null, "result": "win" }],
+  "next_cursor": "opaque_next", "has_more": false,
+  "generated_at": "2026-10-31T10:01:00Z" }</code></pre>
+<ul>
+  <li>فقط رویدادهای خود شما برمی‌گرده. توکنش از مسیر بخش ۸ گرفته میشه و scope <code>events:read</code> لازم داره.</li>
+  <li>هر آیتم همون فیلدهای رویداد داخل SET رو داره، به‌اضافه <code>type</code> (همون URI). بار اول بدون <code>cursor</code> صدا بزنید تا از قدیمی‌ترین رویداد شروع بشه.</li>
+  <li><code>cursor</code> رو تفسیر نکنید و به زمان یا شناسه تبدیلش نکنید. فقط آخرین <code>next_cursor</code> رو نگه دارید و دوباره بفرستید؛ این مقدار وقتی <code>has_more</code> برابر <code>false</code> هم هست برمی‌گرده (صفحه خالی همون cursor ارسالی رو برمی‌گردونه).</li>
+  <li><code>limit</code> پیش‌فرض ۵۰ و حداکثر ۲۰۰ هست. cursor یا limit نامعتبر <code>400 PARTNER_REPORT_INVALID</code> می‌گیره.</li>
+  <li>ترتیب feed نسبت به commit امنه: هر رویداد وقتی توی feed دیده میشه که همه تراکنش‌هایی که می‌تونستن رویدادی قبل از اون بذارن تموم شده باشن (معمولا کمتر از یک ثانیه). پس رویدادی که دیرتر commit شده هیچ‌وقت پشت cursor شما جا نمی‌افته.</li>
+  <li>مدت نگهداری feed دست‌کم ۷۲ ساعت به‌اضافه زمان قطعی توافق‌شده‌ست. عدد نهایی توی قرارداد داده میاد.</li>
+</ul>
+
+<h2>۸. API گزارش</h2>
+<h3>۸.۱ گرفتن توکن</h3>
+<p>توکن گزارش با <code>client_credentials</code> و روش <code>private_key_jwt</code> گرفته میشه. این کار فقط از سرور شما انجام میشه. توکن نباید به مرورگر یا اپ برسه یا لاگ بشه.</p>
+<pre><code>POST /oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&amp;scope=reports:read
+&amp;client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+&amp;client_assertion=&lt;signed-client-assertion&gt;</code></pre>
+<pre><code>{ "alg": "ES256", "typ": "JWT", "kid": "partner-a-sandbox-2026-11" }
+
+{
+  "iss": "&lt;client_id&gt;", "sub": "&lt;client_id&gt;",
+  "aud": "https://sandbox.funlands.example/oauth/token",
+  "iat": 1793440800, "exp": 1793440860,
+  "jti": "assert_01J..."
+}
+
+200 OK
+Cache-Control: no-store
+{ "access_token": "&lt;partner-api-jwt&gt;", "token_type": "Bearer",
+  "expires_in": 900, "scope": "reports:read" }</code></pre>
+<ul>
+  <li><code>iss</code> و <code>sub</code> هر دو برابر <code>client_id</code>، <code>aud</code> دقیقا نشانی token endpoint همون محیط، عمر حداکثر ۶۰ ثانیه و <code>jti</code> یک‌بارمصرف.</li>
+  <li>توکن launch یا logout رو به‌جای assertion نفرستید. رد میشه.</li>
+  <li>توکن گزارش ۱۵ دقیقه عمر داره و refresh نداره. وقتی تموم شد یک assertion تازه بسازید و توکن جدید بگیرید.</li>
+  <li>توکن گزارش یک JWT با هدر <code>typ</code> برابر <code>at+jwt</code> و <code>aud</code> برابر <code>partner-api</code> هست که فان‌لندز امضاش می‌کنه. فقط با <code>Authorization: Bearer</code> بفرستیدش و به محتواش تکیه نکنید.</li>
+  <li>اگه از سقف نرخ توکن برای <code>client_id</code> خودتون رد بشید، جواب <code>429</code> با <code>"error": "temporarily_unavailable"</code> و هدر <code>Retry-After</code> هست. مشکل گذرا سمت ما هم <code>503</code> با همین <code>error</code> و <code>Retry-After</code> میده.</li>
+  <li><code>partner_id</code> فقط از همین توکن خونده میشه. هیچ پارامتری توی URL یا بدنه نمی‌تونه شریک رو عوض کنه.</li>
+</ul>
+
+<h3>۸.۲ مسیرها</h3>
+<table>
+<tr><th style="width:40%">مسیر</th><th style="width:16%">scope</th><th>محتوا</th></tr>
+<tr><td><code>GET /partner/v1/metrics/summary</code></td><td><code>reports:read</code></td><td>بازه، منطقه زمانی، DAU و MAU، شروع و تکمیل بازی، زمان بازی</td></tr>
+<tr><td><code>GET /partner/v1/metrics/daily</code></td><td><code>reports:read</code></td><td>ردیف روزانه با تاریخ محلی شما و بازه UTC متناظرش</td></tr>
+<tr><td><code>GET /partner/v1/games</code></td><td><code>reports:read</code></td><td>شاخص‌ها به تفکیک <code>game_id</code>. فیلد <code>game_version</code> فعلا همیشه <code>null</code> هست.</td></tr>
+<tr><td><code>GET /partner/v1/players/{external_sub}</code></td><td><code>players:read</code></td><td>حداقل پروفایل و آمار تجمیعی یک بازیکن خودتون در همین محیط. هر جستجو حسابرسی میشه. <code>age_band</code> فعلا همیشه <code>null</code> هست.</td></tr>
+<tr><td><code>GET /partner/v1/players/{external_sub}/activity</code></td><td><code>players:read</code></td><td>فعالیت بازیکن با صفحه‌بندی cursor و فیلتر بازه (<code>limit</code> پیش‌فرض ۵۰، حداکثر ۲۰۰). <code>result</code> رویدادهای <code>game.completed</code> فعلا همیشه <code>null</code> هست.</td></tr>
+<tr><td><code>GET /partner/v1/events</code></td><td><code>events:read</code></td><td>feed بازیابی رویداد (بخش ۷.۶)</td></tr>
+</table>
+<p>خروجی فایل با <code>POST /partner/v1/exports</code> در مرحله بعد اضافه میشه.</p>
+<ul>
+  <li><code>sub</code> ناشناخته، <code>sub</code> شریک دیگه و <code>sub</code>ی که فقط توی محیط دیگه شما بازی کرده همه یک جواب یکسان می‌گیرن: <code>404 PARTNER_PLAYER_NOT_FOUND</code>.</li>
+  <li><code>from</code>/<code>to</code> با قالب <code>YYYY-MM-DD</code> و تاریخ محلی، هر دو سر شامل، حداکثر ۳۶۶ روز. پارامتر نامعتبر، cursor دستکاری‌شده یا <code>limit</code> بیرون از ۱ تا ۲۰۰ جواب <code>400 PARTNER_REPORT_INVALID</code> می‌گیره.</li>
+  <li>گزارش‌ها فقط بازیکن‌های همون محیطی رو می‌شمرن که توکن براش صادر شده.</li>
+</ul>
+
+<h3>۸.۳ تعریف شاخص‌ها</h3>
+<p>این تعریف‌ها توی پنل و API یکی هستن. هیچ‌کدوم مبنای صورتحساب نیست، مگر اینکه جدا تعریف و امضا بشه.</p>
+<table>
+<tr><th style="width:22%">شاخص</th><th>تعریف</th></tr>
+<tr><td>DAU</td><td>تعداد <code>external_sub</code> یکتا که در یک روز، به منطقه زمانی شما، دست‌کم یک <code>game.started</code> معتبر داشتن</td></tr>
+<tr><td>MAU</td><td>همون شمارش برای ماه تقویمی‌ای که <code>to</code> توش هست، محدود به بازه درخواست: از دیرترین <code>from</code> و روز اول اون ماه تا آخر روز <code>to</code></td></tr>
+<tr><td>نرخ تکمیل</td><td>تعداد <code>game.completed</code> معتبر تقسیم بر <code>game.started</code> معتبر در همون cohort شروع</td></tr>
+<tr><td>ماندگاری روز N</td><td>سهم کاربرهای cohort اولین بازی که روز N دوباره <code>game.started</code> داشتن</td></tr>
+<tr><td>زمان بازی</td><td>از بازه‌های معتبر نشست و بازی، با سقف و حذف تکرار. جمع کور مدت‌هایی که کلاینت فرستاده نیست. زمانی که دستگاه گزارش می‌کنه فقط telemetry حساب میشه.</td></tr>
+</table>
+<p>هر پاسخ گزارش این سه فیلد رو داره:</p>
+<pre><code>{
+  "range": { "from": "2026-10-01", "to": "2026-10-31", "timezone": "Asia/Tehran" },
+  "metrics": { "...": "..." },
+  "generated_at": "2026-11-01T03:10:00Z",
+  "data_lag_seconds": 2100,
+  "metric_definition_version": 1
+}</code></pre>
+<p><code>generated_at</code> زمان ساخت پاسخه، <code>data_lag_seconds</code> نشون میده داده چقدر عقب‌تر از زمان واقعیه، و <code>metric_definition_version</code> نسخه تعریف‌های بالاست (عدد صحیح). اگه تعریفی عوض بشه نسخه بالا میره. <code>data_lag_seconds</code> فعلا حدود ۲۱۰۰ ثانیه‌ست، چون یک نشست بازی باز حداکثر ۳۰ دقیقه بعد بسته میشه و بستنش تا ۵ دقیقه دیگه طول می‌کشه. بازی‌های نیمه‌کاره و رویدادهای دیررس قاعده اصلاح مشخص دارن که توی قرارداد داده میاد. شکل کامل هر پاسخ توی OpenAPI هست.</p>
+
+<h2>۹. خطاها</h2>
+<p>همه خطاها این شکل رو دارن. تصمیم کلاینت فقط بر اساس <code>code</code> باشه. <code>message</code> متن فارسی برای نمایش به کاربره و ممکنه عوض بشه. شناسه درخواست توی هدر پاسخ <code>X-Correlation-Id</code> میاد و توی خطاهای endpointهای شریک (<code>/v1/partner/*</code>، <code>/v1/session/bootstrap</code> و <code>/partner/v1/*</code>) همون مقدار توی بدنه با نام <code>correlation_id</code> هم هست؛ وقتی با ما تماس می‌گیرید اون رو بفرستید. <code>retry_after_seconds</code> فقط توی خطاهای گذرا میاد و همون مقدار توی هدر <code>Retry-After</code> هم هست. جزئیات امضا، وجود یا نبود کاربر و داده شریک دیگه توی خطا نمیاد.</p>
+<pre><code>X-Correlation-Id: req_01J...
+
+{ "state": false,
+  "code": "TOKEN_EXPIRED",
+  "message": "زمان اعتبار توکن گذشته است",
+  "correlation_id": "req_01J..." }</code></pre>
+<table>
+<tr><th style="width:27%">کد</th><th style="width:7%">HTTP</th><th style="width:33%">معنی</th><th>کار شریک</th></tr>
+<tr><td><code>ORIGIN_NOT_ALLOWED</code></td><td>403</td><td>Origin صفحه ثبت نشده، خالیه یا <code>null</code></td><td>Origin دقیق رو ثبت و تست کنید</td></tr>
+<tr><td><code>PARTNER_UNKNOWN</code></td><td>401</td><td><code>iss</code> با هیچ شریکی در این محیط نمی‌خونه</td><td>issuer و محیط رو چک کنید</td></tr>
+<tr><td><code>PARTNER_SUSPENDED</code></td><td>403</td><td>شریک یا این محیط غیرفعاله</td><td>با پشتیبانی هماهنگ کنید، تلاش خودکار نکنید</td></tr>
+<tr><td><code>TOKEN_TYPE_INVALID</code></td><td>401</td><td><code>typ</code> اشتباه یا نبودنش، یا وجود <code>jku</code>/<code>x5u</code>/<code>jwk</code> در هدر</td><td>هدر رو طبق همین راهنما بسازید</td></tr>
+<tr><td><code>ALG_NOT_ALLOWED</code></td><td>401</td><td>الگوریتم با مقدار ثبت‌شده یکی نیست</td><td>تنظیم امضا رو درست کنید</td></tr>
+<tr><td><code>KEY_NOT_FOUND</code></td><td>401</td><td><code>kid</code> حتی بعد از خوندن دوباره JWKS پیدا نشد یا ابطال شده</td><td>کلید رو قبل از استفاده منتشر کنید</td></tr>
+<tr><td><code>SIGNATURE_INVALID</code></td><td>401</td><td>امضا تایید نشد</td><td>کلید و محیط رو چک کنید</td></tr>
+<tr><td><code>AUDIENCE_MISMATCH</code></td><td>401</td><td><code>aud</code> اشتباهه، مثلا توکن sandbox روی production</td><td>audience همون محیط و همون نوع توکن رو بذارید</td></tr>
+<tr><td><code>TOKEN_EXPIRED</code></td><td>401</td><td><code>exp</code> گذشته، عمر بیشتر از ۱۲۰ ثانیه‌ست یا <code>iat</code> در آینده‌ست</td><td>ساعت سرور رو هماهنگ کنید و توکن تازه بسازید</td></tr>
+<tr><td><code>TOKEN_REPLAYED</code></td><td>401</td><td><code>jti</code> قبلا مصرف شده</td><td>برای هر ورود توکن تازه بسازید</td></tr>
+<tr><td><code>CLAIMS_INVALID</code></td><td>400</td><td>claim ناقص یا نامعتبر، <code>game</code> با فرم نمی‌خونه یا verifier با challenge نمی‌خونه</td><td>ساخت توکن و فرم رو اصلاح کنید</td></tr>
+<tr><td><code>LAUNCH_PAYLOAD_CHANGED</code></td><td>409</td><td>همون <code>jti</code> با محتوای متفاوت</td><td>برای محتوای جدید <code>jti</code> جدید بسازید</td></tr>
+<tr><td><code>PLAYER_SUSPENDED</code></td><td>403</td><td>بازیکن تعلیق شده</td><td>پیام مناسب نشون بدید، تلاش خودکار بی‌پایان نکنید</td></tr>
+<tr><td><code>BOOTSTRAP_INVALID</code></td><td>400</td><td>کد bootstrap اشتباه، مصرف‌شده، منقضی یا verifier نادرست</td><td>از مسیر relaunch ورود تازه بدید</td></tr>
+<tr><td><code>TOKEN_REUSE</code></td><td>401</td><td>refreshی که قبلا چرخیده دوباره استفاده شده و همه نشست‌های بازیکن باطل شدن. refresh ناشناخته یا منقضی <code>TOKEN_EXPIRED</code> می‌گیره.</td><td>ورود تازه</td></tr>
+<tr><td><code>SESSION_REVOKED</code></td><td>401</td><td>نشست با خروج یا غیرفعال شدن شریک یا محیط بسته شده و refresh یا bootstrap قبل از حذف نشست رسیده. بعد از حذف نشست، همون حالت <code>TOKEN_EXPIRED</code> می‌گیره (بخش ۴.۷).</td><td>مثل <code>TOKEN_EXPIRED</code> روی refresh: نشست تموم شده؛ اگه کاربر هنوز پیش شما وارده، ورود تازه</td></tr>
+<tr><td><code>PARTNER_TOKEN_MISMATCH</code></td><td>403</td><td>توکن بازیکن شریک بدون <code>x-partner-api-key</code> همون شریک، یا با کلید شریک دیگه، فرستاده شده</td><td>صفحه بازی کلید <code>client_direct</code> رو روی همه درخواست‌ها و اتصال‌های WebSocket بفرسته؛ تلاش خودکار نکنید</td></tr>
+<tr><td><code>PARTNER_KEY_INVALID</code></td><td>401</td><td><code>x-partner-api-key</code> ناشناخته‌ست یا چرخیده</td><td>کلید فعلی برگ شریک رو بذارید؛ این خطا با refresh درست نمیشه</td></tr>
+<tr><td><code>SCOPE_NOT_ALLOWED</code></td><td>403</td><td>توکن API این scope رو نداره</td><td>scope درست رو درخواست کنید</td></tr>
+<tr><td><code>PARTNER_REPORT_INVALID</code></td><td>400</td><td><code>from</code>، <code>to</code>، <code>cursor</code> یا <code>limit</code> گزارش نامعتبره</td><td>پارامترها رو طبق بخش ۸.۲ درست کنید</td></tr>
+<tr><td><code>PARTNER_PLAYER_NOT_FOUND</code></td><td>404</td><td>این <code>external_sub</code> توی این محیط بازیکن شما نیست</td><td><code>sub</code> و محیط توکن رو چک کنید، تلاش خودکار نکنید</td></tr>
+<tr><td><code>RATE_LIMITED</code></td><td>429</td><td>از محدودیت نرخ رد شدید</td><td>بعد از <code>retry_after_seconds</code> دوباره تلاش کنید</td></tr>
+<tr><td><code>UPSTREAM_UNAVAILABLE</code></td><td>503</td><td>مشکل گذرا سمت ما</td><td>با رعایت <code>Retry-After</code> دوباره تلاش کنید و پیام قابل بازیابی نشون بدید</td></tr>
+</table>
+<p class="small">مسیر <code>/oauth/token</code> طبق استاندارد OAuth خطا میده: <code>invalid_request</code>، <code>invalid_client</code>، <code>unauthorized_client</code>، <code>unsupported_grant_type</code>، <code>invalid_scope</code> یا <code>temporarily_unavailable</code> (برای <code>429</code> و <code>503</code>، همراه هدر <code>Retry-After</code>) در فیلد <code>error</code>، به‌اضافه <code>error_description</code>.</p>
+
+<div class="nest">
+<h2 class="pb">۱۰. نمونه پیاده‌سازی سمت شریک با NestJS</h2>
+<p>این نمونه‌ها کارهای سمت سرور شریک رو با NestJS نشون میدن: انتشار JWKS، امضای توکن launch و صفحه ورود، گرفتن وب‌هوک، گرفتن توکن و صدا زدن API گزارش، و فرستادن توکن خروج. کد برای NestJS نسخه ۱۰ به بالا، Node.js نسخه ۲۰ به بالا و کتابخونه <code>jose</code> نسخه ۵ یا ۶ نوشته شده و با Express کار می‌کنه. همه نشانی‌ها، <code>kid</code>ها و شناسه‌ها نمونه‌ان و هیچ کلید واقعی‌ای اینجا نیست. اسم فایل‌ها و کلاس‌ها پیشنهادیه و می‌تونید با ساختار پروژه خودتون جورش کنید.</p>
+<pre><code>npm install @nestjs/config jose pg
+npm install -D @types/pg</code></pre>
+
+<h3>۱۰.۱ تنظیمات</h3>
+<p>همه مقدارهای هر محیط از متغیرهای محیطی خونده میشن. مقدارهای سمت فان‌لندز رو از برگ شریک بردارید و برای sandbox و production جدا نگه دارید. کلید خصوصی توی این فایل یا توی <code>.env</code> نمیاد. فقط مسیر پوشه‌ای که secret روش mount شده اینجاست.</p>
+<pre><code>// src/funlands/funlands.config.ts
+import { ConfigType, registerAs } from '@nestjs/config';
+
+function required(name: string): string {
+  const value = process.env[name];
+  if (!value) throw new Error(`Missing environment variable ${name}`);
+  return value;
+}
+
+export const funlandsConfig = registerAs('funlands', () =&gt; ({
+  // our own values
+  issuer: required('PARTNER_ISSUER'),                 // https://auth.sandbox.partner.example
+  signingKeyDir: required('PARTNER_SIGNING_KEY_DIR'), // mounted secret dir, one &lt;kid&gt;.pem per key
+  activeKid: required('PARTNER_ACTIVE_KID'),          // partner-a-sandbox-2026-11
+  // values Funlands gives us in the partner sheet
+  funlandsBaseUrl: required('FUNLANDS_BASE_URL'),     // https://sandbox.funlands.example (JWKS, token, reports, logout)
+  funlandsGameOrigin: required('FUNLANDS_GAME_ORIGIN'), // https://play.sandbox.funlands.example (launch form, iframe, postMessage)
+  launchAudience: required('FUNLANDS_LAUNCH_AUD'),    // &lt;base&gt;/partner-launch
+  logoutAudience: required('FUNLANDS_LOGOUT_AUD'),    // &lt;base&gt;/partner-logout
+  tokenEndpoint: required('FUNLANDS_TOKEN_URL'),      // &lt;base&gt;/oauth/token
+  clientId: required('FUNLANDS_CLIENT_ID'),
+  funlandsJwksUrl: required('FUNLANDS_JWKS_URL'),     // &lt;base&gt;/.well-known/jwks.json
+  setIssuer: required('FUNLANDS_SET_ISSUER'),         // https://auth.sandbox.funlands.example
+  setAudience: required('FUNLANDS_SET_AUDIENCE'),     // registered for us, e.g. our issuer
+}));
+
+export type FunlandsConfig = ConfigType&lt;typeof funlandsConfig&gt;;</code></pre>
+
+<h3>۱۰.۲ ساخت کلید و انتشار JWKS</h3>
+<p>این اسکریپت یک جفت کلید ES256 می‌سازه، کلید خصوصی رو به شکل PKCS#8 توی پوشه secret می‌نویسه و بخش عمومی رو چاپ می‌کنه. اگه فایلی با همون <code>kid</code> وجود داشته باشه، کار رو ادامه نمیده. این روش برای sandbox مناسبه. توی production کلید رو داخل KMS یا HSM بسازید و فقط کلید عمومی رو بیرون بیارید.</p>
+<pre><code>// scripts/generate-signing-key.ts
+// usage: ts-node scripts/generate-signing-key.ts &lt;kid&gt; &lt;secret-dir&gt;
+import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { exportJWK, exportPKCS8, generateKeyPair } from 'jose';
+
+async function main(): Promise&lt;void&gt; {
+  const [kid, secretDir] = process.argv.slice(2);
+  if (!kid || !secretDir) throw new Error('usage: generate-signing-key &lt;kid&gt; &lt;secret-dir&gt;');
+
+  const { publicKey, privateKey } = await generateKeyPair('ES256', { extractable: true });
+
+  // flag 'wx' refuses to overwrite: a kid is never reused for a new key
+  const pem = await exportPKCS8(privateKey);
+  await writeFile(join(secretDir, `${kid}.pem`), pem, { mode: 0o600, flag: 'wx' });
+
+  // print only the public part, for review before it goes into the JWKS
+  const { kty, crv, x, y } = await exportJWK(publicKey);
+  console.log(JSON.stringify({ kty, crv, x, y, kid, alg: 'ES256', use: 'sig' }, null, 2));
+}
+
+main().catch((err) =&gt; {
+  console.error(err);
+  process.exit(1);
+});</code></pre>
+<p>سرویس کلید همه فایل‌های پوشه secret رو می‌خونه، چک می‌کنه کلیدها P-256 باشن و فقط بخش عمومی رو منتشر می‌کنه. برای چرخش، فایل K2 رو کنار K1 بذارید تا هر دو منتشر بشن. دست‌کم ۲۴ ساعت بعد <code>PARTNER_ACTIVE_KID</code> رو به K2 عوض کنید و فایل K1 رو دست‌کم ۲۴ ساعت بعد از آخرین امضا بردارید (بخش ۳.۴).</p>
+<pre><code>// src/funlands/signing-key.service.ts
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { createPrivateKey, createPublicKey, KeyObject } from 'node:crypto';
+import { readdir, readFile } from 'node:fs/promises';
+import { basename, join } from 'node:path';
+import { funlandsConfig, FunlandsConfig } from './funlands.config';
+
+export interface PublicJwk {
+  kty: string; crv: string; x: string; y: string;
+  kid: string; alg: 'ES256'; use: 'sig';
+}
+
+@Injectable()
+export class SigningKeyService implements OnModuleInit {
+  private readonly privateKeys = new Map&lt;string, KeyObject&gt;();
+  private publicKeys: PublicJwk[] = [];
+
+  constructor(@Inject(funlandsConfig.KEY) private readonly cfg: FunlandsConfig) {}
+
+  async onModuleInit(): Promise&lt;void&gt; {
+    const files = (await readdir(this.cfg.signingKeyDir)).filter((f) =&gt; f.endsWith('.pem'));
+    for (const file of files) {
+      const kid = basename(file, '.pem');
+      const key = createPrivateKey(await readFile(join(this.cfg.signingKeyDir, file), 'utf8'));
+      const curve = key.asymmetricKeyDetails?.namedCurve;
+      if (key.asymmetricKeyType !== 'ec' || curve !== 'prime256v1') {
+        throw new Error(`Signing key ${kid} is not EC P-256`);
+      }
+      this.privateKeys.set(kid, key);
+    }
+    if (!this.privateKeys.has(this.cfg.activeKid)) {
+      throw new Error(`No key file for active kid ${this.cfg.activeKid}`);
+    }
+    // every key in the directory is published: old and new overlap during rotation
+    this.publicKeys = [...this.privateKeys].map(([kid, key]) =&gt; {
+      const jwk = createPublicKey(key).export({ format: 'jwk' });
+      return { kty: jwk.kty!, crv: jwk.crv!, x: jwk.x!, y: jwk.y!,
+               kid, alg: 'ES256', use: 'sig' };
+    });
+  }
+
+  /** The key every outgoing token is signed with. */
+  active(): { kid: string; key: KeyObject } {
+    return { kid: this.cfg.activeKid, key: this.privateKeys.get(this.cfg.activeKid)! };
+  }
+
+  /** Public fields only. d never leaves this service. */
+  jwks(): { keys: PublicJwk[] } {
+    return { keys: this.publicKeys };
+  }
+}</code></pre>
+<p>کنترلر JWKS فقط خروجی بالا رو با <code>Cache-Control</code> پنج‌دقیقه‌ای برمی‌گردونه. این مسیر باید دقیقا روی همون نشانی‌ای باشه که توی برگ شریک ثبت کردید و ریدایرکت نداشته باشه. اگه برای برنامه <code>setGlobalPrefix</code> گذاشتید، این مسیر رو از پیشوند مستثنا کنید.</p>
+<pre><code>// src/funlands/jwks.controller.ts
+import { Controller, Get, Header } from '@nestjs/common';
+import { SigningKeyService } from './signing-key.service';
+
+@Controller('.well-known')
+export class JwksController {
+  constructor(private readonly keys: SigningKeyService) {}
+
+  // GET https://auth.sandbox.partner.example/.well-known/jwks.json
+  @Get('jwks.json')
+  @Header('Cache-Control', 'public, max-age=300')
+  getJwks() {
+    return this.keys.jwks();
+  }
+}</code></pre>
+
+<h3>۱۰.۳ امضای توکن launch و صفحه ورود</h3>
+<p>برای هر ورود یک verifier تازه ساخته میشه و <code>launch_challenge</code> از روی اون حساب میشه. <code>iat</code> و <code>exp</code> از یک بار خوندن ساعت میان تا فاصله‌شون دقیقا ۱۲۰ ثانیه بمونه. claimهای اختیاری فقط وقتی مقدار دارن توی توکن میان.</p>
+<pre><code>// src/funlands/launch-token.service.ts
+import { Inject, Injectable } from '@nestjs/common';
+import { createHash, randomBytes, randomUUID } from 'node:crypto';
+import { SignJWT } from 'jose';
+import { funlandsConfig, FunlandsConfig } from './funlands.config';
+import { SigningKeyService } from './signing-key.service';
+
+export interface LaunchUser {
+  pairwiseSub: string; // stable pseudonymous id for Funlands only, max 128 chars
+  sessionId: string;   // our session id, sent as sid
+  locale?: string;     // fa-IR
+  ageBand?: string;    // one of the values agreed in the partner sheet
+  nickname?: string;   // max 24 chars
+}
+
+export interface LaunchForm {
+  launchToken: string;
+  bootstrapVerifier: string;
+  game: string;
+}
+
+@Injectable()
+export class LaunchTokenService {
+  constructor(
+    @Inject(funlandsConfig.KEY) private readonly cfg: FunlandsConfig,
+    private readonly keys: SigningKeyService,
+  ) {}
+
+  async create(user: LaunchUser, game: string): Promise&lt;LaunchForm&gt; {
+    const bootstrapVerifier = randomBytes(32).toString('base64url');
+    const launchChallenge = createHash('sha256')
+      .update(bootstrapVerifier, 'ascii')
+      .digest('base64url');
+    const { kid, key } = this.keys.active();
+    const now = Math.floor(Date.now() / 1000);
+
+    const launchToken = await new SignJWT({
+      sid: user.sessionId,
+      game,
+      launch_challenge: launchChallenge,
+      ...(user.locale ? { locale: user.locale } : {}),
+      ...(user.ageBand ? { age_band: user.ageBand } : {}),
+      ...(user.nickname ? { nickname: user.nickname } : {}),
+    })
+      .setProtectedHeader({ alg: 'ES256', typ: 'funlands-launch+jwt', kid })
+      .setIssuer(this.cfg.issuer)
+      .setAudience(this.cfg.launchAudience)
+      .setSubject(user.pairwiseSub)
+      .setIssuedAt(now)
+      .setExpirationTime(now + 120)
+      .setJti(randomUUID())
+      .sign(key);
+
+    return { launchToken, bootstrapVerifier, game };
+  }
+}</code></pre>
+<p>کنترلر صفحه بازی اول چک می‌کنه کاربر وارد شده باشه و این بازی براش مجاز باشه. بعد یک صفحه HTML با <code>no-store</code> و CSP سخت برمی‌گردونه که <code>frame-src</code> و <code>form-action</code> فقط Origin بازی فان‌لندز (<code>FUNLANDS_GAME_ORIGIN</code>) رو مجاز می‌کنه. <code>Referrer-Policy</code> عمدا <code>strict-origin-when-cross-origin</code> هست تا مرورگر Origin واقعی صفحه رو بفرسته (هشدار بخش ۴ رو ببینید). مسیر دوم برای relaunch توکن تازه میده.</p>
+<pre><code>// src/funlands/play.controller.ts
+import {
+  Controller, Get, Header, Inject, NotFoundException, Param, Post, Req, Res, UseGuards,
+} from '@nestjs/common';
+import type { Request, Response } from 'express';
+import { randomBytes } from 'node:crypto';
+import { funlandsConfig, FunlandsConfig } from './funlands.config';
+import { LaunchForm, LaunchTokenService, LaunchUser } from './launch-token.service';
+import { renderPlayPage } from './play-page';
+import { GameAccessService } from '../games/game-access.service';    // your entitlement check
+import { PartnerSessionGuard } from '../auth/partner-session.guard'; // your login guard
+
+interface AuthedRequest extends Request { user: LaunchUser }
+const GAME_ID = /^[a-z0-9-]{1,64}$/;
+
+@Controller('games')
+@UseGuards(PartnerSessionGuard)
+export class PlayController {
+  constructor(
+    @Inject(funlandsConfig.KEY) private readonly cfg: FunlandsConfig,
+    private readonly launches: LaunchTokenService,
+    private readonly access: GameAccessService,
+  ) {}
+
+  @Get(':game/play')
+  async play(
+    @Param('game') game: string,
+    @Req() req: AuthedRequest,
+    @Res() res: Response,
+  ): Promise&lt;void&gt; {
+    await this.assertAllowed(req.user, game);
+    const form = await this.launches.create(req.user, game);
+    const origin = new URL(this.cfg.funlandsGameOrigin).origin; // launch and bootstrap run here, not on the API base
+    const nonce = randomBytes(16).toString('base64');
+
+    res.status(200).set({
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-store',
+      'Referrer-Policy': 'strict-origin-when-cross-origin', // keeps the real Origin on the cross-origin form POST
+      'Content-Security-Policy': [
+        "default-src 'none'", `script-src 'nonce-${nonce}'`, `style-src 'nonce-${nonce}'`,
+        `frame-src ${origin}`, `form-action ${origin}`, "connect-src 'self'",
+        "frame-ancestors 'self'", "base-uri 'none'",
+      ].join('; '),
+    });
+    res.send(renderPlayPage({ form, launchUrl: `${origin}/v1/partner/launch`,
+      gameOrigin: origin, relaunchPath: `/games/${game}/launch`, nonce }));
+  }
+
+  /** Fresh launch for funlands:relaunch_requested. Protect it with your usual CSRF defence. */
+  @Post(':game/launch')
+  @Header('Cache-Control', 'no-store')
+  async relaunch(@Param('game') game: string, @Req() req: AuthedRequest): Promise&lt;LaunchForm&gt; {
+    await this.assertAllowed(req.user, game);
+    return this.launches.create(req.user, game);
+  }
+
+  private async assertAllowed(user: LaunchUser, game: string): Promise&lt;void&gt; {
+    if (!GAME_ID.test(game) || !(await this.access.canPlay(user, game))) {
+      throw new NotFoundException();
+    }
+  }
+}</code></pre>
+<p>خود صفحه یک iframe و یک فرم مخفی داره که بلافاصله <code>launch_token</code>، <code>game</code> و <code>bootstrap_verifier</code> رو با POST داخل iframe می‌فرسته. همه مقدارها escape میشن. اگه صفحه بازی پیام <code>funlands:relaunch_requested</code> بفرسته، فقط وقتی Origin بازی و منبع پیام درست باشن توکن تازه گرفته میشه، جواب <code>partner:relaunch_ready</code> با همون <code>request_id</code> برمی‌گرده و فرم دوباره ارسال میشه. <code>funlands:launch_failed</code> از صفحه handoff فقط لاگ میشه (بخش ۴.۹).</p>
+<pre><code>// src/funlands/play-page.ts
+import { LaunchForm } from './launch-token.service';
+
+const ESCAPES: Record&lt;string, string&gt; = {
+  '&amp;': '&amp;amp;', '&lt;': '&amp;lt;', '&gt;': '&amp;gt;', '"': '&amp;quot;', "'": '&amp;#39;',
+};
+const esc = (value: string): string =&gt; value.replace(/[&amp;&lt;&gt;"']/g, (c) =&gt; ESCAPES[c]);
+
+export interface PlayPageInput {
+  form: LaunchForm;
+  launchUrl: string;    // https://play.sandbox.funlands.example/v1/partner/launch
+  gameOrigin: string;   // https://play.sandbox.funlands.example (FUNLANDS_GAME_ORIGIN)
+  relaunchPath: string; // /games/star-runner/launch
+  nonce: string;
+}
+
+export function renderPlayPage(input: PlayPageInput): string {
+  const { form, launchUrl, gameOrigin, relaunchPath, nonce } = input;
+  return `&lt;!doctype html&gt;
+&lt;html lang="fa" dir="rtl"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Game&lt;/title&gt;
+  &lt;style nonce="${nonce}"&gt;
+    html, body, iframe { margin: 0; width: 100%; height: 100%; border: 0; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;iframe name="game-frame" title="Game" allow="fullscreen"&gt;&lt;/iframe&gt;
+  &lt;form id="launch" method="post" action="${esc(launchUrl)}" target="game-frame"&gt;
+    &lt;input type="hidden" name="launch_token" value="${esc(form.launchToken)}"&gt;
+    &lt;input type="hidden" name="game" value="${esc(form.game)}"&gt;
+    &lt;input type="hidden" name="bootstrap_verifier" value="${esc(form.bootstrapVerifier)}"&gt;
+  &lt;/form&gt;
+  &lt;script nonce="${nonce}"&gt;
+    const GAME_ORIGIN = ${JSON.stringify(gameOrigin)};
+    const RELAUNCH = ${JSON.stringify(relaunchPath)};
+    const form = document.getElementById('launch');
+    const frame = document.querySelector('iframe');
+    form.submit();
+
+    window.addEventListener('message', async (event) =&gt; {
+      if (event.origin !== GAME_ORIGIN || event.source !== frame.contentWindow) return;
+      if (event.data &amp;&amp; event.data.type === 'funlands:launch_failed') {
+        console.warn('Funlands launch failed', event.data.code, event.data.request_id); // request_id = X-Correlation-Id
+        return;
+      }
+      // Sent by the game page itself when it has no session (reload, or TOKEN_EXPIRED / SESSION_REVOKED on refresh).
+      if (!event.data || event.data.type !== 'funlands:relaunch_requested') return;
+      const res = await fetch(RELAUNCH, { method: 'POST', credentials: 'same-origin' });
+      if (!res.ok) return; // show a retry message here
+      const next = await res.json();
+      frame.contentWindow.postMessage(
+        { type: 'partner:relaunch_ready', request_id: event.data.request_id }, GAME_ORIGIN);
+      form.elements.launch_token.value = next.launchToken;
+      form.elements.bootstrap_verifier.value = next.bootstrapVerifier;
+      form.elements.game.value = next.game;
+      form.submit();
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;`;
+}</code></pre>
+
+<h3>۱۰.۴ گرفتن و چک کردن وب‌هوک</h3>
+<p>بدنه وب‌هوک یک JWT خامه، نه JSON. پس توی <code>main.ts</code> یک parser متنی با سقف حجم برای نوع <code>application/secevent+jwt</code> اضافه کنید.</p>
+<pre><code>// src/main.ts
+import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { AppModule } from './app.module';
+
+async function bootstrap(): Promise&lt;void&gt; {
+  const app = await NestFactory.create&lt;NestExpressApplication&gt;(AppModule);
+  // webhook bodies arrive as a raw JWT string, capped in size
+  app.useBodyParser('text', { type: 'application/secevent+jwt', limit: '64kb' });
+  await app.listen(3000);
+}
+
+void bootstrap();</code></pre>
+<p>سرویس چک کردن SET کلید رو فقط از نشانی JWKS فان‌لندز که توی برگ شریک گرفتید می‌خونه و <code>createRemoteJWKSet</code> کش و دوباره خوندن برای <code>kid</code> ناشناخته رو مدیریت می‌کنه. هدرهای ممنوع و <code>kid</code>های ابطال‌شده قبل از چک امضا رد میشن.</p>
+<pre><code>// src/funlands/set-verifier.service.ts
+import {
+  BadRequestException, Inject, Injectable, ServiceUnavailableException, UnauthorizedException,
+} from '@nestjs/common';
+import {
+  createRemoteJWKSet, decodeProtectedHeader, errors, jwtVerify,
+  JWTPayload, ProtectedHeaderParameters,
+} from 'jose';
+import { funlandsConfig, FunlandsConfig } from './funlands.config';
+import { KidDenylist } from './kid-denylist';
+
+export interface FunlandsEvent {
+  type: string;          // https://api.funlands.ir/events/game.completed
+  event_id: string;
+  schema_version: number;
+  subject: { format: 'iss_sub'; iss: string; sub: string };
+  player_seq: number;
+  occurred_at: string;
+  [field: string]: unknown;
+}
+
+const FORBIDDEN_HEADERS = ['jku', 'x5u', 'jwk', 'x5c'];
+
+@Injectable()
+export class SetVerifierService {
+  private readonly jwks: ReturnType&lt;typeof createRemoteJWKSet&gt;;
+
+  constructor(
+    @Inject(funlandsConfig.KEY) private readonly cfg: FunlandsConfig,
+    private readonly denylist: KidDenylist,
+  ) {
+    this.jwks = createRemoteJWKSet(new URL(cfg.funlandsJwksUrl), {
+      timeoutDuration: 3_000,   // JWKS fetch timeout
+      cooldownDuration: 30_000, // unknown kid: at most one refetch every 30 s
+      cacheMaxAge: 600_000,     // never keep Funlands keys longer than 10 min
+    });
+  }</code></pre>
+<p>بعد امضا، <code>typ</code>، <code>iss</code>، <code>aud</code> و سن <code>iat</code> چک میشن. خطای امضا و claim جواب <code>401</code> می‌گیره و ما ارسال رو نگه می‌داریم. timeout خوندن JWKS جواب <code>503</code> می‌گیره تا دوباره تلاش کنیم. رویدادی که شکلش درست نیست <code>400</code> می‌گیره.</p>
+<pre><code>  async verify(token: string): Promise&lt;FunlandsEvent[]&gt; {
+    let header: ProtectedHeaderParameters;
+    try {
+      header = decodeProtectedHeader(token);
+    } catch {
+      throw new UnauthorizedException();
+    }
+    const forbidden = FORBIDDEN_HEADERS.some((h) =&gt; h in header);
+    if (forbidden || !header.kid || this.denylist.has(header.kid)) {
+      throw new UnauthorizedException();
+    }
+
+    let payload: JWTPayload;
+    try {
+      ({ payload } = await jwtVerify(token, this.jwks, {
+        algorithms: ['ES256'],
+        typ: 'secevent+jwt',
+        issuer: this.cfg.setIssuer,
+        audience: this.cfg.setAudience,
+        requiredClaims: ['iat', 'jti', 'events'],
+        maxTokenAge: '5m',  // iat at most 5 min old
+        clockTolerance: 30, // and at most 30 s in the future
+      }));
+    } catch (err) {
+      // JWKS timeout: 503 so Funlands retries. Bad signature or claims: 401.
+      if (err instanceof errors.JWKSTimeout) throw new ServiceUnavailableException();
+      if (err instanceof errors.JOSEError) throw new UnauthorizedException();
+      throw err;
+    }
+
+    const events = payload.events;
+    if (!events || typeof events !== 'object' || Object.keys(events).length === 0) {
+      throw new BadRequestException();
+    }
+    const entries = Object.entries(events as Record&lt;string, Partial&lt;FunlandsEvent&gt;&gt;);
+    return entries.map(([type, body]) =&gt; {
+      if (typeof body?.event_id !== 'string' || typeof body.player_seq !== 'number') {
+        throw new BadRequestException();
+      }
+      return { ...body, type } as FunlandsEvent;
+    });
+  }
+}</code></pre>
+<p>denylist باید جایی باشه که وسط حادثه بشه بدون deploy عوضش کرد. این نمونه برای کوتاهی از متغیر محیطی می‌خونه.</p>
+<pre><code>// src/funlands/kid-denylist.ts
+import { Injectable } from '@nestjs/common';
+
+/** Leaked Funlands kids. In production, load from a store you can change without a deploy. */
+@Injectable()
+export class KidDenylist {
+  private readonly kids = new Set(
+    (process.env.FUNLANDS_KID_DENYLIST ?? '').split(',').filter(Boolean),
+  );
+
+  has(kid: string): boolean {
+    return this.kids.has(kid);
+  }
+}</code></pre>
+<p>تشخیص تکرار روی <code>event_id</code> انجام میشه، با کلید اصلی جدول. رویداد تکراری بی‌صدا نادیده گرفته میشه و باز هم جواب موفق می‌گیره.</p>
+<pre><code>CREATE TABLE funlands_event_inbox (
+  event_id     text PRIMARY KEY,
+  event_type   text        NOT NULL,
+  player_sub   text        NOT NULL,
+  player_seq   bigint      NOT NULL,
+  occurred_at  timestamptz NOT NULL,
+  payload      jsonb       NOT NULL,
+  received_at  timestamptz NOT NULL DEFAULT now(),
+  processed_at timestamptz
+);</code></pre>
+<pre><code>// src/funlands/event-inbox.ts
+import { Inject, Injectable } from '@nestjs/common';
+import { Pool } from 'pg';
+import { FunlandsEvent } from './set-verifier.service';
+
+export const PG_POOL = Symbol('PG_POOL');
+
+export abstract class EventInbox {
+  /** Resolves only after the events are committed. Duplicates are ignored, not rejected. */
+  abstract saveAll(events: FunlandsEvent[]): Promise&lt;void&gt;;
+}
+
+@Injectable()
+export class PgEventInbox extends EventInbox {
+  constructor(@Inject(PG_POOL) private readonly pool: Pool) {
+    super();
+  }
+
+  async saveAll(events: FunlandsEvent[]): Promise&lt;void&gt; {
+    const client = await this.pool.connect();
+    try {
+      await client.query('BEGIN');
+      for (const e of events) {
+        await client.query(
+          `INSERT INTO funlands_event_inbox
+             (event_id, event_type, player_sub, player_seq, occurred_at, payload)
+           VALUES ($1, $2, $3, $4, $5, $6)
+           ON CONFLICT (event_id) DO NOTHING`,
+          [e.event_id, e.type, e.subject.sub, e.player_seq, e.occurred_at, JSON.stringify(e)],
+        );
+      }
+      await client.query('COMMIT');
+    } catch (err) {
+      await client.query('ROLLBACK');
+      throw err;
+    } finally {
+      client.release();
+    }
+  }
+}</code></pre>
+<p>کنترلر فقط وقتی <code>202</code> برمی‌گردونه که رویدادها commit شده باشن. اگه ذخیره شکست بخوره، Nest خودش <code>500</code> برمی‌گردونه و ما دوباره می‌فرستیم. پردازش واقعی رو یک worker جدا از روی همین جدول انجام بده. اونجا آخرین <code>player_seq</code> هر بازیکن رو نگه دارید و اگه فاصله دیدید از feed بازیابی پرش کنید.</p>
+<pre><code>// src/funlands/funlands-webhook.controller.ts
+import { BadRequestException, Body, Controller, Headers, HttpCode, Post } from '@nestjs/common';
+import { EventInbox } from './event-inbox';
+import { SetVerifierService } from './set-verifier.service';
+
+@Controller('funlands')
+export class FunlandsWebhookController {
+  constructor(
+    private readonly verifier: SetVerifierService,
+    private readonly inbox: EventInbox,
+  ) {}
+
+  // POST https://sandbox.partner.example/funlands/events
+  @Post('events')
+  @HttpCode(202)
+  async receive(
+    @Headers('content-type') contentType: string | undefined,
+    @Body() body: unknown,
+  ): Promise&lt;void&gt; {
+    if (!contentType?.startsWith('application/secevent+jwt') || typeof body !== 'string') {
+      throw new BadRequestException();
+    }
+    const events = await this.verifier.verify(body.trim()); // 401, 400 or 503 on failure
+    await this.inbox.saveAll(events); // a DB error becomes 500, so Funlands retries
+    // 202 only after commit; processing happens later in a worker that reads the inbox
+  }
+}</code></pre>
+
+<h3>۱۰.۵ توکن و API گزارش</h3>
+<p>خطاهای فان‌لندز رو با یک کلاس خطا نگه دارید تا <code>code</code> و شناسه درخواست (هدر <code>X-Correlation-Id</code>) همیشه در دسترس باشن. مسیر <code>/oauth/token</code> به‌جای <code>code</code> فیلد <code>error</code> برمی‌گردونه.</p>
+<pre><code>// src/funlands/funlands-api.error.ts
+export class FunlandsApiError extends Error {
+  constructor(
+    readonly status: number,
+    readonly code: string,
+    readonly correlationId?: string,
+    readonly retryAfterSeconds?: number,
+  ) {
+    super(`Funlands ${status} ${code} correlation_id=${correlationId ?? '-'}`);
+  }
+
+  static async from(res: Response): Promise&lt;FunlandsApiError&gt; {
+    const body = (await res.json().catch(() =&gt; ({}))) as {
+      code?: string; error?: string; retry_after_seconds?: number;
+    };
+    const retryAfter = Number(res.headers.get('retry-after') ?? body.retry_after_seconds);
+    // API errors carry code, /oauth/token errors carry the OAuth error field
+    return new FunlandsApiError(res.status, body.code ?? body.error ?? 'UNKNOWN',
+      res.headers.get('x-correlation-id') ?? undefined, Number.isFinite(retryAfter) ? retryAfter : undefined);
+  }
+}</code></pre>
+<p>کلاینت گزارش توکن رو فقط توی حافظه نگه می‌داره و یک دقیقه قبل از تموم شدن عوضش می‌کنه. اگه API جواب <code>401</code> بده، یک بار توکن تازه می‌گیره و دوباره امتحان می‌کنه. اینجا مسیر <code>metrics/daily</code> نمونه‌ست و بقیه مسیرهای بخش ۸.۲ هم همین‌طور صدا زده میشن.</p>
+<pre><code>// src/funlands/funlands-api.client.ts
+import { Inject, Injectable } from '@nestjs/common';
+import { randomUUID } from 'node:crypto';
+import { SignJWT } from 'jose';
+import { FunlandsApiError } from './funlands-api.error';
+import { funlandsConfig, FunlandsConfig } from './funlands.config';
+import { SigningKeyService } from './signing-key.service';
+
+export interface DailyMetricsResponse {
+  range: { from: string; to: string; timezone: string };
+  metrics: Record&lt;string, unknown&gt;; // exact row shape: see the OpenAPI document
+  generated_at: string;
+  data_lag_seconds: number;
+  metric_definition_version: number;
+}
+
+@Injectable()
+export class FunlandsApiClient {
+  private token?: { value: string; expiresAt: number }; // memory only, never logged
+
+  constructor(
+    @Inject(funlandsConfig.KEY) private readonly cfg: FunlandsConfig,
+    private readonly keys: SigningKeyService,
+  ) {}
+
+  async dailyMetrics(from: string, to: string): Promise&lt;DailyMetricsResponse&gt; {
+    const url = new URL('/partner/v1/metrics/daily', this.cfg.funlandsBaseUrl);
+    url.search = new URLSearchParams({ from, to }).toString(); // parameter names: see OpenAPI
+    return this.get&lt;DailyMetricsResponse&gt;(url);
+  }
+
+  private async get&lt;T&gt;(url: URL, retried = false): Promise&lt;T&gt; {
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${await this.accessToken()}`,
+        Accept: 'application/json',
+      },
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (res.status === 401 &amp;&amp; !retried) {
+      this.token = undefined; // token expired or revoked: get a new one once
+      return this.get&lt;T&gt;(url, true);
+    }
+    if (!res.ok) throw await FunlandsApiError.from(res);
+    return (await res.json()) as T;
+  }</code></pre>
+<p>برای گرفتن توکن یک client assertion با عمر ۶۰ ثانیه و <code>jti</code> تازه امضا میشه. <code>iss</code> و <code>sub</code> هر دو <code>client_id</code> هستن و <code>aud</code> دقیقا نشانی token endpoint همون محیطه.</p>
+<pre><code>  private async accessToken(): Promise&lt;string&gt; {
+    if (this.token &amp;&amp; this.token.expiresAt &gt; Date.now() + 60_000) return this.token.value;
+
+    const { kid, key } = this.keys.active();
+    const now = Math.floor(Date.now() / 1000);
+    const assertion = await new SignJWT({})
+      .setProtectedHeader({ alg: 'ES256', typ: 'JWT', kid })
+      .setIssuer(this.cfg.clientId)
+      .setSubject(this.cfg.clientId)
+      .setAudience(this.cfg.tokenEndpoint)
+      .setIssuedAt(now)
+      .setExpirationTime(now + 60)
+      .setJti(randomUUID())
+      .sign(key);
+
+    const res = await fetch(this.cfg.tokenEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        grant_type: 'client_credentials',
+        scope: 'reports:read',
+        client_assertion_type: 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
+        client_assertion: assertion,
+      }),
+      signal: AbortSignal.timeout(5_000),
+    });
+    if (!res.ok) throw await FunlandsApiError.from(res);
+
+    const body = (await res.json()) as { access_token: string; expires_in: number };
+    this.token = { value: body.access_token, expiresAt: Date.now() + body.expires_in * 1000 };
+    return body.access_token;
+  }
+}</code></pre>
+
+<h3>۱۰.۶ فرستادن توکن خروج</h3>
+<p>وقتی کاربر از سرویس شما خارج میشه یا نشستش رو باطل می‌کنید، این سرویس رو صدا بزنید. اگه شبکه قطع شد یا <code>5xx</code> و <code>429</code> گرفتید، همون توکن دوباره فرستاده میشه، چون ارسال دوباره همون <code>jti</code> هم <code>200</code> می‌گیره. اگه بعد از سه بار تایید نگرفتید، خروج رو توی صف خودتون بذارید و بعدا با توکن تازه بفرستید، چون عمر هر توکن خروج ۱۲۰ ثانیه‌ست.</p>
+<pre><code>// src/funlands/funlands-logout.service.ts
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { randomUUID } from 'node:crypto';
+import { setTimeout as sleep } from 'node:timers/promises';
+import { SignJWT } from 'jose';
+import { FunlandsApiError } from './funlands-api.error';
+import { funlandsConfig, FunlandsConfig } from './funlands.config';
+import { SigningKeyService } from './signing-key.service';
+
+const LOGOUT_EVENT = 'http://schemas.openid.net/event/backchannel-logout';
+
+@Injectable()
+export class FunlandsLogoutService {
+  private readonly logger = new Logger(FunlandsLogoutService.name);
+
+  constructor(
+    @Inject(funlandsConfig.KEY) private readonly cfg: FunlandsConfig,
+    private readonly keys: SigningKeyService,
+  ) {}
+
+  /** Call when the user signs out or we revoke the session sent as sid. */
+  async logout(pairwiseSub: string, sessionId: string): Promise&lt;void&gt; {
+    const { kid, key } = this.keys.active();
+    const now = Math.floor(Date.now() / 1000);
+    const logoutToken = await new SignJWT({ sid: sessionId, events: { [LOGOUT_EVENT]: {} } })
+      .setProtectedHeader({ alg: 'ES256', typ: 'logout+jwt', kid })
+      .setIssuer(this.cfg.issuer)
+      .setAudience(this.cfg.logoutAudience)
+      .setSubject(pairwiseSub)
+      .setIssuedAt(now)
+      .setExpirationTime(now + 120) // no nonce claim
+      .setJti(randomUUID())
+      .sign(key);
+
+    const url = new URL('/partner/v1/backchannel-logout', this.cfg.funlandsBaseUrl);
+    for (let attempt = 1; attempt &lt;= 3; attempt++) {
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ logout_token: logoutToken }),
+          signal: AbortSignal.timeout(5_000),
+        });
+        if (res.ok) return; // 200: done now or already done before
+        const error = await FunlandsApiError.from(res);
+        // other 4xx is a configuration problem: do not retry
+        if (res.status &lt; 500 &amp;&amp; res.status !== 429) throw error;
+        this.logger.warn(`logout attempt ${attempt} failed: ${error.message}`);
+      } catch (err) {
+        if (err instanceof FunlandsApiError) throw err;
+        this.logger.warn(`logout attempt ${attempt} failed: network`); // never log the token
+      }
+      if (attempt &lt; 3) await sleep(attempt * 2_000);
+    }
+    throw new Error('Funlands logout not confirmed: queue it and retry later with a fresh token');
+  }
+}</code></pre>
+
+<h3>۱۰.۷ وصل کردن ماژول</h3>
+<p>همه این‌ها توی یک ماژول جمع میشن. <code>GameAccessService</code> و <code>PartnerSessionGuard</code> مال خود شماست و فقط باید بگن کاربر کیه و اجازه این بازی رو داره یا نه.</p>
+<pre><code>// src/funlands/funlands.module.ts
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { Pool } from 'pg';
+import { EventInbox, PG_POOL, PgEventInbox } from './event-inbox';
+import { FunlandsApiClient } from './funlands-api.client';
+import { FunlandsLogoutService } from './funlands-logout.service';
+import { FunlandsWebhookController } from './funlands-webhook.controller';
+import { funlandsConfig } from './funlands.config';
+import { JwksController } from './jwks.controller';
+import { KidDenylist } from './kid-denylist';
+import { LaunchTokenService } from './launch-token.service';
+import { PlayController } from './play.controller';
+import { SetVerifierService } from './set-verifier.service';
+import { SigningKeyService } from './signing-key.service';
+import { GamesModule } from '../games/games.module'; // exports your GameAccessService
+
+@Module({
+  imports: [ConfigModule.forFeature(funlandsConfig), GamesModule],
+  controllers: [JwksController, PlayController, FunlandsWebhookController],
+  providers: [
+    SigningKeyService, LaunchTokenService, SetVerifierService, KidDenylist,
+    FunlandsApiClient, FunlandsLogoutService,
+    {
+      provide: PG_POOL,
+      useFactory: () =&gt; new Pool({ connectionString: process.env.DATABASE_URL }),
+    },
+    { provide: EventInbox, useClass: PgEventInbox },
+  ],
+  exports: [FunlandsLogoutService, FunlandsApiClient],
+})
+export class FunlandsModule {}</code></pre>
+
+</div>
+
+<h2 class="pb">۱۱. چک‌لیست قبل از production</h2>
+<p>همه این موارد باید روی sandbox واقعی، نه روی نمونه‌های این سند، پاس بشن و نتیجه‌شون ثبت بشه.</p>
+<h3>کلید</h3>
+<ul>
+  <li>JWKS فقط کلید عمومی داره، هر کلید <code>kid</code> و <code>alg</code> داره و نشانیش بدون ریدایرکت جواب میده.</li>
+  <li>چرخش کامل تمرین شده: انتشار K2، امضا با K2، قبول K1 و K2 در هم‌پوشانی، و حذف K1.</li>
+  <li>ابطال اضطراری تمرین شده: بعد از اعلام، توکن K1 با <code>exp</code> معتبر رد میشه.</li>
+  <li>توکن با <code>kid</code> ناشناخته، <code>alg=none</code>، <code>HS256</code> یا هدر <code>jku</code> رد میشه.</li>
+  <li>کلید و توکن sandbox روی production قبول نمیشه، و دو شریک با <code>kid</code> یکسان توکن هم رو باز نمی‌کنن.</li>
+</ul>
+<h3>ورود و نشست</h3>
+<ul>
+  <li>ورود معتبر، و ورود دوباره با همون <code>sub</code> که به همون بازیکن می‌رسه.</li>
+  <li>همون <code>sub</code> توی production بعد از بازی در sandbox یک بازیکن جدا می‌سازه و گزارش هر محیط فقط بازیکن همون محیط رو نشون میده.</li>
+  <li>دو ورود هم‌زمان یک بازیکن می‌سازن.</li>
+  <li>توکن منقضی، عمر بیشتر از ۱۲۰ ثانیه، <code>iat</code> آینده، <code>aud</code> اشتباه و نبود <code>typ</code> رد میشن.</li>
+  <li>Origin غایب یا ثبت‌نشده رد میشه.</li>
+  <li>فرم launch، <code>frame-src</code>، <code>form-action</code> و چک <code>postMessage</code> همه با Origin بازی (<code>FUNLANDS_GAME_ORIGIN</code>) همون محیط تنظیم شدن، نه با نشانی پایه API.</li>
+  <li>برای <code>client_direct</code>، صفحه بازی <code>x-partner-api-key</code> رو روی همه درخواست‌ها و اتصال‌های WebSocket می‌فرسته و هیچ سکرت <code>server_to_server</code>ی به مرورگر نمی‌رسه.</li>
+  <li>verifier اشتباه رد میشه، و تکرار ورود بعد از مصرف کد طبق بخش ۴.۸ رفتار می‌کنه.</li>
+  <li>هیچ توکن، کد یا verifierی توی URL یا لاگ‌های شما نیست.</li>
+  <li>relaunch بعد از reload و بعد از قطع موقت سرور شما کار می‌کنه.</li>
+  <li>کاربر با رده سنی ناشناخته محتوای محدودشده نمی‌بینه.</li>
+</ul>
+<h3>خروج</h3>
+<ul>
+  <li>بعد از توکن خروج، نشست و WebSocket فورا بسته میشن و refresh با <code>401 TOKEN_EXPIRED</code> (یا اگه زودتر از حذف نشست برسه، <code>SESSION_REVOKED</code>) رد میشه و صفحه بازی ورود تازه می‌خواد.</li>
+  <li>توکن خروج تکراری <code>200</code> می‌گیره و توکن خروج بدون <code>exp</code> رد میشه.</li>
+</ul>
+<h3>رویداد</h3>
+<ul>
+  <li>گیرنده شما امضا، <code>iss</code>، <code>aud</code> و سن <code>iat</code> رو چک می‌کنه و تکرار رو با <code>event_id</code> تشخیص میده.</li>
+  <li><code>202</code> فقط بعد از ذخیره ماندگار برمی‌گرده.</li>
+  <li>ارسال تکراری با SET تازه و همون <code>event_id</code> فقط یک بار پردازش میشه.</li>
+  <li>رفتار درست در 429 با <code>Retry-After</code>، 5xx، timeout، dead letter و replay.</li>
+  <li>رویداد خارج از ترتیب و فاصله در <code>player_seq</code> با feed بازیابی پر میشه.</li>
+</ul>
+<h3>گزارش و داده</h3>
+<ul>
+  <li>توکن بازی برای API گزارش رد میشه و assertion تکراری رد میشه.</li>
+  <li>با <code>external_sub</code> شریک دیگه هیچ داده‌ای برنمی‌گرده.</li>
+  <li>عددهای پنل و API برای یک بازه یکی هستن.</li>
+  <li>پیام‌های فارسی خطا به‌صورت دستی در حالت RTL مرور شدن.</li>
+</ul>
+<h3>عملیات</h3>
+<ul>
+  <li>کانال حادثه دوطرفه، مخاطب عملیات و مخاطب امنیت ثبت و یک بار امتحان شدن.</li>
+  <li>عددهای کش، اختلاف ساعت و مهلت اعلام حادثه توی برگ عملیاتی دو طرف نوشته شدن.</li>
+</ul>
+
+<h2>۱۲. موارد باز</h2>
+<p>این‌ها هنوز نهایی نیستن. تا وقتی نهایی نشدن، روی هیچ شکل پیشنهادی‌شون پیاده‌سازی نکنید.</p>
+<table>
+<tr><th style="width:26%">موضوع</th><th>وضعیت</th></tr>
+<tr><td>API رویدادهای فنی بازی</td><td>پنل پوسته‌ها به رویدادهایی مثل Load، Run، Start، پایان مرحله و Crash نیاز داره، ولی API دریافتش هنوز تعریف نشده. یک طرح پیشنهادی داریم که هنوز تایید نشده. این عددها فقط telemetry هستن و مبنای امتیاز یا شاخص رسمی نمیشن.</td></tr>
+<tr><td>ورود اپ بومی</td><td>مسیر handoff سرور به سرور، شکل درخواست و روش گره زدن به دستگاه برای Android، iOS و TV هنوز تعریف نشده (بخش ۵).</td></tr>
+<tr><td>حذف حساب</td><td>نشانی درخواست، شکل پیام (مثلا یک SET امضاشده)، مسیر پیگیری وضعیت و مهلت کامل شدن حذف تا امضای سیاست داده باز می‌مونن.</td></tr>
+<tr><td>پروفایل خروج</td><td>الان <code>typ: logout+jwt</code> رو قبول می‌کنیم. اینکه مقدار دیگه‌ای هم پذیرفته بشه، استفاده از پروفایل کامل OIDC Back-Channel Logout و خروج بدون <code>sid</code> هنوز توافق نشده.</td></tr>
+<tr><td>فضای شریک روی درخواست‌های بازی</td><td>الان صفحه بازی شریک‌های <code>client_direct</code> باید <code>x-partner-api-key</code> رو بفرسته (بخش ۴.۷). اینکه فضای شریک از خود توکن بازیکن شریک خونده بشه در حال بررسیه و تصمیمی براش گرفته نشده. برای شریک‌های <code>server_to_server</code> هم که سکرتشون نباید به مرورگر برسه، مسیر صفحه بازی هنوز تعریف نشده.</td></tr>
+<tr><td>عددهای هر شریک</td><td>مجموعه مقدارهای <code>age_band</code>، محدودیت‌های نرخ، مدت نگهداری داده، مسیر ماندگاری و خروجی فایل توی برگ هر شریک نهایی میشن.</td></tr>
+</table>
+<p class="small">برای سوال یا گزارش ناهماهنگی بین این راهنما و رفتار واقعی sandbox، با تیم بک‌اند فان‌لندز تماس بگیرید و <code>correlation_id</code> درخواست رو همراهش بفرستید.</p>
+
+</body>
+</html>

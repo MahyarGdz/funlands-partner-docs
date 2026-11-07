@@ -1,0 +1,26 @@
+{
+  "name": "funlands-sample-partner",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Runnable sample partner and sample game for the Funlands partner integration (local demo only)",
+  "type": "module",
+  "engines": { "node": ">=20.11" },
+  "scripts": {
+    "infra:up": "node scripts/infra.mjs up",
+    "infra:down": "node scripts/infra.mjs down",
+    "setup": "node scripts/setup.mjs",
+    "backend": "node scripts/backend.mjs",
+    "register": "node scripts/register.mjs",
+    "partner": "node partner/server.mjs",
+    "game": "node game/server.mjs",
+    "up": "node scripts/up.mjs",
+    "down": "node scripts/down.mjs",
+    "status": "node scripts/status.mjs",
+    "e2e": "node scripts/e2e.mjs",
+    "e2e:browser": "node scripts/browser-check.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "jose": "^6.1.0"
+  }
+}

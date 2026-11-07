@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Star Runner — Funlands sample game</title>
+<link rel="stylesheet" href="/game.css">
+</head>
+<body>
+<script type="application/json" id="config">__CONFIG__</script>
+<div class="top">
+  <b>Star Runner</b> <span class="muted">Funlands sample game</span>
+  <span id="status" class="pill">starting…</span>
+</div>
+<div id="player" class="muted">Reading the session the launch handoff stored…</div>
+<div class="board">
+  <button id="star" disabled>★</button>
+  <div class="hud"><div>Score <b id="score">0</b></div><div>Time <b id="time">—</b></div></div>
+</div>
+<div class="row">
+  <button id="start" disabled>Start round (game entry)</button>
+  <button id="leaderboard" class="secondary" disabled>Leaderboard</button>
+  <button id="history" class="secondary" disabled>My scores</button>
+  <button id="relaunch" class="secondary" hidden>Ask partner to relaunch</button>
+</div>
+<ol id="log"></ol>
+<script src="/game.js"></script>
+</body>
+</html>
