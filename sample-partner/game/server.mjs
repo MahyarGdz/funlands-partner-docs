@@ -34,9 +34,8 @@ function handle(req, res) {
   if (url.pathname.startsWith("/v1/")) return proxy(req, res);
   const play = /^\/play\/([A-Za-z0-9][A-Za-z0-9._-]{0,127})$/.exec(url.pathname);
   if (req.method === "GET" && play) {
-    // In client_direct mode the game client carries the partner's client-direct API key (x-partner-api-key) with the
-    // player's bearer token. A real deployment would select it per partner; the demo has one partner.
-    const config = { game: decodeURIComponent(play[1]), apiKey: state.partner.apiKey, partnerOrigin: PARTNER_ORIGIN };
+    // The game page holds no partner credentials: the player's access token carries the partner scope.
+    const config = { game: decodeURIComponent(play[1]), partnerOrigin: PARTNER_ORIGIN };
     const html = page("game.html").replace("__CONFIG__", JSON.stringify(config).replace(/</g, "\\u003c"));
     res.writeHead(200, {
       "content-type": "text/html; charset=utf-8",

@@ -158,7 +158,7 @@ await step("6  bootstrap on the game origin (code + verifier, exact Origin) open
   expect(res.status === 200 && typeof res.json?.access_token === "string", `bootstrap ${res.status} ${res.text}`);
   expect(res.headers.get("cache-control")?.includes("no-store"), "bootstrap response must be no-store");
   tokens = res.json;
-  gameHeaders = { authorization: `Bearer ${tokens.access_token}`, "x-partner-api-key": state.partner.apiKey, origin: GAME_ORIGIN };
+  gameHeaders = { authorization: `Bearer ${tokens.access_token}`, origin: GAME_ORIGIN };
   return `token_type ${tokens.token_type}, expires_in ${tokens.expires_in}s, refresh token issued`;
 });
 
@@ -180,14 +180,13 @@ await step("8  game page is served at the handoff's game path on the game origin
   return `200 text/html, ${res.text.length} bytes`;
 });
 
-await step("9  game session works on the API: profile; refused without the partner API key", async () => {
+await step("9  game session works with the bearer token only; a wrong partner key is refused", async () => {
   const profile = await http(`${GAME_ORIGIN}/v1/profile`, { headers: gameHeaders });
   expect(profile.status === 200, `profile ${profile.status} ${profile.text.slice(0, 200)}`);
-  const { "x-partner-api-key": _key, ...noKey } = gameHeaders;
-  const without = await http(`${GAME_ORIGIN}/v1/profile`, { headers: noKey });
-  expect(without.status === 403, `without key ${without.status} ${codeOf(without)}`);
+  const wrong = await http(`${GAME_ORIGIN}/v1/profile`, { headers: { ...gameHeaders, "x-partner-api-key": "fk_not_this_partner" } });
+  expect(wrong.status === 401 || wrong.status === 403, `wrong key ${wrong.status} ${codeOf(wrong)}`);
   const p = profile.json.data;
-  return `profile 200 (user ${p.id ?? p._id ?? p.userId}, userName ${p.userName}); without x-partner-api-key → ${without.status} ${codeOf(without)}`;
+  return `profile 200 with no partner key (user ${p.id ?? p._id ?? p.userId}, userName ${p.userName}); wrong x-partner-api-key → ${wrong.status} ${codeOf(wrong)}`;
 });
 
 await step(`10 game entry + final score ${score} + score history; platform leaderboard refused to partner players`, async () => {
@@ -265,7 +264,6 @@ await step("15 the game session is dead: API call and refresh refused", async ()
   expect(entry.status === 401, `entry after logout ${entry.status}`);
   const refresh = await http(`${GAME_ORIGIN}/v1/auth/session/refresh`, {
     method: "POST",
-    headers: { "x-partner-api-key": state.partner.apiKey },
     body: { refreshToken: tokens.refresh_token },
   });
   expect(refresh.status === 401, `refresh after logout ${refresh.status}`);

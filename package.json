@@ -1,0 +1,14 @@
+{
+  "name": "funlands-partner-docs",
+  "version": "1.0.0",
+  "description": "Funlands partner integration docs: build the published site and PDFs",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:pdf": "node scripts/build.mjs --pdf"
+  },
+  "type": "module",
+  "devDependencies": {
+    "shiki": "^3.23.0"
+  },
+  "private": true
+}

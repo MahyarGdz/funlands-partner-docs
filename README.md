@@ -14,11 +14,11 @@ Documentation and a reference implementation for partners that show Funlands gam
 
 1. Your backend signs a short-lived launch token (ES256) for the signed-in player and publishes its public keys as JWKS.
 2. Your page posts the launch token to the Funlands **game origin**. Funlands verifies it and opens a game session for that player.
-3. The game calls the Funlands API with that session. For `client_direct` partners, every call also carries your `x-partner-api-key`.
+3. The game calls the Funlands API and socket with that session's bearer token only. Funlands takes your partner scope from the token; the game page never holds a partner key.
 4. Funlands sends signed webhooks (`player.created`, `session.started`, `game.completed`, `session.ended`, `player.deleted`) and serves an events feed for anything you missed.
 5. Your server reads reports with an OAuth `private_key_jwt` client and can end a player's session at once with a back-channel logout token.
 
-The exact hosts, keys, client ids and scopes for each environment come in the partner sheet the Funlands team sends you. Every domain and key in these documents is an example.
+The exact hosts, keys, client ids and scopes for each environment come in the partner sheet the Funlands team sends you. Every domain and key in these documents is an example (`*.funlands.example`, `partner.example`).
 
 ## The reference implementation
 
@@ -27,6 +27,10 @@ The exact hosts, keys, client ids and scopes for each environment come in the pa
 - To learn the integration, read `sample-partner/partner/` (your side) and `sample-partner/game/` (the game side). `sample-partner/lib/partner-crypto.mjs` has the signing and verification code.
 - Running it end to end (`npm run up`, `npm run e2e`) needs a local Funlands backend, which only the Funlands team has. Partners test against the Funlands sandbox with the values from their partner sheet.
 - `sample-partner/demo-backend/` and the demo TLS setup exist only so a local backend can reach a local partner. Never use them in production.
+
+## Building the pages
+
+`src/` holds the source pages. `npm install && npm run build` writes `index.html` and `guide/index.html` with code blocks highlighted at build time by [Shiki](https://shiki.style); `npm run build:pdf` also prints the PDFs with headless Chrome.
 
 ## Contact
 

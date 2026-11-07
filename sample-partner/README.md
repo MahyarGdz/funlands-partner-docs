@@ -72,7 +72,7 @@ Proceed"), or trust that CA yourself. Then:
 | 5 | Replay without the verifier → 401 `TOKEN_REPLAYED` |
 | 6–7 | Bootstrap on the exact game Origin → session tokens (`no-store`); the code is single use (`BOOTSTRAP_INVALID`) |
 | 8 | Game page served at the handoff's game path, frameable by the partner |
-| 9 | The session works on the API; without the partner's client-direct key → 403 `PARTNER_TOKEN_MISMATCH` |
+| 9 | The session works on the API with the bearer token alone (the token carries the partner scope); a wrong partner key is refused |
 | 10 | Game entry, final score, score history; platform leaderboard refused (403) |
 | 11 | Webhooks `player.created`, `session.started`, `game.completed` delivered and verified (iss = Funlands base, aud = partner issuer) |
 | 12 | Events feed (OAuth `events:read`) has the same `event_id`s in `player_seq` order |

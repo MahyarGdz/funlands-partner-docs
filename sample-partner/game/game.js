@@ -49,7 +49,7 @@
     return fetch(path, {
       method: method,
       headers: Object.assign(
-        { accept: "application/json", authorization: "Bearer " + session.access, "x-partner-api-key": config.apiKey },
+        { accept: "application/json", authorization: "Bearer " + session.access },
         body ? { "content-type": "application/json" } : {}
       ),
       body: body ? JSON.stringify(body) : undefined,
@@ -67,7 +67,7 @@
   function refresh() {
     return fetch("/v1/auth/session/refresh", {
       method: "POST",
-      headers: { "content-type": "application/json", accept: "application/json", "x-partner-api-key": config.apiKey },
+      headers: { "content-type": "application/json", accept: "application/json" },
       body: JSON.stringify({ refreshToken: session.refresh }),
       credentials: "omit"
     }).then(function (res) {
