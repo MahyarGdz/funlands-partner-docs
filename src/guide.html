@@ -62,7 +62,7 @@ h2, h3 { page-break-after: avoid; }
     <div class="card"><h3>اصل اعتماد</h3><p>هر طرف با کلید خصوصی خودش امضا می‌کنه و کلید عمومیش رو روی یک نشانی JWKS منتشر می‌کنه. هیچ کلید خصوصی یا سکرت مشترکی بین ما و شریک جابه‌جا نمیشه.</p></div>
     <div class="card"><h3>هر پوسته یک شریک</h3><p>هر پوسته یک شریک جداست با شناسه، کلید، داده و پنل خودش. هیچ شریکی داده شریک دیگه رو نمی‌بینه.</p></div>
     <div class="card"><h3>دو محیط جدا</h3><p>sandbox و production کاملا از هم جدا هستن: کلید، issuer، audience، client_id، داده، وب‌هوک و پنل. توکن یک محیط توی محیط دیگه رد میشه و یک <code>sub</code> یکسان توی این دو محیط دو بازیکن جدا در فان‌لندزه.</p></div>
-    <div class="card"><h3>نمونه‌ها</h3><p>دامنه‌هایی مثل <code>api.sandbox.funlands.example</code>، <code>play.sandbox.funlands.example</code> و <code>partner.example</code> نشانی واقعی هیچ سرویسی نیستن و همه کلیدها، <code>client_id</code>ها، scopeها و شناسه‌های این متن هم نمونه‌ان. نشانی‌ها، کلیدها، <code>client_id</code> و scopeهای واقعی هر محیط فقط از برگ شریک میان.</p></div>
+    <div class="card"><h3>نشانی‌ها</h3><p>نشانی‌های فان‌لندز توی این راهنما همون نشانی‌های واقعی هستن: sandbox روی <code>sandbox-api.funlands.ir</code> و <code>sandbox-play.funlands.ir</code>، و production روی <code>api.funlands.ir</code> و <code>play.funlands.ir</code>. دامنه‌هایی مثل <code>partner.example</code> مال یک شریک فرضی‌ان و کلیدها، <code>client_id</code>ها، scopeها و شناسه‌های این متن نمونه‌ان. کلیدها، <code>client_id</code> و scopeهای واقعی هر محیط از برگ شریک میان.</p></div>
   </div>
 </div>
 
@@ -114,9 +114,9 @@ h2, h3 { page-break-after: avoid; }
 <tr><td><code>partner_id</code></td><td>شناسه داخلی شریک در فان‌لندز. توی پاسخ‌ها و پنل می‌بینیدش، ولی هیچ‌وقت لازم نیست توی درخواست بفرستیدش. ما شریک رو فقط از توکن امضاشده تشخیص می‌دیم.</td></tr>
 <tr><td><code>client_id</code></td><td>شناسه کلاینت برای گرفتن توکن گزارش، جدا برای هر محیط</td></tr>
 <tr><td>audienceها</td><td>سه مقدار جدا برای هر محیط که موقع ثبت توی برگ شریک بهتون می‌دیم: ورود (<code>…/partner-launch</code>)، خروج (<code>…/partner-logout</code>) و token endpoint (<code>…/oauth/token</code>). مقایسه حرف‌به‌حرفه، پس همون مقدار برگ شریک رو بذارید.</td></tr>
-<tr><td>JWKS فان‌لندز و issuer ما</td><td>نشانی <code>/.well-known/jwks.json</code> هر محیط و مقدار <code>iss</code> که روی SETها و توکن گزارش می‌ذاریم. این issuer همون نشانی پایه‌ایه که audienceهای همون محیط روش ساخته شدن، یعنی token endpoint بدون <code>/oauth/token</code>، مثلا <code>https://api.sandbox.funlands.example</code>.</td></tr>
+<tr><td>JWKS فان‌لندز و issuer ما</td><td>نشانی <code>/.well-known/jwks.json</code> هر محیط و مقدار <code>iss</code> که روی SETها و توکن گزارش می‌ذاریم. این issuer همون نشانی پایه‌ایه که audienceهای همون محیط روش ساخته شدن، یعنی token endpoint بدون <code>/oauth/token</code>، مثلا <code>https://sandbox-api.funlands.ir</code>.</td></tr>
 <tr><td>نشانی‌های sandbox</td><td>launch، خروج، token، پایه API گزارش و feed رویداد</td></tr>
-<tr><td>Origin بازی (<code>FUNLANDS_GAME_ORIGIN</code>)</td><td>Origin دقیقی که صفحه handoff و صفحه بازی روش باز میشن، مثلا <code>https://play.sandbox.funlands.example</code>، جدا برای هر محیط. فرم launch به همین Origin میره و iframe، CSP و چک <code>postMessage</code> هم با همین مقدار تنظیم میشن. توی بعضی استقرارها ممکنه با نشانی پایه API یکی باشه، ولی همیشه مقدار برگ شریک رو بذارید. JWKS، خروج، token، گزارش و feed روی نشانی پایه API می‌مونن.</td></tr>
+<tr><td>Origin بازی (<code>FUNLANDS_GAME_ORIGIN</code>)</td><td>Origin دقیقی که صفحه handoff و صفحه بازی روش باز میشن، مثلا <code>https://sandbox-play.funlands.ir</code>، جدا برای هر محیط. فرم launch به همین Origin میره و iframe، CSP و چک <code>postMessage</code> هم با همین مقدار تنظیم میشن. توی بعضی استقرارها ممکنه با نشانی پایه API یکی باشه، ولی همیشه مقدار برگ شریک رو بذارید. JWKS، خروج، token، گزارش و feed روی نشانی پایه API می‌مونن.</td></tr>
 <tr><td>کلید شریک (اختیاری)</td><td>فقط اگه از مسیرهای بدون توکن بازیکن استفاده می‌کنید (OTP، ورود، مهمان و خوندن‌های عمومی). شریک <code>client_direct</code> کلید <code>x-partner-api-key</code> می‌گیره و شریک <code>server_to_server</code> جفت <code>X-Partner-Public-Key</code> و <code>X-Partner-Secret</code> که فقط سمت سرور می‌مونه. صفحه بازی بعد از bootstrap به هیچ‌کدوم نیاز نداره (بخش ۴.۷). فان‌لندز فقط hash کلید رو نگه می‌داره: مقدار خام فقط یک بار، موقع صدور، ساخته میشه و از طریق برگ شریک به شما می‌رسه و بعدش دیگه قابل نمایش نیست. اگه گم بشه کلید تازه صادر می‌کنیم و کلید قبلی همون لحظه باطل میشه.</td></tr>
 <tr><td>قرارداد API و رویداد</td><td>OpenAPI نسخه‌دار، schema رویدادها و پیشوند ثابت URI نوع رویدادها (بخش ۷.۱)</td></tr>
 <tr><td>آزمون انطباق</td><td>مجموعه تستی که شریک روی sandbox اجرا می‌کنه. فهرستش توی بخش ۱۱ هست.</td></tr>
@@ -237,7 +237,7 @@ h2, h3 { page-break-after: avoid; }
 <table>
 <tr><th style="width:18%">claim</th><th style="width:10%">اجباری</th><th>قاعده</th></tr>
 <tr><td><code>iss</code></td><td>بله</td><td>حرف‌به‌حرف برابر issuer ثبت‌شده همین محیط</td></tr>
-<tr><td><code>aud</code></td><td>بله</td><td>audience ورود همین محیط، مثلا <code>https://api.sandbox.funlands.example/partner-launch</code></td></tr>
+<tr><td><code>aud</code></td><td>بله</td><td>audience ورود همین محیط، مثلا <code>https://sandbox-api.funlands.ir/partner-launch</code></td></tr>
 <tr><td><code>sub</code></td><td>بله</td><td>شناسه مستعار، پایدار و مخصوص همین اتصال، حداکثر ۱۲۸ کاراکتر. ایمیل، شماره تلفن، کد ملی یا شناسه سراسری قابل ردیابی نباشه. اگه <code>sub</code> عوض بشه از نظر ما یک بازیکن جدیده.</td></tr>
 <tr><td><code>sid</code></td><td>بله</td><td>شناسه نشست کاربر در سمت شما. خروج دقیق با همین انجام میشه.</td></tr>
 <tr><td><code>iat</code>، <code>exp</code></td><td>بله</td><td><code>exp - iat</code> حداکثر ۱۲۰ ثانیه. <code>iat</code> بیشتر از ۳۰ ثانیه در آینده نباشه.</td></tr>
@@ -253,7 +253,7 @@ h2, h3 { page-break-after: avoid; }
 
 {
   "iss": "https://auth.sandbox.partner.example",
-  "aud": "https://api.sandbox.funlands.example/partner-launch",
+  "aud": "https://sandbox-api.funlands.ir/partner-launch",
   "sub": "pw_7f3c9a1e",
   "sid": "partner_session_123",
   "iat": 1793440800,
@@ -286,13 +286,13 @@ const launchToken = await new SignJWT({ sid, game, launch_challenge: challenge }
 
 <h3>۴.۴ صفحه شریک و درخواست</h3>
 <pre><code>&lt;iframe name="game-frame" title="Game"&gt;&lt;/iframe&gt;
-&lt;form method="post" action="https://play.sandbox.funlands.example/v1/partner/launch" target="game-frame"&gt;
+&lt;form method="post" action="https://sandbox-play.funlands.ir/v1/partner/launch" target="game-frame"&gt;
   &lt;input type="hidden" name="launch_token"       value="{{escapedToken}}"&gt;
   &lt;input type="hidden" name="bootstrap_verifier" value="{{escapedVerifier}}"&gt;
   &lt;input type="hidden" name="game"               value="{{escapedGameId}}"&gt;
 &lt;/form&gt;</code></pre>
 <pre><code>POST /v1/partner/launch
-Host: play.sandbox.funlands.example
+Host: sandbox-play.funlands.ir
 Content-Type: application/x-www-form-urlencoded
 Origin: https://sandbox.partner.example
 
@@ -319,8 +319,8 @@ launch_token=&lt;signed-jwt&gt;&amp;game=star-runner&amp;bootstrap_verifier=&lt;
 <h3>۴.۶ پاسخ launch و bootstrap</h3>
 <p>پاسخ موفق یک صفحه HTML با <code>Cache-Control: no-store</code>، <code>Referrer-Policy: same-origin</code> و CSP سخت‌گیرانه‌ست که <code>frame-ancestors</code> اون فقط Originهای ثبت‌شده شما رو مجاز می‌کنه. پس صفحه بازی فقط داخل صفحه‌های خود شما باز میشه. این صفحه کد bootstrap و verifier رو فقط توی حافظه نگه می‌داره و بلافاصله این درخواست رو روی همون Origin بازی می‌فرسته، بعد توکن‌ها رو به صفحه بازی همین Origin تحویل میده و اون رو باز می‌کنه. این درخواست مال تیم کلاینت فان‌لندزه و شریک نباید صداش بزنه. پاسخ موفق bootstrap پاکت <code>{ "state", "data" }</code> نداره و فیلدهاش snake_case هستن:</p>
 <pre><code>POST /v1/session/bootstrap
-Host: play.sandbox.funlands.example
-Origin: https://play.sandbox.funlands.example
+Host: sandbox-play.funlands.ir
+Origin: https://sandbox-play.funlands.ir
 Content-Type: application/json
 
 { "code": "boot_01J...", "bootstrap_verifier": "&lt;same-verifier&gt;" }
@@ -413,7 +413,7 @@ logout_token=&lt;signed-partner-logout-jwt&gt;</code></pre>
 
 {
   "iss": "https://auth.sandbox.partner.example",
-  "aud": "https://api.sandbox.funlands.example/partner-logout",
+  "aud": "https://sandbox-api.funlands.ir/partner-logout",
   "sub": "pw_7f3c9a1e",
   "sid": "partner_session_123",
   "iat": 1793444400,
@@ -441,7 +441,7 @@ logout_token=&lt;signed-partner-logout-jwt&gt;</code></pre>
 
 <h2>۷. رویدادها و وب‌هوک</h2>
 <h3>۷.۱ فهرست رویدادها</h3>
-<p>هر رویداد این فیلدها رو داره: <code>event_id</code> ثابت، <code>schema_version</code>، <code>subject</code>، <code>player_seq</code> که برای هر بازیکن یکی‌یکی زیاد میشه، و <code>occurred_at</code> به وقت UTC با دقت ثانیه. نوع هر رویداد یک URI هست که از یک پیشوند ثابت و نام کوتاه رویداد ساخته میشه، مثلا <code>https://api.funlands.example/events/game.completed</code>. این پیشوند توی sandbox و production یکسانه و از نشانی پایه API یا issuer محیط ساخته نمیشه. مقدار دقیقش توی برگ شریک میاد و URI رو حرف‌به‌حرف مقایسه کنید. فهرست دقیق فیلدهای هر نوع توی schema نسخه ۱ میاد.</p>
+<p>هر رویداد این فیلدها رو داره: <code>event_id</code> ثابت، <code>schema_version</code>، <code>subject</code>، <code>player_seq</code> که برای هر بازیکن یکی‌یکی زیاد میشه، و <code>occurred_at</code> به وقت UTC با دقت ثانیه. نوع هر رویداد یک URI هست که از یک پیشوند ثابت و نام کوتاه رویداد ساخته میشه، مثلا <code>https://api.funlands.ir/events/game.completed</code>. این پیشوند توی sandbox و production یکسانه و از نشانی پایه API یا issuer محیط ساخته نمیشه. URI رو حرف‌به‌حرف مقایسه کنید. فهرست دقیق فیلدهای هر نوع توی schema نسخه ۱ میاد.</p>
 <table>
 <tr><th style="width:24%">رویداد</th><th style="width:36%">کِی</th><th>فیلدهای اصلی</th></tr>
 <tr><td><code>player.created</code></td><td>اولین ورود یک <code>sub</code></td><td><code>locale</code>، <code>age_band</code></td></tr>
@@ -465,12 +465,12 @@ Content-Type: application/secevent+jwt
 <pre><code>{ "alg": "ES256", "typ": "secevent+jwt", "kid": "funlands-sandbox-2026-11" }
 
 {
-  "iss": "https://api.sandbox.funlands.example",
+  "iss": "https://sandbox-api.funlands.ir",
   "aud": "https://auth.sandbox.partner.example",
   "iat": 1793440860,
   "jti": "dlv_0193a0e2c4d57e6f8a90b1c2d3e4f5a6",
   "events": {
-    "https://api.funlands.example/events/game.completed": {
+    "https://api.funlands.ir/events/game.completed": {
       "event_id": "evt_0193a0e1b2c37d4e8f50a1b2c3d4e5f6",
       "schema_version": 1,
       "subject": { "format": "iss_sub", "iss": "https://auth.sandbox.partner.example", "sub": "pw_7f3c9a1e" },
@@ -526,7 +526,7 @@ Content-Type: application/secevent+jwt
 Authorization: Bearer &lt;partner-api-access-token&gt;
 
 { "items": [{ "event_id": "evt_0193a0e1b2c37d4e8f50a1b2c3d4e5f6",
-              "type": "https://api.funlands.example/events/game.completed",
+              "type": "https://api.funlands.ir/events/game.completed",
               "schema_version": 1,
               "subject": { "format": "iss_sub", "iss": "https://auth.sandbox.partner.example", "sub": "pw_7f3c9a1e" },
               "player_seq": 42, "occurred_at": "2026-10-31T10:00:00Z",
@@ -555,7 +555,7 @@ grant_type=client_credentials&amp;scope=reports:read
 
 {
   "iss": "&lt;client_id&gt;", "sub": "&lt;client_id&gt;",
-  "aud": "https://api.sandbox.funlands.example/oauth/token",
+  "aud": "https://sandbox-api.funlands.ir/oauth/token",
   "iat": 1793440800, "exp": 1793440860,
   "jti": "assert_01J..."
 }
@@ -671,14 +671,14 @@ export const funlandsConfig = registerAs('funlands', () =&gt; ({
   signingKeyDir: required('PARTNER_SIGNING_KEY_DIR'), // mounted secret dir, one &lt;kid&gt;.pem per key
   activeKid: required('PARTNER_ACTIVE_KID'),          // partner-a-sandbox-2026-11
   // values Funlands gives us in the partner sheet
-  funlandsBaseUrl: required('FUNLANDS_BASE_URL'),     // https://api.sandbox.funlands.example (JWKS, token, reports, logout)
-  funlandsGameOrigin: required('FUNLANDS_GAME_ORIGIN'), // https://play.sandbox.funlands.example (launch form, iframe, postMessage)
+  funlandsBaseUrl: required('FUNLANDS_BASE_URL'),     // https://sandbox-api.funlands.ir (JWKS, token, reports, logout)
+  funlandsGameOrigin: required('FUNLANDS_GAME_ORIGIN'), // https://sandbox-play.funlands.ir (launch form, iframe, postMessage)
   launchAudience: required('FUNLANDS_LAUNCH_AUD'),    // &lt;base&gt;/partner-launch
   logoutAudience: required('FUNLANDS_LOGOUT_AUD'),    // &lt;base&gt;/partner-logout
   tokenEndpoint: required('FUNLANDS_TOKEN_URL'),      // &lt;base&gt;/oauth/token
   clientId: required('FUNLANDS_CLIENT_ID'),
   funlandsJwksUrl: required('FUNLANDS_JWKS_URL'),     // &lt;base&gt;/.well-known/jwks.json
-  setIssuer: required('FUNLANDS_SET_ISSUER'),         // https://api.sandbox.funlands.example (the base above)
+  setIssuer: required('FUNLANDS_SET_ISSUER'),         // https://sandbox-api.funlands.ir (the base above)
   setAudience: required('FUNLANDS_SET_AUDIENCE'),     // registered for us, e.g. our issuer
 }));
 
@@ -913,8 +913,8 @@ const esc = (value: string): string =&gt; value.replace(/[&amp;&lt;&gt;"']/g, (c
 
 export interface PlayPageInput {
   form: LaunchForm;
-  launchUrl: string;    // https://play.sandbox.funlands.example/v1/partner/launch
-  gameOrigin: string;   // https://play.sandbox.funlands.example (FUNLANDS_GAME_ORIGIN)
+  launchUrl: string;    // https://sandbox-play.funlands.ir/v1/partner/launch
+  gameOrigin: string;   // https://sandbox-play.funlands.ir (FUNLANDS_GAME_ORIGIN)
   relaunchPath: string; // /games/star-runner/launch
   nonce: string;
 }
@@ -995,7 +995,7 @@ import { funlandsConfig, FunlandsConfig } from './funlands.config';
 import { KidDenylist } from './kid-denylist';
 
 export interface FunlandsEvent {
-  type: string;          // https://api.funlands.example/events/game.completed
+  type: string;          // https://api.funlands.ir/events/game.completed
   event_id: string;
   schema_version: number;
   subject: { format: 'iss_sub'; iss: string; sub: string };

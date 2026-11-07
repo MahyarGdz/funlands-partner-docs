@@ -18,7 +18,12 @@ Documentation and a reference implementation for partners that show Funlands gam
 4. Funlands sends signed webhooks (`player.created`, `session.started`, `game.completed`, `session.ended`, `player.deleted`) and serves an events feed for anything you missed.
 5. Your server reads reports with an OAuth `private_key_jwt` client and can end a player's session at once with a back-channel logout token.
 
-The exact hosts, keys, client ids and scopes for each environment come in the partner sheet the Funlands team sends you. Every domain and key in these documents is an example (`*.funlands.example`, `partner.example`).
+| Environment | API | Game origin |
+|---|---|---|
+| sandbox | `https://sandbox-api.funlands.ir` | `https://sandbox-play.funlands.ir` |
+| production | `https://api.funlands.ir` | `https://play.funlands.ir` |
+
+Keys, client ids and scopes for each environment come in the partner sheet the Funlands team sends you. `partner.example` and every key in these documents are examples.
 
 ## The reference implementation
 

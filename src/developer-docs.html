@@ -216,18 +216,18 @@ tr:last-child td { border-bottom: 0; }
 <p>دو محیط داریم: <code>sandbox</code> برای توسعه و تست با داده غیرواقعی، و <code>production</code> برای کاربرهای واقعی. این دو کاملا از هم جدا هستن: کلید، issuer، audience، <code>client_id</code>، نشانی Webhook و داده هر کدوم مستقله. توکنی که برای یک محیط امضا شده توی محیط دیگه رد میشه. یک <code>sub</code> یکسان توی sandbox و production دو بازیکن جدا در فان‌لندزه و داده بازی و گزارش‌هاشون هیچ‌وقت قاطی نمیشه.</p>
 <div class="tablewrap"><table>
 <tr><th>مورد</th><th>sandbox</th><th>production</th></tr>
-<tr><td>نشانی پایه API (Base URL)</td><td><code>https://api.sandbox.funlands.example</code></td><td><code>https://api.funlands.example</code></td></tr>
-<tr><td>Origin بازی (<code>FUNLANDS_GAME_ORIGIN</code>)</td><td><code>https://play.sandbox.funlands.example</code></td><td><code>https://play.funlands.example</code></td></tr>
-<tr><td>JWKS فان‌لندز</td><td><code>https://api.sandbox.funlands.example/.well-known/jwks.json</code></td><td><code>https://api.funlands.example/.well-known/jwks.json</code></td></tr>
-<tr><td>issuer فان‌لندز (روی SET و توکن گزارش)</td><td><code>https://api.sandbox.funlands.example</code></td><td><code>https://api.funlands.example</code></td></tr>
-<tr><td>audience توکن launch</td><td><code>https://api.sandbox.funlands.example/partner-launch</code></td><td><code>https://api.funlands.example/partner-launch</code></td></tr>
-<tr><td>audience توکن خروج</td><td><code>https://api.sandbox.funlands.example/partner-logout</code></td><td><code>https://api.funlands.example/partner-logout</code></td></tr>
-<tr><td>token endpoint (audience در client assertion)</td><td><code>https://api.sandbox.funlands.example/oauth/token</code></td><td><code>https://api.funlands.example/oauth/token</code></td></tr>
-<tr><td>پیشوند نوع رویداد</td><td colspan="2"><code>https://api.funlands.example/events/</code>، توی هر دو محیط یکسان</td></tr>
+<tr><td>نشانی پایه API (Base URL)</td><td><code>https://sandbox-api.funlands.ir</code></td><td><code>https://api.funlands.ir</code></td></tr>
+<tr><td>Origin بازی (<code>FUNLANDS_GAME_ORIGIN</code>)</td><td><code>https://sandbox-play.funlands.ir</code></td><td><code>https://play.funlands.ir</code></td></tr>
+<tr><td>JWKS فان‌لندز</td><td><code>https://sandbox-api.funlands.ir/.well-known/jwks.json</code></td><td><code>https://api.funlands.ir/.well-known/jwks.json</code></td></tr>
+<tr><td>issuer فان‌لندز (روی SET و توکن گزارش)</td><td><code>https://sandbox-api.funlands.ir</code></td><td><code>https://api.funlands.ir</code></td></tr>
+<tr><td>audience توکن launch</td><td><code>https://sandbox-api.funlands.ir/partner-launch</code></td><td><code>https://api.funlands.ir/partner-launch</code></td></tr>
+<tr><td>audience توکن خروج</td><td><code>https://sandbox-api.funlands.ir/partner-logout</code></td><td><code>https://api.funlands.ir/partner-logout</code></td></tr>
+<tr><td>token endpoint (audience در client assertion)</td><td><code>https://sandbox-api.funlands.ir/oauth/token</code></td><td><code>https://api.funlands.ir/oauth/token</code></td></tr>
+<tr><td>پیشوند نوع رویداد</td><td colspan="2"><code>https://api.funlands.ir/events/</code>، توی هر دو محیط یکسان</td></tr>
 <tr><td>کلیدهای شما</td><td>جفت‌کلید مخصوص sandbox</td><td>جفت‌کلید جدا. کلید sandbox رو هیچ‌وقت اینجا استفاده نکنید.</td></tr>
 <tr><td>داده</td><td>آزمایشی، بدون اطلاعات کاربر واقعی</td><td>واقعی</td></tr>
 </table></div>
-<div class="note"><p>همه نشانی‌های این صفحه، مثل <code>api.sandbox.funlands.example</code>، <code>play.sandbox.funlands.example</code> و <code>partner.example</code>، نمونه‌ان و نشانی واقعی هیچ سرویسی نیستن. کلیدها، <code>client_id</code>ها و scopeهای نمونه‌کدها هم نمونه‌ان. نشانی‌ها، کلیدها، <code>client_id</code> و scopeهای واقعی هر محیط فقط از برگ شریک میان، از جمله issuer، نشانی JWKS، Origin بازی، پیشوند نوع رویداد و سه audience (launch، خروج و token endpoint). همون مقدارها رو عینا بذارید. این سه audience با هم فرق دارن تا توکن یک نوع هیچ‌وقت به‌جای نوع دیگه قبول نشه. مقایسه audience حرف‌به‌حرفه و یک <code>/</code> اضافه در انتها هم توکن رو رد می‌کنه. issuer فان‌لندز همون نشانی پایه‌ایه که این audienceها روش ساخته شدن، یعنی token endpoint بدون <code>/oauth/token</code>.</p></div>
+<div class="note"><p>نشانی‌های فان‌لندز توی این صفحه همون نشانی‌های واقعی هستن: sandbox روی <code>sandbox-api.funlands.ir</code> و <code>sandbox-play.funlands.ir</code>، و production روی <code>api.funlands.ir</code> و <code>play.funlands.ir</code>. دامنه‌هایی مثل <code>partner.example</code> مال یک شریک فرضی‌ان و کلیدها، <code>client_id</code>ها و scopeهای نمونه‌کدها نمونه‌ان. کلیدها، <code>client_id</code>، scopeها و سه audience (launch، خروج و token endpoint) هر محیط توی برگ شریک میان. همون مقدارها رو عینا بذارید. این سه audience با هم فرق دارن تا توکن یک نوع هیچ‌وقت به‌جای نوع دیگه قبول نشه. مقایسه audience حرف‌به‌حرفه و یک <code>/</code> اضافه در انتها هم توکن رو رد می‌کنه. issuer فان‌لندز همون نشانی پایه‌ایه که این audienceها روش ساخته شدن، یعنی token endpoint بدون <code>/oauth/token</code>.</p></div>
 <div class="note"><p>دو مقدار جدا دارید. نشانی پایه API (<code>FUNLANDS_BASE</code>) برای JWKS فان‌لندز، <code>/oauth/token</code>، API گزارش، feed رویداد و خروج سرور به سرور به کار میره. Origin بازی (<code>FUNLANDS_GAME_ORIGIN</code>) جاییه که صفحه handoff و صفحه بازی روش باز میشن: فرم launch به همین Origin میره، bootstrap فقط درخواستی رو قبول می‌کنه که <code>Origin</code>ش دقیقا همین مقدار باشه، و <code>frame-src</code>، <code>form-action</code> و چک <code>postMessage</code> صفحه شما هم باید همین مقدار رو داشته باشن. توی بعضی استقرارها این دو یکی هستن، ولی همیشه مقدار برگ شریک رو بذارید.</p></div>
 
 <h3 id="versioning">نسخه‌بندی</h3>
@@ -285,14 +285,14 @@ incident_contact: security@partner.example
 partner_id: ptr_sandbox_0000example
 client_id: cli_sandbox_0000example
 scopes: [reports:read, players:read, events:read]
-launch_audience: https://api.sandbox.funlands.example/partner-launch
-logout_audience: https://api.sandbox.funlands.example/partner-logout
-token_audience: https://api.sandbox.funlands.example/oauth/token
-token_endpoint: https://api.sandbox.funlands.example/oauth/token
-funlands_issuer: https://api.sandbox.funlands.example
-funlands_jwks_uri: https://api.sandbox.funlands.example/.well-known/jwks.json
-game_origin: https://play.sandbox.funlands.example   <span class="c"># FUNLANDS_GAME_ORIGIN: launch form, iframe, postMessage</span>
-event_type_prefix: https://api.funlands.example/events/   <span class="c"># fixed, identical in sandbox and production</span>
+launch_audience: https://sandbox-api.funlands.ir/partner-launch
+logout_audience: https://sandbox-api.funlands.ir/partner-logout
+token_audience: https://sandbox-api.funlands.ir/oauth/token
+token_endpoint: https://sandbox-api.funlands.ir/oauth/token
+funlands_issuer: https://sandbox-api.funlands.ir
+funlands_jwks_uri: https://sandbox-api.funlands.ir/.well-known/jwks.json
+game_origin: https://sandbox-play.funlands.ir   <span class="c"># FUNLANDS_GAME_ORIGIN: launch form, iframe, postMessage</span>
+event_type_prefix: https://api.funlands.ir/events/   <span class="c"># fixed, identical in sandbox and production</span>
 partner_api_key: &lt;delivered once&gt;          <span class="c"># optional, client_direct only: for calls without a player token (OTP, login, guest, public reads)</span>
 set_audience: https://partner.example   <span class="c"># the aud of every SET: your issuer</span></code></pre></div>
 
@@ -300,8 +300,8 @@ set_audience: https://partner.example   <span class="c"># the aud of every SET: 
 <p>همه نمونه‌کدها با این مقدارها نوشته شدن. موقع کپی، اون‌ها رو با مقدارهای برگ شریک خودتون عوض کنید.</p>
 <div class="tablewrap"><table>
 <tr><th>نام</th><th>مقدار نمونه</th></tr>
-<tr><td>نشانی پایه API (<code>FUNLANDS_BASE</code>)</td><td><code>https://api.sandbox.funlands.example</code></td></tr>
-<tr><td>Origin بازی (<code>FUNLANDS_GAME_ORIGIN</code>)</td><td><code>https://play.sandbox.funlands.example</code></td></tr>
+<tr><td>نشانی پایه API (<code>FUNLANDS_BASE</code>)</td><td><code>https://sandbox-api.funlands.ir</code></td></tr>
+<tr><td>Origin بازی (<code>FUNLANDS_GAME_ORIGIN</code>)</td><td><code>https://sandbox-play.funlands.ir</code></td></tr>
 <tr><td>issuer شما</td><td><code>https://partner.example</code></td></tr>
 <tr><td>kid کلید launch و خروج</td><td><code>partner-sandbox-2026-11</code></td></tr>
 <tr><td>kid کلید API گزارش</td><td><code>partner-api-sandbox-2026-11</code></td></tr>
@@ -884,7 +884,7 @@ curl -sS --max-redirs 0 -D - https://partner.example/.well-known/jwks.json \
 <h3 id="funlands-jwks">JWKS فان‌لندز</h3>
 <p>فان‌لندز رویدادهای Webhook رو با کلید خودش امضا می‌کنه و کلیدهای عمومیش رو اینجا منتشر می‌کنه. این endpoint عمومیه و احراز هویت نمی‌خواد.</p>
 <div class="codeblock single"><div class="cb-head"><span class="cb-label">HTTP</span><button class="copy" type="button">کپی</button></div><pre><code>GET /.well-known/jwks.json HTTP/1.1
-Host: api.sandbox.funlands.example
+Host: sandbox-api.funlands.ir
 
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -971,7 +971,7 @@ Cache-Control: public, max-age=300
 </table></div>
 <div class="codeblock single"><div class="cb-head"><span class="cb-label">JSON</span><button class="copy" type="button">کپی</button></div><pre><code>{
   "iss": "https://partner.example",
-  "aud": "https://api.sandbox.funlands.example/partner-launch",
+  "aud": "https://sandbox-api.funlands.ir/partner-launch",
   "sub": "u_7f3a9c2e5b1d4e08",
   "sid": "5d0c6a1e-2f9b-4c37-9a51-0e6b8f2d7c44",
   "iat": 1793871000,
@@ -1002,7 +1002,7 @@ launch_challenge   = E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM</code></pre></d
 
 <h3 id="launch-form">ارسال فرم به <code>POST /v1/partner/launch</code></h3>
 <div class="codeblock single"><div class="cb-head"><span class="cb-label">HTTP</span><button class="copy" type="button">کپی</button></div><pre><code>POST /v1/partner/launch HTTP/1.1
-Host: play.sandbox.funlands.example
+Host: sandbox-play.funlands.ir
 Content-Type: application/x-www-form-urlencoded
 Origin: https://partner.example
 
@@ -1020,8 +1020,8 @@ launch_token=eyJhbGciOiJFUzI1NiIsInR5cCI6ImZ1bmxhbmRzLWxhdW5jaCtqd3QiLCJraWQiOiJ
 <div class="warn"><p>روی صفحه‌ای که فرم launch رو می‌فرسته <code>Referrer-Policy: no-referrer</code> نذارید. با این مقدار مرورگر توی POST بین دو دامنه هدر <code>Origin: null</code> می‌فرسته و ورود با <code>ORIGIN_NOT_ALLOWED</code> رد میشه. <code>strict-origin-when-cross-origin</code> رو بذارید (پیش‌فرض مرورگرها)، همون مقداری که نمونه‌های زیر می‌ذارن.</p></div>
 <p class="caption">نمونه: امضای توکن launch و ساخت فرم خودکار</p>
 <div class="codeblock tabs"><div class="cb-head"><div class="tablist" role="tablist" aria-label="Language"><button type="button" role="tab" data-lang="nestjs" aria-selected="true">NestJS</button><button type="button" role="tab" data-lang="express" aria-selected="false">Express</button><button type="button" role="tab" data-lang="fastapi" aria-selected="false">FastAPI</button><button type="button" role="tab" data-lang="django" aria-selected="false">Django</button><button type="button" role="tab" data-lang="laravel" aria-selected="false">Laravel</button><button type="button" role="tab" data-lang="php" aria-selected="false">PHP</button><button type="button" role="tab" data-lang="go" aria-selected="false">Go</button><button type="button" role="tab" data-lang="spring" aria-selected="false">Spring Boot</button><button type="button" role="tab" data-lang="dotnet" aria-selected="false">ASP.NET Core</button><button type="button" role="tab" data-lang="curl" aria-selected="false">cURL</button></div><button class="copy" type="button">کپی</button></div><div class="panel" role="tabpanel" data-lang="nestjs" data-label="NestJS"><pre><code><span class="c">// src/funlands/funlands.config.ts</span>
-export const FUNLANDS_BASE = 'https://api.sandbox.funlands.example';           <span class="c">// production: https://api.funlands.example</span>
-export const FUNLANDS_GAME_ORIGIN = 'https://play.sandbox.funlands.example';   <span class="c">// from your registration sheet; launch form, iframe, postMessage</span>
+export const FUNLANDS_BASE = 'https://sandbox-api.funlands.ir';           <span class="c">// production: https://api.funlands.ir</span>
+export const FUNLANDS_GAME_ORIGIN = 'https://sandbox-play.funlands.ir';   <span class="c">// from your registration sheet; launch form, iframe, postMessage</span>
 export const LAUNCH_AUDIENCE = `${FUNLANDS_BASE}/partner-launch`;          <span class="c">// exact value from your registration sheet</span>
 export const PARTNER_ISSUER = 'https://partner.example';
 export const LAUNCH_KID = 'partner-sandbox-2026-11';
@@ -1122,8 +1122,8 @@ import { importPKCS8, SignJWT } from 'jose';
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 
-const FUNLANDS_BASE = 'https://api.sandbox.funlands.example';         <span class="c">// production: https://api.funlands.example</span>
-const FUNLANDS_GAME_ORIGIN = 'https://play.sandbox.funlands.example'; <span class="c">// from your registration sheet</span>
+const FUNLANDS_BASE = 'https://sandbox-api.funlands.ir';         <span class="c">// production: https://api.funlands.ir</span>
+const FUNLANDS_GAME_ORIGIN = 'https://sandbox-play.funlands.ir'; <span class="c">// from your registration sheet</span>
 const LAUNCH_AUDIENCE = `${FUNLANDS_BASE}/partner-launch`;
 const PARTNER_ISSUER = 'https://partner.example';
 const LAUNCH_KID = 'partner-sandbox-2026-11';
@@ -1195,8 +1195,8 @@ from fastapi.responses import HTMLResponse
 
 from app.auth import current_user  <span class="c"># your existing session auth; returns a user with .funlands_subject</span>
 
-FUNLANDS_BASE = "https://api.sandbox.funlands.example"      <span class="c"># production: https://api.funlands.example</span>
-FUNLANDS_GAME_ORIGIN = "https://play.sandbox.funlands.example"  <span class="c"># from your registration sheet</span>
+FUNLANDS_BASE = "https://sandbox-api.funlands.ir"      <span class="c"># production: https://api.funlands.ir</span>
+FUNLANDS_GAME_ORIGIN = "https://sandbox-play.funlands.ir"  <span class="c"># from your registration sheet</span>
 LAUNCH_AUDIENCE = f"{FUNLANDS_BASE}/partner-launch"
 PARTNER_ISSUER = "https://partner.example"
 LAUNCH_KID = "partner-sandbox-2026-11"
@@ -1259,8 +1259,8 @@ import jwt
 from cryptography.hazmat.primitives import serialization
 from django.conf import settings
 
-FUNLANDS_BASE = "https://api.sandbox.funlands.example"      <span class="c"># production: https://api.funlands.example</span>
-FUNLANDS_GAME_ORIGIN = "https://play.sandbox.funlands.example"  <span class="c"># from your registration sheet</span>
+FUNLANDS_BASE = "https://sandbox-api.funlands.ir"      <span class="c"># production: https://api.funlands.ir</span>
+FUNLANDS_GAME_ORIGIN = "https://sandbox-play.funlands.ir"  <span class="c"># from your registration sheet</span>
 LAUNCH_AUDIENCE = f"{FUNLANDS_BASE}/partner-launch"
 PARTNER_ISSUER = "https://partner.example"
 LAUNCH_KID = "partner-sandbox-2026-11"
@@ -1339,9 +1339,9 @@ def play(request, game: str):
 <span class="c"># partner/urls.py:  path("play/&lt;slug:game&gt;", views.play)</span></code></pre></div><div class="panel" role="tabpanel" data-lang="laravel" data-label="Laravel" hidden><pre><code>&lt;?php
 <span class="c">// config/funlands.php</span>
 return [
-    'base' =&gt; env('FUNLANDS_BASE', 'https://api.sandbox.funlands.example'),          <span class="c">// production: https://api.funlands.example</span>
-    'game_origin' =&gt; env('FUNLANDS_GAME_ORIGIN', 'https://play.sandbox.funlands.example'), <span class="c">// from your registration sheet</span>
-    'launch_audience' =&gt; env('FUNLANDS_LAUNCH_AUD', 'https://api.sandbox.funlands.example/partner-launch'),
+    'base' =&gt; env('FUNLANDS_BASE', 'https://sandbox-api.funlands.ir'),          <span class="c">// production: https://api.funlands.ir</span>
+    'game_origin' =&gt; env('FUNLANDS_GAME_ORIGIN', 'https://sandbox-play.funlands.ir'), <span class="c">// from your registration sheet</span>
+    'launch_audience' =&gt; env('FUNLANDS_LAUNCH_AUD', 'https://sandbox-api.funlands.ir/partner-launch'),
     'issuer' =&gt; 'https://partner.example',
     'launch_kid' =&gt; 'partner-sandbox-2026-11',
 ];
@@ -1442,8 +1442,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 
-const FUNLANDS_BASE = 'https://api.sandbox.funlands.example';             <span class="c">// production: https://api.funlands.example</span>
-const FUNLANDS_GAME_ORIGIN = 'https://play.sandbox.funlands.example';     <span class="c">// from your registration sheet</span>
+const FUNLANDS_BASE = 'https://sandbox-api.funlands.ir';             <span class="c">// production: https://api.funlands.ir</span>
+const FUNLANDS_GAME_ORIGIN = 'https://sandbox-play.funlands.ir';     <span class="c">// from your registration sheet</span>
 const LAUNCH_AUDIENCE = FUNLANDS_BASE . '/partner-launch';
 const PARTNER_ISSUER = 'https://partner.example';
 const LAUNCH_KID = 'partner-sandbox-2026-11';
@@ -1522,8 +1522,8 @@ import (
 )
 
 const (
-	FunlandsBase   = "https://api.sandbox.funlands.example" <span class="c">// production: https://api.funlands.example</span>
-	GameOrigin     = "https://play.sandbox.funlands.example" <span class="c">// FUNLANDS_GAME_ORIGIN from your registration sheet</span>
+	FunlandsBase   = "https://sandbox-api.funlands.ir" <span class="c">// production: https://api.funlands.ir</span>
+	GameOrigin     = "https://sandbox-play.funlands.ir" <span class="c">// FUNLANDS_GAME_ORIGIN from your registration sheet</span>
 	LaunchAudience = FunlandsBase + "/partner-launch"
 	PartnerIssuer  = "https://partner.example"
 	LaunchKID      = "partner-sandbox-2026-11"
@@ -1625,8 +1625,8 @@ func PlayHandler(key jwk.Key) http.HandlerFunc {
 package com.partner.funlands;
 
 public final class FunlandsConfig {
-    public static final String BASE = "https://api.sandbox.funlands.example";      <span class="c">// production: https://api.funlands.example</span>
-    public static final String GAME_ORIGIN = "https://play.sandbox.funlands.example"; <span class="c">// FUNLANDS_GAME_ORIGIN from your registration sheet</span>
+    public static final String BASE = "https://sandbox-api.funlands.ir";      <span class="c">// production: https://api.funlands.ir</span>
+    public static final String GAME_ORIGIN = "https://sandbox-play.funlands.ir"; <span class="c">// FUNLANDS_GAME_ORIGIN from your registration sheet</span>
     public static final String LAUNCH_AUDIENCE = BASE + "/partner-launch";
     public static final String LOGOUT_AUDIENCE = BASE + "/partner-logout";
     public static final String TOKEN_ENDPOINT = BASE + "/oauth/token";
@@ -1743,8 +1743,8 @@ public class PlayController {
 }</code></pre></div><div class="panel" role="tabpanel" data-lang="dotnet" data-label="ASP.NET Core" hidden><pre><code><span class="c">// Funlands/FunlandsConfig.cs</span>
 public static class FunlandsConfig
 {
-    public const string Base = "https://api.sandbox.funlands.example";        <span class="c">// production: https://api.funlands.example</span>
-    public const string GameOrigin = "https://play.sandbox.funlands.example"; <span class="c">// FUNLANDS_GAME_ORIGIN from your registration sheet</span>
+    public const string Base = "https://sandbox-api.funlands.ir";        <span class="c">// production: https://api.funlands.ir</span>
+    public const string GameOrigin = "https://sandbox-play.funlands.ir"; <span class="c">// FUNLANDS_GAME_ORIGIN from your registration sheet</span>
     public const string LaunchAudience = Base + "/partner-launch";
     public const string LogoutAudience = Base + "/partner-logout";
     public const string TokenEndpoint = Base + "/oauth/token";
@@ -1838,7 +1838,7 @@ public static class LaunchEndpoints
     }
 }</code></pre></div><div class="panel" role="tabpanel" data-lang="curl" data-label="cURL" hidden><pre><code><span class="c"># Sandbox only: replay the browser form POST by hand to test your token.</span>
 <span class="c"># LAUNCH_TOKEN and VERIFIER come from your server (any tab above).</span>
-curl -i https://play.sandbox.funlands.example/v1/partner/launch \
+curl -i https://sandbox-play.funlands.ir/v1/partner/launch \
   -H 'Origin: https://partner.example' \
   --data-urlencode "launch_token=${LAUNCH_TOKEN}" \
   --data-urlencode 'game=star-runner' \
@@ -1855,8 +1855,8 @@ cut -d. -f2 &lt;&lt;&lt;"$LAUNCH_TOKEN" | tr '_-' '/+' | base64 -d 2&gt;/dev/nul
 <h3 id="bootstrap">bootstrap: <code>POST /v1/session/bootstrap</code></h3>
 <p>این درخواست رو صفحه handoff فان‌لندز داخل iframe روی Origin بازی می‌فرسته و شما معمولا مستقیم صداش نمی‌زنید. شکلش رو اینجا آوردیم تا موقع عیب‌یابی بدونید چه اتفاقی می‌افته. پاسخ موفق bootstrap، برخلاف refresh، پاکت <code>{ "state", "data" }</code> نداره و فیلدهاش snake_case هستن.</p>
 <div class="codeblock single"><div class="cb-head"><span class="cb-label">HTTP</span><button class="copy" type="button">کپی</button></div><pre><code>POST /v1/session/bootstrap HTTP/1.1
-Host: play.sandbox.funlands.example
-Origin: https://play.sandbox.funlands.example
+Host: sandbox-play.funlands.ir
+Origin: https://sandbox-play.funlands.ir
 Content-Type: application/json
 
 { "code": "boot_01JD3X9F4K7M2N8P5Q", "bootstrap_verifier": "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk" }
@@ -1894,7 +1894,7 @@ Content-Type: application/json
 <h3 id="refresh">تمدید نشست: <code>POST /v1/auth/session/refresh</code></h3>
 <p>این endpoint رو صفحه بازی صدا می‌زنه و همون endpoint تمدید نشست عادی فان‌لندزه. بدنه و پاسخش قالب camelCase فان‌لندز رو دارن، پاسخ موفق داخل پاکت <code>{ "state": true, "data": ... }</code> میاد و هیچ هدر شریکی لازم نیست.</p>
 <div class="codeblock single"><div class="cb-head"><span class="cb-label">HTTP</span><button class="copy" type="button">کپی</button></div><pre><code>POST /v1/auth/session/refresh HTTP/1.1
-Host: api.sandbox.funlands.example
+Host: sandbox-api.funlands.ir
 Content-Type: application/json
 
 { "refreshToken": "rt_opaque_value_shown_once" }
@@ -1954,7 +1954,7 @@ const socket = io('/game', { auth: { token: session.accessToken } });</code></pr
 </table></div>
 <p>در هر دو طرف <code>event.origin</code> رو با Origin بازی (<code>FUNLANDS_GAME_ORIGIN</code>) و <code>event.source</code> رو با پنجره iframe بسنجید و پیام رو با همین <code>targetOrigin</code> دقیق بفرستید، نه <code>*</code>. اگه launch از Origin ثبت‌نشده بیاد، صفحه handoff ساخته نمیشه، پیامی هم نمیاد و iframe فقط بدنه خطای JSON رو نشون میده. اگه سرور شما در دسترس نیست، یک پیام قابل فهم با دکمه تلاش دوباره نشون بدید.</p>
 <div class="codeblock single"><div class="cb-head"><span class="cb-label">JavaScript (browser)</span><button class="copy" type="button">کپی</button></div><pre><code><span class="c">// Runs in your game page (the page that holds the iframe and the launch form).</span>
-const FUNLANDS_GAME_ORIGIN = 'https://play.sandbox.funlands.example';   <span class="c">// from your registration sheet; production: https://play.funlands.example</span>
+const FUNLANDS_GAME_ORIGIN = 'https://sandbox-play.funlands.ir';   <span class="c">// from your registration sheet; production: https://play.funlands.ir</span>
 const frame = document.querySelector('iframe[name="funlands-game"]');
 
 window.addEventListener('message', async (event) =&gt; {
@@ -2017,7 +2017,7 @@ window.addEventListener('message', async (event) =&gt; {
 <span class="c">// claims</span>
 {
   "iss": "https://partner.example",
-  "aud": "https://api.sandbox.funlands.example/partner-logout",
+  "aud": "https://sandbox-api.funlands.ir/partner-logout",
   "sub": "u_7f3a9c2e5b1d4e08",
   "sid": "5d0c6a1e-2f9b-4c37-9a51-0e6b8f2d7c44",
   "iat": 1793871000,
@@ -2026,7 +2026,7 @@ window.addEventListener('message', async (event) =&gt; {
   "events": { "http://schemas.openid.net/event/backchannel-logout": {} }
 }</code></pre></div>
 <div class="codeblock single"><div class="cb-head"><span class="cb-label">HTTP</span><button class="copy" type="button">کپی</button></div><pre><code>POST /partner/v1/backchannel-logout HTTP/1.1
-Host: api.sandbox.funlands.example
+Host: sandbox-api.funlands.ir
 Content-Type: application/x-www-form-urlencoded
 
 logout_token=eyJhbGciOiJFUzI1NiIsInR5cCI6ImxvZ291dCtqd3QiLCJraWQiOiJwYXJ0bmVyLXNhbmRib3gtMjAyNi0xMSJ9.eyJ...
@@ -2097,7 +2097,7 @@ import { importPKCS8, SignJWT } from 'jose';
 import { randomUUID } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 
-const FUNLANDS_BASE = 'https://api.sandbox.funlands.example';                 <span class="c">// production: https://api.funlands.example</span>
+const FUNLANDS_BASE = 'https://sandbox-api.funlands.ir';                 <span class="c">// production: https://api.funlands.ir</span>
 const LOGOUT_AUDIENCE = `${FUNLANDS_BASE}/partner-logout`;
 const PARTNER_ISSUER = 'https://partner.example';
 const LAUNCH_KID = 'partner-sandbox-2026-11';
@@ -2284,7 +2284,7 @@ use GuzzleHttp\Client;
 
 function send_backchannel_logout(string $subject, string $sid): void
 {
-    $base = 'https://api.sandbox.funlands.example';                    <span class="c">// production: https://api.funlands.example</span>
+    $base = 'https://sandbox-api.funlands.ir';                    <span class="c">// production: https://api.funlands.ir</span>
     $kid = 'partner-sandbox-2026-11';
     $now = time();
     $logoutToken = JWT::encode([
@@ -2464,7 +2464,7 @@ app.MapPost("/logout", async (HttpContext http, FunlandsLogoutClient funlands, I
 }).RequireAuthorization();</code></pre></div><div class="panel" role="tabpanel" data-lang="curl" data-label="cURL" hidden><pre><code><span class="c"># LOGOUT_TOKEN: header {"alg":"ES256","typ":"logout+jwt","kid":"partner-sandbox-2026-11"}</span>
 <span class="c"># claims: iss, aud=&lt;logout audience&gt;, sub, sid, iat, exp (&lt;= iat + 120), jti,</span>
 <span class="c">#         events={"http://schemas.openid.net/event/backchannel-logout":{}}   (no nonce)</span>
-curl -i https://api.sandbox.funlands.example/partner/v1/backchannel-logout \
+curl -i https://sandbox-api.funlands.ir/partner/v1/backchannel-logout \
   --data-urlencode "logout_token=${LOGOUT_TOKEN}"
 
 <span class="c"># HTTP/1.1 200 OK      -&gt; session and refresh family revoked (or already revoked)</span></code></pre></div></div>
@@ -2499,12 +2499,12 @@ eyJhbGciOiJFUzI1NiIsInR5cCI6InNlY2V2ZW50K2p3dCIsImtpZCI6ImZsLXNhbmRib3gtMjAyNi0x
 
 <span class="c">// claims</span>
 {
-  "iss": "https://api.sandbox.funlands.example",
+  "iss": "https://sandbox-api.funlands.ir",
   "aud": "https://partner.example",
   "iat": 1793871100,
   "jti": "dlv_0193a0e2c4d57e6f8a90b1c2d3e4f5a6",
   "events": {
-    "https://api.funlands.example/events/game.completed": {
+    "https://api.funlands.ir/events/game.completed": {
       "event_id": "evt_0193a0e1b2c37d4e8f50a1b2c3d4e5f6",
       "schema_version": 1,
       "subject": { "format": "iss_sub", "iss": "https://partner.example", "sub": "u_7f3a9c2e5b1d4e08" },
@@ -2523,7 +2523,7 @@ eyJhbGciOiJFUzI1NiIsInR5cCI6InNlY2V2ZW50K2p3dCIsImtpZCI6ImZsLXNhbmRib3gtMjAyNi0x
 <tr><td><code>iss</code></td><td>issuer فان‌لندز توی همین محیط، یعنی همون نشانی پایه‌ای که audienceهای این محیط روش ساخته شدن (token endpoint بدون <code>/oauth/token</code>).</td></tr>
 <tr><td><code>aud</code></td><td>issuer خود شما توی همین محیط. توی برگ شریک با نام <code>set_audience</code> میاد.</td></tr>
 <tr><td><code>iat</code>، <code>jti</code></td><td>مخصوص همین تلاش ارسال. هر تلاش دوباره یک SET تازه با <code>iat</code> و <code>jti</code> تازه‌ست. SET فیلد <code>exp</code> نداره.</td></tr>
-<tr><td><code>events</code></td><td>یک شیء که کلیدش URI نوع رویداده، مثل <code>https://api.funlands.example/events/game.completed</code>. این URI از یک پیشوند ثابت و نام کوتاه رویداد ساخته میشه. پیشوند توی هر دو محیط یکسانه، از نشانی پایه API یا issuer محیط ساخته نمیشه و مقدار دقیقش توی برگ شریک میاد.</td></tr>
+<tr><td><code>events</code></td><td>یک شیء که کلیدش URI نوع رویداده، مثل <code>https://api.funlands.ir/events/game.completed</code>. این URI از یک پیشوند ثابت و نام کوتاه رویداد ساخته میشه. پیشوند توی هر دو محیط، sandbox هم، همون <code>https://api.funlands.ir/events/</code> است و از نشانی پایه API یا issuer محیط ساخته نمیشه.</td></tr>
 <tr><td><code>event_id</code></td><td>شناسه ثابت رویداد که توی تکرار و replay عوض نمیشه. کلید dedupe شما همینه، نه <code>jti</code>.</td></tr>
 <tr><td><code>schema_version</code></td><td>نسخه قرارداد payload این نوع رویداد.</td></tr>
 <tr><td><code>subject</code></td><td><code>{"format":"iss_sub","iss":...,"sub":...}</code>، با همون <code>sub</code>ی که توی launch فرستادید.</td></tr>
@@ -2577,8 +2577,8 @@ app.useBodyParser('text', { type: 'application/secevent+jwt', limit: '64kb' });
 import { Injectable } from '@nestjs/common';
 import { createRemoteJWKSet, decodeProtectedHeader, jwtVerify } from 'jose';
 
-const FUNLANDS_ISSUER = 'https://api.sandbox.funlands.example';                     <span class="c">// production: https://api.funlands.example</span>
-const FUNLANDS_JWKS = new URL('https://api.sandbox.funlands.example/.well-known/jwks.json');
+const FUNLANDS_ISSUER = 'https://sandbox-api.funlands.ir';                     <span class="c">// production: https://api.funlands.ir</span>
+const FUNLANDS_JWKS = new URL('https://sandbox-api.funlands.ir/.well-known/jwks.json');
 const SET_AUDIENCE = 'https://partner.example';                                <span class="c">// set_audience: your own issuer</span>
 const FORBIDDEN_HEADERS = ['jku', 'x5u', 'jwk', 'x5c', 'crit'];
 
@@ -2692,8 +2692,8 @@ import express from 'express';
 import { createRemoteJWKSet, decodeProtectedHeader, errors, jwtVerify } from 'jose';
 import pg from 'pg';
 
-const FUNLANDS_ISSUER = 'https://api.sandbox.funlands.example';                     <span class="c">// production: https://api.funlands.example</span>
-const FUNLANDS_JWKS = new URL('https://api.sandbox.funlands.example/.well-known/jwks.json');
+const FUNLANDS_ISSUER = 'https://sandbox-api.funlands.ir';                     <span class="c">// production: https://api.funlands.ir</span>
+const FUNLANDS_JWKS = new URL('https://sandbox-api.funlands.ir/.well-known/jwks.json');
 const SET_AUDIENCE = 'https://partner.example';
 const FORBIDDEN_HEADERS = ['jku', 'x5u', 'jwk', 'x5c', 'crit'];
 
@@ -2765,8 +2765,8 @@ import jwt
 from jwt import PyJWKClient
 from jwt.exceptions import PyJWKClientConnectionError
 
-FUNLANDS_ISSUER = "https://api.sandbox.funlands.example"                  <span class="c"># production: https://api.funlands.example</span>
-FUNLANDS_JWKS = "https://api.sandbox.funlands.example/.well-known/jwks.json"
+FUNLANDS_ISSUER = "https://sandbox-api.funlands.ir"                  <span class="c"># production: https://api.funlands.ir</span>
+FUNLANDS_JWKS = "https://sandbox-api.funlands.ir/.well-known/jwks.json"
 SET_AUDIENCE = "https://partner.example"
 FORBIDDEN_HEADERS = {"jku", "x5u", "jwk", "x5c", "crit"}
 
@@ -2846,8 +2846,8 @@ import jwt
 from jwt import PyJWKClient
 from jwt.exceptions import PyJWKClientConnectionError
 
-FUNLANDS_ISSUER = "https://api.sandbox.funlands.example"                  <span class="c"># production: https://api.funlands.example</span>
-FUNLANDS_JWKS = "https://api.sandbox.funlands.example/.well-known/jwks.json"
+FUNLANDS_ISSUER = "https://sandbox-api.funlands.ir"                  <span class="c"># production: https://api.funlands.ir</span>
+FUNLANDS_JWKS = "https://sandbox-api.funlands.ir/.well-known/jwks.json"
 SET_AUDIENCE = "https://partner.example"
 FORBIDDEN_HEADERS = {"jku", "x5u", "jwk", "x5c", "crit"}
 
@@ -2942,8 +2942,8 @@ use Illuminate\Support\Facades\Http;
 
 final class FunlandsSetVerifier
 {
-    private const ISSUER = 'https://api.sandbox.funlands.example';                  <span class="c">// production: https://api.funlands.example</span>
-    private const JWKS_URL = 'https://api.sandbox.funlands.example/.well-known/jwks.json';
+    private const ISSUER = 'https://sandbox-api.funlands.ir';                  <span class="c">// production: https://api.funlands.ir</span>
+    private const JWKS_URL = 'https://sandbox-api.funlands.ir/.well-known/jwks.json';
     private const AUDIENCE = 'https://partner.example';
     private const FORBIDDEN_HEADERS = ['jku', 'x5u', 'jwk', 'x5c', 'crit'];
 
@@ -3049,8 +3049,8 @@ use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-const FUNLANDS_ISSUER = 'https://api.sandbox.funlands.example';                    <span class="c">// production: https://api.funlands.example</span>
-const FUNLANDS_JWKS = 'https://api.sandbox.funlands.example/.well-known/jwks.json';
+const FUNLANDS_ISSUER = 'https://sandbox-api.funlands.ir';                    <span class="c">// production: https://api.funlands.ir</span>
+const FUNLANDS_JWKS = 'https://sandbox-api.funlands.ir/.well-known/jwks.json';
 const SET_AUDIENCE = 'https://partner.example';
 const FORBIDDEN_HEADERS = ['jku', 'x5u', 'jwk', 'x5c', 'crit'];
 
@@ -3148,8 +3148,8 @@ import (
 )
 
 const (
-	FunlandsIssuer = "https://api.sandbox.funlands.example" <span class="c">// production: https://api.funlands.example</span>
-	FunlandsJWKS   = "https://api.sandbox.funlands.example/.well-known/jwks.json"
+	FunlandsIssuer = "https://sandbox-api.funlands.ir" <span class="c">// production: https://api.funlands.ir</span>
+	FunlandsJWKS   = "https://sandbox-api.funlands.ir/.well-known/jwks.json"
 	SetAudience    = "https://partner.example"
 )
 
@@ -3296,8 +3296,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FunlandsSetVerifier {
-    static final String ISSUER = "https://api.sandbox.funlands.example";           <span class="c">// production: https://api.funlands.example</span>
-    static final String JWKS_URL = "https://api.sandbox.funlands.example/.well-known/jwks.json";
+    static final String ISSUER = "https://sandbox-api.funlands.ir";           <span class="c">// production: https://api.funlands.ir</span>
+    static final String JWKS_URL = "https://sandbox-api.funlands.ir/.well-known/jwks.json";
     static final String AUDIENCE = "https://partner.example";
 
     public static class SetRejected extends Exception {
@@ -3400,8 +3400,8 @@ public sealed class SetRejectedException(string message) : Exception(message);
 
 public sealed class FunlandsSetVerifier(HttpClient http)
 {
-    private const string Issuer = "https://api.sandbox.funlands.example";            <span class="c">// production: https://api.funlands.example</span>
-    private const string JwksUrl = "https://api.sandbox.funlands.example/.well-known/jwks.json";
+    private const string Issuer = "https://sandbox-api.funlands.ir";            <span class="c">// production: https://api.funlands.ir</span>
+    private const string JwksUrl = "https://sandbox-api.funlands.ir/.well-known/jwks.json";
     private const string Audience = "https://partner.example";
     private static readonly string[] ForbiddenHeaders = ["jku", "x5u", "jwk", "x5c", "crit"];
 
@@ -3516,7 +3516,7 @@ app.MapPost("/funlands/events", async (HttpRequest request, FunlandsSetVerifier 
 <span class="c">#   eyJhbGciOiJFUzI1NiIsInR5cCI6InNlY2V2ZW50K2p3dCIsImtpZCI6ImZsLXNhbmRib3gtMjAyNi0xMSJ9.eyJ...</span>
 
 <span class="c"># Fetch the Funlands public keys your verifier uses:</span>
-curl -sS https://api.sandbox.funlands.example/.well-known/jwks.json | jq '.keys[] | {kid, kty, crv, alg, use}'
+curl -sS https://sandbox-api.funlands.ir/.well-known/jwks.json | jq '.keys[] | {kid, kty, crv, alg, use}'
 
 <span class="c"># Replay a captured sandbox delivery against your own receiver within 5 minutes of its iat</span>
 <span class="c"># (expect 202, then 202 again for the duplicate event_id; after 5 minutes expect 401):</span>
@@ -3545,7 +3545,7 @@ curl -i https://partner.example/funlands/events \
 <h3 id="events-pull">دریافت با pull: <code>GET /partner/v1/events</code></h3>
 <p>اگه سرور شما مدتی قطع بوده یا توی <code>player_seq</code> جای خالی دیدید، رویدادها رو از این feed بخونید. feed فقط رویدادهای خود شما رو به ترتیب انتشار برمی‌گردونه. توکنش رو مثل <a href="#oauth-token">API گزارش</a> با scope <code>events:read</code> بگیرید.</p>
 <div class="codeblock single"><div class="cb-head"><span class="cb-label">HTTP</span><button class="copy" type="button">کپی</button></div><pre><code>GET /partner/v1/events?cursor=c_9mQ2xR7tLw&amp;limit=100 HTTP/1.1
-Host: api.sandbox.funlands.example
+Host: sandbox-api.funlands.ir
 Authorization: Bearer &lt;token with scope events:read&gt;
 
 HTTP/1.1 200 OK
@@ -3555,7 +3555,7 @@ Content-Type: application/json
   "items": [
     {
       "event_id": "evt_0193a0e1b2c37d4e8f50a1b2c3d4e5f6",
-      "type": "https://api.funlands.example/events/game.completed",
+      "type": "https://api.funlands.ir/events/game.completed",
       "schema_version": 1,
       "subject": { "format": "iss_sub", "iss": "https://partner.example", "sub": "u_7f3a9c2e5b1d4e08" },
       "player_seq": 42,
@@ -3603,13 +3603,13 @@ Content-Type: application/json
 {
   "iss": "cli_sandbox_0000example",
   "sub": "cli_sandbox_0000example",
-  "aud": "https://api.sandbox.funlands.example/oauth/token",
+  "aud": "https://sandbox-api.funlands.ir/oauth/token",
   "iat": 1793871000,
   "exp": 1793871060,
   "jti": "3f6a2d9c-1b7e-4c50-8a4d-6e2f9b1c7d05"
 }</code></pre></div>
 <div class="codeblock single"><div class="cb-head"><span class="cb-label">HTTP</span><button class="copy" type="button">کپی</button></div><pre><code>POST /oauth/token HTTP/1.1
-Host: api.sandbox.funlands.example
+Host: sandbox-api.funlands.ir
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=client_credentials
@@ -3648,7 +3648,7 @@ Retry-After: 30
 { "error": "temporarily_unavailable", "error_description": "rate limit exceeded" }
 
 # Decoded access token: header { "alg": "ES256", "typ": "at+jwt", "kid": "&lt;funlands kid&gt;" },
-# claims { "iss": "https://api.sandbox.funlands.example", "aud": "partner-api", "sub": "&lt;environment id&gt;",
+# claims { "iss": "https://sandbox-api.funlands.ir", "aud": "partner-api", "sub": "&lt;environment id&gt;",
 #          "client_id", "partner_id", "scope", "iat", "exp" (iat + 900), "jti" }</code></pre></div>
 <p class="caption">نمونه: گرفتن توکن با private_key_jwt و خوندن خلاصه آمار</p>
 <div class="codeblock tabs"><div class="cb-head"><div class="tablist" role="tablist" aria-label="Language"><button type="button" role="tab" data-lang="nestjs" aria-selected="true">NestJS</button><button type="button" role="tab" data-lang="express" aria-selected="false">Express</button><button type="button" role="tab" data-lang="fastapi" aria-selected="false">FastAPI</button><button type="button" role="tab" data-lang="django" aria-selected="false">Django</button><button type="button" role="tab" data-lang="laravel" aria-selected="false">Laravel</button><button type="button" role="tab" data-lang="php" aria-selected="false">PHP</button><button type="button" role="tab" data-lang="go" aria-selected="false">Go</button><button type="button" role="tab" data-lang="spring" aria-selected="false">Spring Boot</button><button type="button" role="tab" data-lang="dotnet" aria-selected="false">ASP.NET Core</button><button type="button" role="tab" data-lang="curl" aria-selected="false">cURL</button></div><button class="copy" type="button">کپی</button></div><div class="panel" role="tabpanel" data-lang="nestjs" data-label="NestJS"><pre><code><span class="c">// src/funlands/funlands-reports.client.ts</span>
@@ -3657,7 +3657,7 @@ import { importPKCS8, SignJWT } from 'jose';
 import { randomUUID } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 
-const FUNLANDS_BASE = 'https://api.sandbox.funlands.example';                 <span class="c">// production: https://api.funlands.example</span>
+const FUNLANDS_BASE = 'https://sandbox-api.funlands.ir';                 <span class="c">// production: https://api.funlands.ir</span>
 const TOKEN_ENDPOINT = `${FUNLANDS_BASE}/oauth/token`;
 const CLIENT_ID = 'cli_sandbox_0000example';                              <span class="c">// from your registration sheet</span>
 const ASSERTION_KID = 'partner-api-sandbox-2026-11';
@@ -3719,7 +3719,7 @@ import { importPKCS8, SignJWT } from 'jose';
 import { randomUUID } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 
-const FUNLANDS_BASE = 'https://api.sandbox.funlands.example';                 <span class="c">// production: https://api.funlands.example</span>
+const FUNLANDS_BASE = 'https://sandbox-api.funlands.ir';                 <span class="c">// production: https://api.funlands.ir</span>
 const TOKEN_ENDPOINT = `${FUNLANDS_BASE}/oauth/token`;
 const CLIENT_ID = 'cli_sandbox_0000example';
 const ASSERTION_KID = 'partner-api-sandbox-2026-11';
@@ -3780,7 +3780,7 @@ import httpx
 import jwt
 from cryptography.hazmat.primitives import serialization
 
-FUNLANDS_BASE = "https://api.sandbox.funlands.example"            <span class="c"># production: https://api.funlands.example</span>
+FUNLANDS_BASE = "https://sandbox-api.funlands.ir"            <span class="c"># production: https://api.funlands.ir</span>
 TOKEN_ENDPOINT = f"{FUNLANDS_BASE}/oauth/token"
 CLIENT_ID = "cli_sandbox_0000example"
 ASSERTION_KID = "partner-api-sandbox-2026-11"
@@ -3948,7 +3948,7 @@ use GuzzleHttp\Client;
 
 final class FunlandsReports
 {
-    private const BASE = 'https://api.sandbox.funlands.example';           <span class="c">// production: https://api.funlands.example</span>
+    private const BASE = 'https://sandbox-api.funlands.ir';           <span class="c">// production: https://api.funlands.ir</span>
     private const TOKEN_ENDPOINT = self::BASE . '/oauth/token';
     private const CLIENT_ID = 'cli_sandbox_0000example';
     private const ASSERTION_KID = 'partner-api-sandbox-2026-11';
@@ -4237,7 +4237,7 @@ public sealed class FunlandsReportsClient
 }</code></pre></div><div class="panel" role="tabpanel" data-lang="curl" data-label="cURL" hidden><pre><code><span class="c"># 1) Exchange a signed client assertion for a 900 s report token.</span>
 <span class="c">#    CLIENT_ASSERTION: header {"alg":"ES256","typ":"JWT","kid":"partner-api-sandbox-2026-11"}</span>
 <span class="c">#    claims: iss = sub = client_id, aud = token endpoint, exp = iat + 60, fresh jti</span>
-curl -sS https://api.sandbox.funlands.example/oauth/token \
+curl -sS https://sandbox-api.funlands.ir/oauth/token \
   -d grant_type=client_credentials \
   -d scope=reports:read \
   -d client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer \
@@ -4246,7 +4246,7 @@ curl -sS https://api.sandbox.funlands.example/oauth/token \
 <span class="c"># {"access_token":"eyJhbGciOiJFUzI1NiIs...","token_type":"Bearer","expires_in":900,"scope":"reports:read"}</span>
 
 <span class="c"># 2) Call the report API with it.</span>
-curl -sS 'https://api.sandbox.funlands.example/partner/v1/metrics/summary?from=2026-10-01&amp;to=2026-10-31' \
+curl -sS 'https://sandbox-api.funlands.ir/partner/v1/metrics/summary?from=2026-10-01&amp;to=2026-10-31' \
   -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H 'Accept: application/json' | jq</code></pre></div></div>
 
@@ -4536,10 +4536,10 @@ curl -sS 'https://api.sandbox.funlands.example/partner/v1/metrics/summary?from=2
     <a class="ep" href="#set-format"><span class="method hook">HOOK</span>POST your webhook URL</a>
   </div>
   <div class="box envbox">
-    <h4>محیط‌ها (نشانی نمونه)</h4>
-    <b>sandbox</b><div>https://api.sandbox.funlands.example</div>
-    <b>production</b><div>https://api.funlands.example</div>
-    <b>Origin بازی</b><div>https://play.sandbox.funlands.example</div><div>https://play.funlands.example</div>
+    <h4>محیط‌ها</h4>
+    <b>sandbox</b><div>https://sandbox-api.funlands.ir</div>
+    <b>production</b><div>https://api.funlands.ir</div>
+    <b>Origin بازی</b><div>https://sandbox-play.funlands.ir</div><div>https://play.funlands.ir</div>
   </div>
   <div class="box">
     <h4>عددهای مهم</h4>
